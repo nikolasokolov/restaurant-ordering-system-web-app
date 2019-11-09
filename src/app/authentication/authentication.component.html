@@ -1,14 +1,20 @@
 <div class="login-form">
+  <div class="alert alert-danger" *ngIf="error">
+    <p>{{ error }}</p>
+  </div>
   <div *ngIf="isLoading" style="text-align: center;">
     <app-loading-spinner></app-loading-spinner>
   </div>
   <form #authenticationForm="ngForm" (ngSubmit)="authenticate(authenticationForm)" *ngIf="!isLoading">
     <h2 class="text-center">Log in</h2>
     <div class="form-group">
-      <input type="text" class="form-control" placeholder="E-Mail" ngModel name="email" required email id="email"/>
+      <input type="text" class="form-control" placeholder="E-Mail" ngModel name="email" required email id="email" #email="ngModel"/>
+      <span class="help-block" *ngIf="!email.valid && email.touched">Please enter a valid email</span>
     </div>
     <div class="form-group">
-      <input type="password" class="form-control" placeholder="Password" ngModel name="password" required id="password"/>
+      <input type="password" class="form-control" placeholder="Password" ngModel name="password" required minlength="6" id="password" #password="ngModel"/>
+      <span class="help-block" *ngIf="!password.valid && password.touched">Password should be at least 6 characters</span>
+
     </div>
     <div class="form-group">
       <button type="submit" class="btn btn-primary btn-block">Log in</button>
@@ -18,5 +24,4 @@
       <a href="#" class="pull-right">Forgot Password?</a>
     </div>
   </form>
-  <p class="text-center"><a href="#">Create an Account</a></p>
 </div>

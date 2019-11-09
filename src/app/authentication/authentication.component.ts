@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-authentication',
@@ -9,8 +10,9 @@ import {HttpClient} from '@angular/common/http';
 })
 export class AuthenticationComponent implements OnInit {
   isLoading = false;
+  error = null;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private router: Router) { }
 
   ngOnInit() {
   }
@@ -24,8 +26,10 @@ export class AuthenticationComponent implements OnInit {
     this.httpClient.post('http://localhost:8080/api/auth/signin', credentials).subscribe(response => {
       this.isLoading = false;
       console.log('Successfully logged in');
+      this.router.navigate(['/home']);
     }, error => {
       this.isLoading = false;
+      this.error = 'Incorrect credentials, please try again.';
       console.log('Error occurred while trying to log in');
     });
   }
