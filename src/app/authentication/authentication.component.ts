@@ -20,10 +20,10 @@ export class AuthenticationComponent implements OnInit {
   authenticate(authenticationForm: NgForm) {
     this.isLoading = true;
     const credentials = {
-      usernameOrEmail: authenticationForm.value.usernameOrEmail,
+      username: authenticationForm.value.username,
       password: authenticationForm.value.password
     };
-    this.httpClient.post('http://localhost:8080/api/authentication', credentials).subscribe(response => {
+    this.httpClient.post('http://localhost:8080/api/authenticate', credentials).subscribe(response => {
       this.isLoading = false;
       console.log('Successfully logged in');
       this.router.navigate(['/home']);
