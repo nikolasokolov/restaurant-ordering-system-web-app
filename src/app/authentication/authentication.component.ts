@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {User} from './user.model';
+import {BehaviorSubject} from 'rxjs';
+import {AuthenticationService} from './authentication.service';
 
 @Component({
   selector: 'app-authentication',
@@ -11,27 +14,29 @@ import {Router} from '@angular/router';
 export class AuthenticationComponent implements OnInit {
   isLoading = false;
   error = null;
+  user = new BehaviorSubject<User>(null);
+  isAuthenticated = false;
 
-  constructor(private httpClient: HttpClient, private router: Router) { }
+  constructor(private httpClient: HttpClient, private router: Router, private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
   }
 
   authenticate(authenticationForm: NgForm) {
     this.isLoading = true;
-    const credentials = {
-      username: authenticationForm.value.username,
-      password: authenticationForm.value.password
-    };
-    this.httpClient.post('http://localhost:8080/api/authenticate', credentials).subscribe(response => {
+    const username = authenticationForm.value.username;
+    const password = authenticationForm.value.password;
+    this.authenticationService.authenticate(username, password).subscribe(response => {
       this.isLoading = false;
-      console.log('Successfully logged in');
-      this.router.navigate(['/home']);
+      this.isAuthenticated = true;
     }, error => {
       this.isLoading = false;
       this.error = 'Incorrect credentials, please try again.';
-      console.log('Error occurred while trying to log in');
     });
+  }
+
+  logout() {
+    this.authenticationService.logout();
   }
 
 }
