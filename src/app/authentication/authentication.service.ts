@@ -13,7 +13,7 @@ export class AuthenticationService {
 
   authenticate(username: string, password: string) {
     const credentials = {username, password};
-    return this.httpClient.post<User>('http://localhost:8080/api/authenticate', credentials)
+    return this.httpClient.post<User>('http://localhost:8080/authenticate', credentials)
       .pipe(catchError(this.handleError), tap(response => {
         this.handleAuthentication(
           response.username,
@@ -27,6 +27,7 @@ export class AuthenticationService {
     const user = new User(username, token);
     this.user.next(user);
     localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('Authorization', token);
     this.router.navigate(['/home']);
   }
 
