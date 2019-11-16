@@ -7,7 +7,7 @@ import {Router} from '@angular/router';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
-  user = new BehaviorSubject<User>(null);
+  user = new BehaviorSubject<User>(this.isAuthenticated());
 
   constructor(private httpClient: HttpClient, private router: Router) {}
 
@@ -23,6 +23,10 @@ export class AuthenticationService {
     );
   }
 
+  isAuthenticated() {
+    return JSON.parse(localStorage.getItem('user'));
+  }
+
   private handleAuthentication(username: string, token: string) {
     const user = new User(username, token);
     this.user.next(user);
@@ -35,6 +39,8 @@ export class AuthenticationService {
     this.user.next(null);
     this.router.navigate(['/authentication']);
     localStorage.removeItem('user');
+    localStorage.removeItem('Authorization');
+    this.router.navigate(['/authenticate']);
   }
 
   private handleError(errorRes: HttpErrorResponse) {

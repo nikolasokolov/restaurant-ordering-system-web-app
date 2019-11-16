@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {AuthenticationService} from '../authentication/authentication.service';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +9,7 @@ import {HttpClient} from '@angular/common/http';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
   }
@@ -19,6 +20,10 @@ export class HomeComponent implements OnInit {
     }, error => {
       console.log('error');
     });
+  }
+
+  logout() {
+    this.authenticationService.logout();
   }
 
 }

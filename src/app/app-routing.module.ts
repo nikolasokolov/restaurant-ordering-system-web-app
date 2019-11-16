@@ -6,7 +6,7 @@ import {AuthenticationGuard} from './authentication/authentication-guard';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/authenticate', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'authenticate', component: AuthenticationComponent },
   { path: 'home', component: HomeComponent, canActivate: [AuthenticationGuard] }
 ];

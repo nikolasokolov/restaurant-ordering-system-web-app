@@ -15,10 +15,12 @@ export class AuthenticationGuard implements CanActivate {
       take(1),
       map(user => {
         const isAuth = !!user;
+        console.log(user);
+        console.log(!!user);
         if (isAuth) {
           return true;
         }
-        return this.router.createUrlTree(['/auth']);
+        return this.router.createUrlTree(['/authenticate']);
       })
     );
   }
