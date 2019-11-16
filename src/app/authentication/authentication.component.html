@@ -1,23 +1,24 @@
-<button class="btn btn-primary" (click)="logout()" *ngIf="isAuthenticated">Logout</button>
-<div class="login-form">
-  <div class="alert alert-danger text-center" *ngIf="error">
-    <p>{{ error }}</p>
-  </div>
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
   <div *ngIf="isLoading" style="text-align: center;">
     <app-loading-spinner></app-loading-spinner>
   </div>
-  <form #authenticationForm="ngForm" (ngSubmit)="authenticate(authenticationForm)" *ngIf="!isLoading">
-    <h2 class="text-center">Log in</h2>
-    <div class="form-group">
-      <input type="text" class="form-control" placeholder="Username" ngModel name="username" required id="username" #username="ngModel"/>
-      <span class="help-block" *ngIf="!username.valid && username.touched">Please enter a valid username</span>
-    </div>
-    <div class="form-group">
-      <input type="password" class="form-control" placeholder="Password" ngModel name="password" required minlength="6" id="password" #password="ngModel"/>
-      <span class="help-block" *ngIf="!password.valid && password.touched">Password should be at least 6 characters</span>
-    </div>
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary btn-block">Log in</button>
-    </div>
-  </form>
+  <mat-card class="box" *ngIf="!isLoading">
+    <mat-card-header>
+      <mat-card-title>Log in</mat-card-title>
+    </mat-card-header>
+    <form class="example-form" #authenticationForm="ngForm" (ngSubmit)="authenticate(authenticationForm)">
+      <mat-card-content class="input-width">
+        <mat-form-field class="example-full-width">
+          <input matInput type="text" placeholder="Username" ngModel name="username" required #username="ngModel"/>
+          <mat-hint *ngIf="!username.valid && username.touched">Please enter a valid username</mat-hint>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput type="password" placeholder="Password" ngModel name="password" required minlength="6" #password="ngModel"/>
+          <mat-hint *ngIf="!password.valid && password.touched">Password should be at least 6 characters</mat-hint>
+        </mat-form-field>
+      </mat-card-content>
+      <button mat-raised-button	color="primary" class="btn-block">Log in</button>
+    </form>
+    <mat-error *ngIf="error" class="text-center">{{error}}</mat-error>
+  </mat-card>
 </div>
