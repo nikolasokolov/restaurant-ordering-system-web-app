@@ -14,10 +14,10 @@ export class HomeComponent implements OnInit {
   }
 
   test() {
-    this.httpClient.get('http://localhost:8080/api/test').subscribe(response => {
-      console.log(response);
+    this.httpClient.get('https://localhost:8080/api/test').subscribe(response => {
+      console.log('success');
     }, error => {
-      console.log(error);
+      console.log('error');
     });
   }
 

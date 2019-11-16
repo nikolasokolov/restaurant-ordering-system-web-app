@@ -9,6 +9,7 @@ export class AuthenticationInterceptorService implements HttpInterceptor {
   constructor(private authenticationService: AuthenticationService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler) {
+    const token = localStorage.getItem('Authorization');
     return this.authenticationService.user.pipe(
       take(1),
       exhaustMap(user => {
@@ -16,7 +17,7 @@ export class AuthenticationInterceptorService implements HttpInterceptor {
           return next.handle(request);
         }
         const modifiedReq = request.clone({
-          headers: request.headers.set('Authorization', user.token)
+          headers: request.headers.set('Authorization', token)
         });
         return next.handle(modifiedReq);
       })
