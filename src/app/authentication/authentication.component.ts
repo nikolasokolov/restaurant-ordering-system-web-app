@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {FormControl, NgForm, Validators} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {NgForm} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {User} from './user.model';
-import {BehaviorSubject} from 'rxjs';
 import {AuthenticationService} from './authentication.service';
 
 @Component({
