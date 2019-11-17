@@ -31,4 +31,8 @@ export class HomeComponent implements OnInit {
     this.authenticationService.logout();
   }
 
+  getUser() {
+    this.authenticationService.getUser();
+  }
+
 }
