@@ -14,7 +14,6 @@ import {AuthenticationService} from './authentication.service';
 export class AuthenticationComponent implements OnInit {
   isLoading = false;
   error = null;
-  user = new BehaviorSubject<User>(this.authenticationService.isAuthenticated());
   isAuthenticated = false;
 
   constructor(private httpClient: HttpClient, private router: Router, private authenticationService: AuthenticationService) { }
@@ -33,10 +32,6 @@ export class AuthenticationComponent implements OnInit {
       this.isLoading = false;
       this.error = 'Incorrect credentials';
     });
-  }
-
-  logout() {
-    this.authenticationService.logout();
   }
 
 }

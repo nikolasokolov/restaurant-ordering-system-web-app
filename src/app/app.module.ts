@@ -5,21 +5,23 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { HomeComponent } from './home/home.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import {AuthenticationInterceptorService} from './authentication/authentication-interceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {AngularMaterialModule} from './angular-material.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {MatCardModule} from '@angular/material';
+import {MatCardModule, MatMenuModule} from '@angular/material';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthenticationComponent,
     HomeComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +32,7 @@ import {MatCardModule} from '@angular/material';
     AngularMaterialModule,
     FlexLayoutModule,
     MatCardModule,
-    ReactiveFormsModule
+    MatMenuModule
   ],
   providers: [
     {
