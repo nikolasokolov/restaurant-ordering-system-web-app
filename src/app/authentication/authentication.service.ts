@@ -1,26 +1,23 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, throwError} from 'rxjs';
-import {User} from './user.model';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {catchError, tap} from 'rxjs/operators';
+import {BehaviorSubject} from 'rxjs';
+import {User} from '../model/user.model';
+import {HttpClient} from '@angular/common/http';
+import {tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
-
-export interface AuthResponseData {
-  username: string;
-  token: string;
-  expiresIn: number;
-}
+import {AuthenticationResponseData} from '../model/authentication-response-data.model';
+import {UserDetails} from '../model/user-details.model';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
   user = new BehaviorSubject<User>(this.isAuthenticated());
+  companyName = '';
   private tokenExpirationTimer: any;
 
   constructor(private httpClient: HttpClient, private router: Router) {}
 
   authenticate(username: string, password: string) {
     const credentials = {username, password};
-    return this.httpClient.post<AuthResponseData>('https://localhost:8080/authenticate', credentials)
+    return this.httpClient.post<AuthenticationResponseData>('https://localhost:8080/authenticate', credentials)
       .pipe(tap(response => {
         this.handleAuthentication(
           response.username,
@@ -55,18 +52,11 @@ export class AuthenticationService {
     this.user.next(null);
     localStorage.removeItem('user');
     localStorage.removeItem('Authorization');
+    localStorage.removeItem('userCompanyName');
     if (this.tokenExpirationTimer) {
       clearTimeout(this.tokenExpirationTimer);
     }
     this.tokenExpirationTimer = null;
     this.router.navigate(['/authenticate']);
-  }
-
-  getUser() {
-    this.httpClient.get('https://localhost:8080/account').subscribe(response => {
-      console.log(response);
-    }, error => {
-      console.log(error);
-    });
   }
 }

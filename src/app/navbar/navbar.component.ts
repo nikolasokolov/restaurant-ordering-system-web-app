@@ -1,7 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthenticationService} from '../authentication/authentication.service';
-import {BehaviorSubject, Subscription} from 'rxjs';
-import {User} from '../authentication/user.model';
+import {Subscription} from 'rxjs';
+import {UserDetails} from '../model/user-details.model';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-navbar',
@@ -16,8 +17,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     username: null,
     token: null,
   };
+  companyName = '';
 
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor(private authenticationService: AuthenticationService, private httpClient: HttpClient) { }
 
   ngOnInit() {
     this.loggedInUser = this.authenticationService.user.subscribe(user => {
@@ -25,12 +27,22 @@ export class NavbarComponent implements OnInit, OnDestroy {
       if (this.isAuthenticated) {
         this.loggedUser = user;
         this.loggedInUserUsername = user.username;
+        this.getUser();
       }
     });
+    this.companyName = localStorage.getItem('userCompanyName');
   }
 
   logout() {
     this.authenticationService.logout();
+  }
+
+  getUser() {
+    return this.httpClient.get<UserDetails>('https://localhost:8080/account').subscribe(response => {
+      localStorage.setItem('userCompanyName', response.company.name);
+    }, error => {
+      console.log(error);
+    });
   }
 
   ngOnDestroy() {
