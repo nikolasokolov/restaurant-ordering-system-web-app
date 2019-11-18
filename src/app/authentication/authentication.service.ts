@@ -5,12 +5,10 @@ import {HttpClient} from '@angular/common/http';
 import {tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {AuthenticationResponseData} from '../model/authentication-response-data.model';
-import {UserDetails} from '../model/user-details.model';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
   user = new BehaviorSubject<User>(this.isAuthenticated());
-  companyName = '';
   private tokenExpirationTimer: any;
 
   constructor(private httpClient: HttpClient, private router: Router) {}
@@ -52,7 +50,7 @@ export class AuthenticationService {
     this.user.next(null);
     localStorage.removeItem('user');
     localStorage.removeItem('Authorization');
-    localStorage.removeItem('userCompanyName');
+    localStorage.removeItem('userDetails');
     if (this.tokenExpirationTimer) {
       clearTimeout(this.tokenExpirationTimer);
     }

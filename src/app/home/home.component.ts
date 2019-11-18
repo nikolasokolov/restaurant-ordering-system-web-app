@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
   }
 
   test() {
-    this.httpClient.get('https://localhost:8080/api/test').subscribe(response => {
+    this.httpClient.get('https://localhost:8080/main/test').subscribe(response => {
       console.log('success');
       this.testApi = 'Successfully received response from test api';
     }, error => {
@@ -25,10 +25,6 @@ export class HomeComponent implements OnInit {
       this.testApi = 'Error occurred during execution of test api';
       this.testApiSuccess = false;
     });
-  }
-
-  logout() {
-    this.authenticationService.logout();
   }
 
 }

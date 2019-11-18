@@ -1,36 +1,31 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthenticationService} from '../authentication/authentication.service';
-import {Subscription} from 'rxjs';
+import {BehaviorSubject, Subscription} from 'rxjs';
 import {UserDetails} from '../model/user-details.model';
 import {HttpClient} from '@angular/common/http';
+import {exhaustMap, take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit, OnDestroy {
+export class NavbarComponent implements OnInit {
   isAuthenticated = false;
-  private loggedInUser: Subscription;
-  loggedInUserUsername = null;
-  loggedUser = {
-    username: null,
-    token: null,
-  };
-  companyName = '';
+  loggedUserDetails: UserDetails;
+  userSub: Subscription;
 
   constructor(private authenticationService: AuthenticationService, private httpClient: HttpClient) { }
 
   ngOnInit() {
-    this.loggedInUser = this.authenticationService.user.subscribe(user => {
-      this.isAuthenticated = !!user;
-      if (this.isAuthenticated) {
-        this.loggedUser = user;
-        this.loggedInUserUsername = user.username;
+    this.userSub = this.authenticationService.user.subscribe(response => {
+      if (response !== null) {
+        this.isAuthenticated = true;
         this.getUser();
+      } else {
+        this.isAuthenticated = false;
       }
     });
-    this.companyName = localStorage.getItem('userCompanyName');
   }
 
   logout() {
@@ -38,15 +33,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   getUser() {
-    return this.httpClient.get<UserDetails>('https://localhost:8080/account').subscribe(response => {
-      localStorage.setItem('userCompanyName', response.company.name);
-    }, error => {
-      console.log(error);
+    return this.httpClient.get<UserDetails>('https://localhost:8080/api/account').subscribe(response => {
+      const userDetails = new UserDetails(response.id, response.username, response.password,
+        response.email, response.authorities, response.company);
+      this.loggedUserDetails = userDetails;
+      if (userDetails !== null) {
+        localStorage.setItem('userDetails', JSON.stringify(userDetails));
+      }
     });
   }
-
-  ngOnDestroy() {
-    this.loggedInUser.unsubscribe();
-  }
-
 }
