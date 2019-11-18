@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-    <span *ngIf="isAuthenticated">{{loggedUserDetails.company.name}}</span>
+    <span *ngIf="isAuthenticated && loggedUserDetails.company !== undefined">{{loggedUserDetails.company.name}}</span>
     <div class="col-xs-2 col-xs-offset-10">
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <p *ngIf="isAuthenticated"><span class="glyphicon glyphicon-user"></span> &nbsp; {{loggedUserDetails.username}}</p>

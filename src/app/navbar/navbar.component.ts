@@ -10,17 +10,17 @@ import {exhaustMap, take} from 'rxjs/operators';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
-  loggedUserDetails: UserDetails;
-  userSub: Subscription;
+  loggedUserDetails = {};
+  private userSub: Subscription;
 
   constructor(private authenticationService: AuthenticationService, private httpClient: HttpClient) { }
 
   ngOnInit() {
-    this.userSub = this.authenticationService.user.subscribe(response => {
-      if (response !== null) {
-        this.isAuthenticated = true;
+    this.userSub = this.authenticationService.user.subscribe(user => {
+      if (user !== null) {
+        this.isAuthenticated = !!user;
         this.getUser();
       } else {
         this.isAuthenticated = false;
@@ -41,5 +41,9 @@ export class NavbarComponent implements OnInit {
         localStorage.setItem('userDetails', JSON.stringify(userDetails));
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.userSub.unsubscribe();
   }
 }
