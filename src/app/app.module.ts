@@ -14,6 +14,7 @@ import {AngularMaterialModule} from './angular-material.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MatCardModule, MatMenuModule} from '@angular/material';
 import { NavbarComponent } from './navbar/navbar.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     AuthenticationComponent,
     HomeComponent,
     LoadingSpinnerComponent,
-    NavbarComponent
+    NavbarComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
