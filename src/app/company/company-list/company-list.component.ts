@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Company} from '../../model/company.model';
 import {Subscription} from 'rxjs';
+import {CompanyService} from '../company-service';
 
 @Component({
   selector: 'app-company-list',
@@ -9,10 +10,10 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./company-list.component.css']
 })
 export class CompanyListComponent implements OnInit {
-  companies = [];
+  companies: Company[];
   isLoading = false;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private companyService: CompanyService) { }
 
   ngOnInit() {
     this.getAllCompanies();
@@ -20,12 +21,11 @@ export class CompanyListComponent implements OnInit {
 
   getAllCompanies() {
     this.isLoading = true;
-    return this.httpClient.get('https://localhost:8080/main/companies').subscribe((response: any[]) => {
-      this.isLoading = false;
+    this.companyService.getAllCompanies().subscribe((response: any[]) => {
       this.companies = response;
+      this.isLoading = false;
     }, error => {
       this.isLoading = false;
-      console.log(error);
     });
   }
 

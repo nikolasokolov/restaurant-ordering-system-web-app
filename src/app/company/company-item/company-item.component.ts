@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Company} from '../../model/company.model';
 import {ActivatedRoute} from '@angular/router';
+import {CompanyService} from '../company-service';
 
 @Component({
   selector: 'app-company-item',
@@ -12,22 +13,20 @@ export class CompanyItemComponent implements OnInit {
   isLoading = false;
   company: Company;
 
-  constructor(private httpClient: HttpClient, private activatedRoute: ActivatedRoute) { }
+  constructor(private httpClient: HttpClient, private activatedRoute: ActivatedRoute, private companyService: CompanyService) { }
 
   ngOnInit() {
     this.getCompany();
   }
 
   getCompany() {
-    const id = this.activatedRoute.snapshot.params.id;
     this.isLoading = true;
-    this.httpClient.get<Company>('https://localhost:8080/main/company/' + id).subscribe(response => {
+    const id = this.activatedRoute.snapshot.params.id;
+    this.companyService.getCompany(id).subscribe(response => {
       this.company = response;
       this.isLoading = false;
-      console.log(response);
     }, error => {
       this.isLoading = false;
-      console.log(error);
     });
   }
 

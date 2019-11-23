@@ -7,6 +7,7 @@ import {ChangePasswordComponent} from './change-password/change-password.compone
 import {CompanyListComponent} from './company/company-list/company-list.component';
 import {CompanyEditComponent} from './company/company-edit/company-edit.component';
 import {CompanyItemComponent} from './company/company-item/company-item.component';
+import {AuthorizationGuard} from './authentication/authorization-guard';
 
 
 const routes: Routes = [
@@ -14,9 +15,9 @@ const routes: Routes = [
   { path: 'authenticate', component: AuthenticationComponent },
   { path: 'home', component: HomeComponent, canActivate: [AuthenticationGuard] },
   { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthenticationGuard] },
-  { path: 'company-list', component: CompanyListComponent, canActivate: [AuthenticationGuard] },
-  { path: 'company-edit', component: CompanyEditComponent, canActivate: [AuthenticationGuard] },
-  { path: 'company/:id', component: CompanyItemComponent, canActivate: [AuthenticationGuard] }
+  { path: 'company-list', component: CompanyListComponent, canActivate: [AuthorizationGuard] },
+  { path: 'company-edit', component: CompanyEditComponent, canActivate: [AuthorizationGuard] },
+  { path: 'company/:id', component: CompanyItemComponent, canActivate: [AuthorizationGuard] }
 ];
 
 @NgModule({

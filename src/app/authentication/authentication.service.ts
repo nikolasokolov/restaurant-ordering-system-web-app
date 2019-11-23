@@ -11,6 +11,7 @@ import {Company} from '../model/company.model';
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
   user = new BehaviorSubject<User>(this.isAuthenticated());
+  userDetails = new BehaviorSubject<UserDetails>(null);
   private tokenExpirationTimer: any;
 
   constructor(private httpClient: HttpClient, private router: Router) {}
@@ -52,6 +53,7 @@ export class AuthenticationService {
 
   handleUserDetails(id: number, username: string, password: string, email: string, authorities: any[], company: Company) {
     const userDetails = new UserDetails(id, username, password, email, authorities, company);
+    this.userDetails.next(userDetails);
     localStorage.setItem('userDetails', JSON.stringify(userDetails));
   }
 

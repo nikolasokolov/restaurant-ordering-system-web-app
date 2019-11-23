@@ -3,10 +3,10 @@
     <div *ngIf="isLoading" style="text-align: center;">
       <app-loading-spinner></app-loading-spinner>
     </div>
-    <div class="col-xs-6 col-xs-offset-3 text-center">
+    <div class="col-xs-6 col-xs-offset-3 text-center" *ngIf="company">
       <h3>Company name: {{company.name}}</h3>
       <h3>Company address: {{company.address}}</h3>
-      <h3>Company phoneNumber: {{company.phoneNumber}}</h3>
+      <h3>Company phone number: {{company.phoneNumber}}</h3>
     </div>
   </div>
 </div>
