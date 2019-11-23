@@ -15,6 +15,9 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {MatCardModule, MatMenuModule} from '@angular/material';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { CompanyListComponent } from './company/company-list/company-list.component';
+import { CompanyItemComponent } from './company/company-item/company-item.component';
+import { CompanyEditComponent } from './company/company-edit/company-edit.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,10 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     HomeComponent,
     LoadingSpinnerComponent,
     NavbarComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    CompanyListComponent,
+    CompanyItemComponent,
+    CompanyEditComponent
   ],
   imports: [
     BrowserModule,
