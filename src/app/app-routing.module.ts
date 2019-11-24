@@ -17,6 +17,7 @@ const routes: Routes = [
   { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthenticationGuard] },
   { path: 'company-list', component: CompanyListComponent, canActivate: [AuthorizationGuard] },
   { path: 'company-edit/:id', component: CompanyEditComponent, canActivate: [AuthorizationGuard] },
+  { path: 'company-edit', component: CompanyEditComponent, canActivate: [AuthorizationGuard] },
   { path: 'company/:id', component: CompanyItemComponent, canActivate: [AuthorizationGuard] }
 ];
 

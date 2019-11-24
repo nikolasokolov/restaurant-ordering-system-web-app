@@ -1,5 +1,5 @@
-import {EventEmitter, Injectable, Output} from '@angular/core';
-import {BehaviorSubject, pipe} from 'rxjs';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
 import {User} from '../model/user.model';
 import {HttpClient} from '@angular/common/http';
 import {switchMap, tap} from 'rxjs/operators';
@@ -14,8 +14,7 @@ export class AuthenticationService {
   userDetails = new BehaviorSubject<UserDetails>(this.getUserDetails());
   private tokenExpirationTimer: any;
 
-  constructor(private httpClient: HttpClient, private router: Router) {
-  }
+  constructor(private httpClient: HttpClient, private router: Router) {}
 
   authenticate(username: string, password: string) {
     const credentials = {username, password};
