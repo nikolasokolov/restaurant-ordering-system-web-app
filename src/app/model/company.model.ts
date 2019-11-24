@@ -4,9 +4,10 @@ export class Company {
   public name: string;
   public phoneNumber: string;
 
-  constructor(address: string, name: string, phoneNumber: string) {
-    this.address = address;
+  constructor(name: string, address: string, phoneNumber: string, id?: number) {
+    this.id = id;
     this.name = name;
+    this.address = address;
     this.phoneNumber = phoneNumber;
   }
 }

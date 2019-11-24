@@ -1,1 +1,36 @@
-<p>company edit works</p>
+<div class="alert alert-success fadein text-center" role="alert" *ngIf="companyEditedSuccessfully">
+  <strong>Company updated successfully</strong>
+</div>
+<div class="container-fluid" style="margin-top: 100px;">
+  <div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+    <div *ngIf="isLoading" style="text-align: center;">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+    <mat-card class="box" *ngIf="!isLoading || company !== undefined">
+      <mat-card-header>
+        <mat-card-title>Edit company</mat-card-title>
+      </mat-card-header>
+      <form class="example-form" #editCompanyForm="ngForm" (ngSubmit)="editCompany(editCompanyForm)">
+        <mat-card-content class="input-width">
+          <mat-form-field class="example-full-width">
+            <input matInput type="text" placeholder="Company name" [(ngModel)]="company.name"
+                   ngModel name="name" required #name="ngModel"/>
+            <mat-hint *ngIf="!name.valid && name.touched">Company is required</mat-hint>
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <input matInput type="text" placeholder="Company address" [(ngModel)]="company.address"
+                   ngModel name="address" required #address="ngModel"/>
+            <mat-hint *ngIf="!address.valid && address.touched">Address is required</mat-hint>
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <input matInput type="text" placeholder="Company phone number" [(ngModel)]="company.phoneNumber"
+                   ngModel name="phoneNumber" required #phoneNumber="ngModel"/>
+            <mat-hint *ngIf="!phoneNumber.valid && phoneNumber.touched">Phone number is required</mat-hint>
+          </mat-form-field>
+        </mat-card-content>
+        <button mat-raised-button color="primary" class="btn-block">Edit company</button>
+      </form>
+      <mat-error *ngIf="error" class="text-center">{{error}}</mat-error>
+    </mat-card>
+  </div>
+</div>

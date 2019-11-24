@@ -19,4 +19,8 @@ export class CompanyService {
   addCompany(company: Company): Observable<any> {
     return this.httpClient.post('https://localhost:8080/main/company/new', company);
   }
+
+  editCompany(company: Company): Observable<any> {
+    return this.httpClient.put('https://localhost:8080/main/company/edit', company);
+  }
 }
