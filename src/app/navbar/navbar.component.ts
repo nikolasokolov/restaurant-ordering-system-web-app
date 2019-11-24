@@ -12,20 +12,16 @@ import {User} from '../model/user.model';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  private userSub: Subscription;
   isAuthenticated = false;
   userDetails = {};
 
-  constructor(private authenticationService: AuthenticationService, private httpClient: HttpClient) {
-  }
+  constructor(private authenticationService: AuthenticationService) {}
 
   ngOnInit() {
-    this.userSub = this.authenticationService.user.subscribe(user => {
-      this.isAuthenticated = !!user;
+    this.authenticationService.userDetails.subscribe(response => {
+      this.isAuthenticated = !!response;
+      this.userDetails = response;
     });
-    if (this.isAuthenticated) {
-      this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
-    }
   }
 
   logout() {

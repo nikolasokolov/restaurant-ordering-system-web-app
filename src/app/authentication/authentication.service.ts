@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable, Output} from '@angular/core';
 import {BehaviorSubject, pipe} from 'rxjs';
 import {User} from '../model/user.model';
 import {HttpClient} from '@angular/common/http';
@@ -11,10 +11,11 @@ import {Company} from '../model/company.model';
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
   user = new BehaviorSubject<User>(this.isAuthenticated());
-  userDetails = new BehaviorSubject<UserDetails>(null);
+  userDetails = new BehaviorSubject<UserDetails>(this.getUserDetails());
   private tokenExpirationTimer: any;
 
-  constructor(private httpClient: HttpClient, private router: Router) {}
+  constructor(private httpClient: HttpClient, private router: Router) {
+  }
 
   authenticate(username: string, password: string) {
     const credentials = {username, password};
@@ -31,6 +32,10 @@ export class AuthenticationService {
 
   isAuthenticated() {
     return JSON.parse(localStorage.getItem('user'));
+  }
+
+  getUserDetails() {
+    return JSON.parse(localStorage.getItem('userDetails'));
   }
 
   private handleAuthentication(username: string, token: string, expiresIn: number) {
@@ -65,6 +70,7 @@ export class AuthenticationService {
 
   logout() {
     this.user.next(null);
+    this.userDetails.next(null);
     localStorage.removeItem('user');
     localStorage.removeItem('Authorization');
     localStorage.removeItem('userDetails');
