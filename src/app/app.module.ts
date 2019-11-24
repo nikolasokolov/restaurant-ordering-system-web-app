@@ -18,6 +18,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { CompanyListComponent } from './company/company-list/company-list.component';
 import { CompanyItemComponent } from './company/company-item/company-item.component';
 import { CompanyEditComponent } from './company/company-edit/company-edit.component';
+import { CompanyAddComponent } from './company/company-add/company-add.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { CompanyEditComponent } from './company/company-edit/company-edit.compon
     ChangePasswordComponent,
     CompanyListComponent,
     CompanyItemComponent,
-    CompanyEditComponent
+    CompanyEditComponent,
+    CompanyAddComponent
   ],
   imports: [
     BrowserModule,

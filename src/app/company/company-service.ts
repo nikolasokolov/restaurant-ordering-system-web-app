@@ -15,4 +15,8 @@ export class CompanyService {
   getCompany(id: number): Observable<any> {
     return this.httpClient.get<Company>('https://localhost:8080/main/company/' + id);
   }
+
+  addCompany(company: Company): Observable<any> {
+    return this.httpClient.post('https://localhost:8080/main/company/new', company);
+  }
 }

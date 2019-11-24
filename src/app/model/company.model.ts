@@ -4,8 +4,7 @@ export class Company {
   public name: string;
   public phoneNumber: string;
 
-  public Company(id: number, address: string, name: string, phoneNumber: string) {
-    this.id = id;
+  constructor(address: string, name: string, phoneNumber: string) {
     this.address = address;
     this.name = name;
     this.phoneNumber = phoneNumber;
