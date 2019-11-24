@@ -24,7 +24,9 @@ export class ChangePasswordComponent implements OnInit {
     const currentPassword = changePasswordForm.value.currentPassword;
     const newPassword = changePasswordForm.value.newPassword;
     const confirmPassword = changePasswordForm.value.confirmPassword;
-    if (newPassword !== confirmPassword) {
+    if (username.value < 6 || currentPassword.value < 6 || newPassword.value < 6 || confirmPassword.value < 6) {
+      this.error = 'All field should be at least 6 characters';
+    } else if (newPassword !== confirmPassword) {
       this.error = 'Passwords doesn\'t match';
       this.isLoading = false;
     } else {
