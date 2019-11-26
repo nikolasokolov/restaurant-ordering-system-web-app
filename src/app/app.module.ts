@@ -18,9 +18,6 @@ import {ChangePasswordComponent} from './change-password/change-password.compone
 import {CompanyListComponent} from './company/company-list/company-list.component';
 import {CompanyItemComponent} from './company/company-item/company-item.component';
 import {CompanyEditComponent} from './company/company-edit/company-edit.component';
-import {UserListComponent} from './user/user-list/user-list.component';
-import {UserEditComponent} from './user/user-edit/user-edit.component';
-import {UserItemComponent} from './user/user-item/user-item.component';
 
 @NgModule({
   declarations: [
@@ -32,10 +29,7 @@ import {UserItemComponent} from './user/user-item/user-item.component';
     ChangePasswordComponent,
     CompanyListComponent,
     CompanyItemComponent,
-    CompanyEditComponent,
-    UserListComponent,
-    UserEditComponent,
-    UserItemComponent
+    CompanyEditComponent
   ],
   imports: [
     BrowserModule,
