@@ -11,9 +11,11 @@ import {NgForm} from '@angular/forms';
 })
 export class CompanyEditComponent implements OnInit {
   companyEditedSuccessfully = null;
+  companyAddedSuccessfully = null;
   company: Company;
   isLoading = false;
   error = null;
+  isInEdit = false;
 
   constructor(private companyService: CompanyService, private activatedRoute: ActivatedRoute) { }
 
@@ -22,25 +24,39 @@ export class CompanyEditComponent implements OnInit {
     if (id !== undefined) {
       this.companyService.getCompany(id).subscribe(response => {
         this.company = response;
+        this.isInEdit = true;
       });
+    } else {
+      this.company = new Company('', '', '');
     }
   }
 
-  editCompany(editCompanyForm: NgForm) {
+  handleCompanyForm(companyForm: NgForm) {
     this.isLoading = true;
-    const id = editCompanyForm.value.id;
-    const name = editCompanyForm.value.name;
-    const address = editCompanyForm.value.address;
-    const phoneNumber = editCompanyForm.value.phoneNumber;
-    const companyRequest = new Company(name, address, phoneNumber, this.company.id);
-    this.companyService.editCompany(companyRequest).subscribe(response => {
-      this.companyEditedSuccessfully = true;
-      this.isLoading = false;
-    }, error => {
-      this.isLoading = false;
-      this.error = 'Error occurred while trying to update company';
-    });
-    editCompanyForm.resetForm();
+    const name = companyForm.value.name;
+    const address = companyForm.value.address;
+    const phoneNumber = companyForm.value.phoneNumber;
+    if (this.company.id !== undefined) {
+      const editCompanyRequest = new Company(name, address, phoneNumber, this.company.id);
+      this.companyService.editCompany(editCompanyRequest).subscribe(response => {
+        this.companyEditedSuccessfully = true;
+        this.isLoading = false;
+      }, error => {
+        this.isLoading = false;
+        this.error = 'Error occurred while trying to update company';
+      });
+      companyForm.resetForm();
+    } else {
+      const addCompanyRequest = new Company(name, address, phoneNumber);
+      this.companyService.addCompany(addCompanyRequest).subscribe(response => {
+        this.companyAddedSuccessfully = true;
+        this.isLoading = false;
+      }, error => {
+        this.isLoading = false;
+        this.error = 'Company could not be added';
+      });
+      companyForm.resetForm();
+    }
   }
 
 }
