@@ -12,6 +12,7 @@ import {CompanyService} from '../company-service';
 export class CompanyItemComponent implements OnInit {
   isLoading = false;
   company: Company;
+  imageBlobUrl: string | ArrayBuffer = null;
 
   constructor(private httpClient: HttpClient, private activatedRoute: ActivatedRoute, private companyService: CompanyService) { }
 
@@ -28,6 +29,29 @@ export class CompanyItemComponent implements OnInit {
     }, error => {
       this.isLoading = false;
     });
+    if (id !== undefined) {
+      this.getThumbnail(id);
+    }
+  }
+
+  getThumbnail(id: number): void {
+    this.companyService.getLogo(id).subscribe((val) => {
+          this.createImageFromBlob(val);
+        }, response => {
+          console.log('POST - getThumbnail - in error', response);
+        }, () => {
+          console.log('POST - getThumbnail - observable is now completed.');
+        });
+  }
+
+  createImageFromBlob(image: Blob) {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      this.imageBlobUrl = reader.result;
+    }, false);
+    if (image) {
+      reader.readAsDataURL(image);
+    }
   }
 
 }

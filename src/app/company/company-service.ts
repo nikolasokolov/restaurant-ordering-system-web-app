@@ -23,4 +23,17 @@ export class CompanyService {
   editCompany(company: Company): Observable<any> {
     return this.httpClient.put('https://localhost:8080/main/company/edit', company);
   }
+
+  uploadFile(file: File, companyId: number): Observable<any> {
+    const url = 'https://localhost:8080/main/company/' + companyId + '/uploadLogo/';
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+    return this.httpClient.post(url , formData);
+  }
+
+  getLogo(id: number): Observable<Blob> {
+    return this.httpClient.get<Blob>('https://localhost:8080/main/company/' + id + '/logo', {
+      responseType: 'blob' as 'json' });
+  }
+
 }

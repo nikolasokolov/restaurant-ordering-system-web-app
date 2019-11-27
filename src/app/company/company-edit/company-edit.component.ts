@@ -3,6 +3,7 @@ import {CompanyService} from '../company-service';
 import {ActivatedRoute} from '@angular/router';
 import {Company} from '../../model/company.model';
 import {NgForm} from '@angular/forms';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-company-edit',
@@ -16,6 +17,7 @@ export class CompanyEditComponent implements OnInit {
   isLoading = false;
   error = null;
   isInEdit = false;
+  selectedPhoto: File = null;
 
   constructor(private companyService: CompanyService, private activatedRoute: ActivatedRoute) { }
 
@@ -51,12 +53,22 @@ export class CompanyEditComponent implements OnInit {
       this.companyService.addCompany(addCompanyRequest).subscribe(response => {
         this.companyAddedSuccessfully = true;
         this.isLoading = false;
+        this.companyService.uploadFile(this.selectedPhoto, response.id).subscribe(responseLogo => {
+          alert('Logo uploaded successfully');
+        }, errorLogo => {
+          alert('Logo cannot be uploaded');
+        });
       }, error => {
         this.isLoading = false;
         this.error = 'Company could not be added';
       });
       companyForm.resetForm();
     }
+  }
+
+  onFileSelected(event) {
+    this.selectedPhoto = event.target.files[0];
+    console.log(this.selectedPhoto);
   }
 
 }
