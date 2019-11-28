@@ -21,15 +21,20 @@ export class AuthenticationComponent implements OnInit {
 
   authenticate(authenticationForm: NgForm) {
     this.isLoading = true;
-    const username = authenticationForm.value.username;
-    const password = authenticationForm.value.password;
-    this.authenticationService.authenticate(username, password).subscribe(response => {
+    if (authenticationForm.invalid) {
+      this.error = 'Username and password should be at least 6 characters';
       this.isLoading = false;
-      this.isAuthenticated = true;
-    }, error => {
-      this.isLoading = false;
-      this.error = 'Incorrect credentials';
-    });
+    } else {
+      const username = authenticationForm.value.username;
+      const password = authenticationForm.value.password;
+      this.authenticationService.authenticate(username, password).subscribe(response => {
+        this.isLoading = false;
+        this.isAuthenticated = true;
+      }, error => {
+        this.isLoading = false;
+        this.error = 'Incorrect credentials';
+      });
+    }
   }
 
 }

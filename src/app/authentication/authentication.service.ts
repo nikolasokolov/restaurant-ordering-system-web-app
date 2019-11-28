@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, pipe} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 import {User} from '../model/user.model';
 import {HttpClient} from '@angular/common/http';
 import {switchMap, tap} from 'rxjs/operators';
@@ -11,6 +11,7 @@ import {Company} from '../model/company.model';
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
   user = new BehaviorSubject<User>(this.isAuthenticated());
+  userDetails = new BehaviorSubject<UserDetails>(this.getUserDetails());
   private tokenExpirationTimer: any;
 
   constructor(private httpClient: HttpClient, private router: Router) {}
@@ -30,6 +31,10 @@ export class AuthenticationService {
 
   isAuthenticated() {
     return JSON.parse(localStorage.getItem('user'));
+  }
+
+  getUserDetails() {
+    return JSON.parse(localStorage.getItem('userDetails'));
   }
 
   private handleAuthentication(username: string, token: string, expiresIn: number) {
@@ -52,6 +57,7 @@ export class AuthenticationService {
 
   handleUserDetails(id: number, username: string, password: string, email: string, authorities: any[], company: Company) {
     const userDetails = new UserDetails(id, username, password, email, authorities, company);
+    this.userDetails.next(userDetails);
     localStorage.setItem('userDetails', JSON.stringify(userDetails));
   }
 
@@ -63,6 +69,7 @@ export class AuthenticationService {
 
   logout() {
     this.user.next(null);
+    this.userDetails.next(null);
     localStorage.removeItem('user');
     localStorage.removeItem('Authorization');
     localStorage.removeItem('userDetails');

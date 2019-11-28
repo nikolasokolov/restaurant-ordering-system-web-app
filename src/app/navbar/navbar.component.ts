@@ -1,10 +1,6 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../authentication/authentication.service';
-import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {UserDetails} from '../model/user-details.model';
-import {HttpClient} from '@angular/common/http';
-import {exhaustMap, take} from 'rxjs/operators';
-import {User} from '../model/user.model';
 
 @Component({
   selector: 'app-navbar',
@@ -12,24 +8,19 @@ import {User} from '../model/user.model';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  private userSub: Subscription;
   isAuthenticated = false;
-  userDetails = {};
+  userDetails: UserDetails;
 
-  constructor(private authenticationService: AuthenticationService, private httpClient: HttpClient) {
-  }
+  constructor(private authenticationService: AuthenticationService) {}
 
   ngOnInit() {
-    this.userSub = this.authenticationService.user.subscribe(user => {
-      this.isAuthenticated = !!user;
+    this.authenticationService.userDetails.subscribe(userDetailsResponse => {
+      this.isAuthenticated = !!userDetailsResponse;
+      this.userDetails = userDetailsResponse;
     });
-    if (this.isAuthenticated) {
-      this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
-    }
   }
 
   logout() {
     this.authenticationService.logout();
   }
-
 }
