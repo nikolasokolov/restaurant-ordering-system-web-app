@@ -53,12 +53,10 @@ export class CompanyEditComponent implements OnInit {
       this.companyService.addCompany(addCompanyRequest).subscribe(response => {
         this.companyAddedSuccessfully = true;
         this.isLoading = false;
-        this.companyService.uploadFile(this.selectedPhoto, response.id).subscribe(responseLogo => {
-          alert('Logo uploaded successfully');
-        }, errorLogo => {
-          alert('Logo cannot be uploaded');
+        this.companyService.uploadFile(this.selectedPhoto, response.id).subscribe(() => {
+        }, () => {
         });
-      }, error => {
+      }, () => {
         this.isLoading = false;
         this.error = 'Company could not be added';
       });
@@ -68,7 +66,6 @@ export class CompanyEditComponent implements OnInit {
 
   onFileSelected(event) {
     this.selectedPhoto = event.target.files[0];
-    console.log(this.selectedPhoto);
   }
 
 }

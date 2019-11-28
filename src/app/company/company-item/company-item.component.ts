@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Company} from '../../model/company.model';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {CompanyService} from '../company-service';
 
 @Component({
@@ -14,7 +14,8 @@ export class CompanyItemComponent implements OnInit {
   company: Company;
   imageBlobUrl: string | ArrayBuffer = null;
 
-  constructor(private httpClient: HttpClient, private activatedRoute: ActivatedRoute, private companyService: CompanyService) { }
+  constructor(private httpClient: HttpClient,
+              private activatedRoute: ActivatedRoute, private companyService: CompanyService, private router: Router) { }
 
   ngOnInit() {
     this.getCompany();
@@ -26,7 +27,7 @@ export class CompanyItemComponent implements OnInit {
     this.companyService.getCompany(id).subscribe(response => {
       this.company = response;
       this.isLoading = false;
-    }, error => {
+    }, () => {
       this.isLoading = false;
     });
     if (id !== undefined) {
@@ -37,10 +38,8 @@ export class CompanyItemComponent implements OnInit {
   getThumbnail(id: number): void {
     this.companyService.getLogo(id).subscribe((val) => {
           this.createImageFromBlob(val);
-        }, response => {
-          console.log('POST - getThumbnail - in error', response);
         }, () => {
-          console.log('POST - getThumbnail - observable is now completed.');
+        }, () => {
         });
   }
 
@@ -54,4 +53,11 @@ export class CompanyItemComponent implements OnInit {
     }
   }
 
+  deleteCompany(id: number) {
+    this.companyService.deleteCompany(id).subscribe(response => {
+      this.router.navigate(['/company-list']);
+    }, () => {
+    });
+
+  }
 }

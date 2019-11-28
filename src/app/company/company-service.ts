@@ -24,6 +24,10 @@ export class CompanyService {
     return this.httpClient.put('https://localhost:8080/main/company/edit', company);
   }
 
+  deleteCompany(id: number): Observable<any> {
+    return this.httpClient.delete('https://localhost:8080/main/company/' + id + '/delete');
+  }
+
   uploadFile(file: File, companyId: number): Observable<any> {
     const url = 'https://localhost:8080/main/company/' + companyId + '/uploadLogo/';
     const formData: FormData = new FormData();
