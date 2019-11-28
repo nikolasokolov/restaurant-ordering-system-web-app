@@ -8,6 +8,9 @@ import {CompanyListComponent} from './company/company-list/company-list.componen
 import {CompanyEditComponent} from './company/company-edit/company-edit.component';
 import {CompanyItemComponent} from './company/company-item/company-item.component';
 import {AuthorizationGuard} from './authentication/authorization-guard';
+import {RestaurantListComponent} from './restaurant/restaurant-list/restaurant-list.component';
+import {RestaurantEditComponent} from './restaurant/restaurant-edit/restaurant-edit.component';
+import {RestaurantItemComponent} from './restaurant/restaurant-item/restaurant-item.component';
 
 
 const routes: Routes = [
@@ -18,7 +21,12 @@ const routes: Routes = [
   { path: 'company-list', component: CompanyListComponent, canActivate: [AuthorizationGuard] },
   { path: 'company-edit/:id', component: CompanyEditComponent, canActivate: [AuthorizationGuard] },
   { path: 'company-edit', component: CompanyEditComponent, canActivate: [AuthorizationGuard] },
-  { path: 'company/:id', component: CompanyItemComponent, canActivate: [AuthorizationGuard] }
+  { path: 'company/:id', component: CompanyItemComponent, canActivate: [AuthorizationGuard] },
+  { path: 'restaurant-list', component: RestaurantListComponent, canActivate: [AuthorizationGuard] },
+  { path: 'restaurant-edit/:id', component: RestaurantEditComponent, canActivate: [AuthorizationGuard] },
+  { path: 'restaurant-edit', component: RestaurantEditComponent, canActivate: [AuthorizationGuard] },
+  { path: 'restaurant/:id', component: RestaurantItemComponent, canActivate: [AuthorizationGuard] }
+
 ];
 
 @NgModule({

@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-6 col-xs-offset-3 text-center">
+      <h2>Restaurants:</h2>
+      <hr/>
+      <div *ngIf="isLoading" style="text-align: center;">
+        <app-loading-spinner></app-loading-spinner>
+      </div>
+      <div class="row" *ngFor="let restaurant of restaurants">
+        <h3><a mat-button [routerLink]="['/restaurant', restaurant.id]">{{restaurant.name}}</a></h3>
+      </div>
+      <hr/>
+      <button mat-raised-button color="primary" routerLink="/restaurant-edit" class="btn-block">Add new restaurant</button>
+    </div>
+  </div>
+</div>

@@ -1,7 +1,8 @@
 <mat-toolbar color="primary" *ngIf="isAuthenticated">
   <button mat-button routerLink="home" class="text-center">{{userDetails.company.name}}</button>
-  <button mat-button routerLink="company-list" class="text-center">Companies</button>
-  <div class="col-xs-2 col-xs-offset-9">
+  <button mat-button routerLink="company-list" class="text-center">Companies</button> &nbsp; &nbsp;
+  <button mat-button routerLink="restaurant-list" class="text-center">Restaurants</button>
+  <div class="col-xs-2 col-xs-offset-8">
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <p><span class="glyphicon glyphicon-user"></span> &nbsp; {{userDetails.username}}</p>
     </button>

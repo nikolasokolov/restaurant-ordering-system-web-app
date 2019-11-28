@@ -18,6 +18,9 @@ import {ChangePasswordComponent} from './change-password/change-password.compone
 import {CompanyListComponent} from './company/company-list/company-list.component';
 import {CompanyItemComponent} from './company/company-item/company-item.component';
 import {CompanyEditComponent} from './company/company-edit/company-edit.component';
+import { RestaurantListComponent } from './restaurant/restaurant-list/restaurant-list.component';
+import { RestaurantItemComponent } from './restaurant/restaurant-item/restaurant-item.component';
+import { RestaurantEditComponent } from './restaurant/restaurant-edit/restaurant-edit.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,10 @@ import {CompanyEditComponent} from './company/company-edit/company-edit.componen
     ChangePasswordComponent,
     CompanyListComponent,
     CompanyItemComponent,
-    CompanyEditComponent
+    CompanyEditComponent,
+    RestaurantListComponent,
+    RestaurantItemComponent,
+    RestaurantEditComponent
   ],
   imports: [
     BrowserModule,

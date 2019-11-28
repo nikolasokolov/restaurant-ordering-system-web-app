@@ -1,0 +1,45 @@
+<div class="alert alert-success fadein text-center" role="alert" *ngIf="restaurantEditedSuccessfully">
+  <strong>Restaurant updated successfully</strong>
+</div>
+<div class="alert alert-success fadein text-center" role="alert" *ngIf="restaurantAddedSuccessfully">
+  <strong>Restaurant added successfully</strong>
+</div>
+<div class="container-fluid" style="margin-top: 100px;">
+  <div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+    <div *ngIf="isLoading" style="text-align: center;">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+    <mat-card class="box" *ngIf="!isLoading">
+      <mat-card-header>
+        <mat-card-title *ngIf="isInEdit">Edit restaurant</mat-card-title>
+        <mat-card-title *ngIf="!isInEdit">Create new restaurant</mat-card-title>
+      </mat-card-header>
+      <form class="example-form" #restaurantForm="ngForm" (ngSubmit)="handleRestaurantForm(restaurantForm)">
+        <mat-card-content class="input-width">
+          <mat-form-field class="example-full-width">
+            <input matInput type="text" placeholder="Restaurant name" [(ngModel)]="restaurant.name"
+                   ngModel name="name" required #name="ngModel"/>
+            <mat-hint *ngIf="!name.valid && name.touched">Company is required</mat-hint>
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <input matInput type="text" placeholder="Restaurant address" [(ngModel)]="restaurant.address"
+                   ngModel name="address" required #address="ngModel"/>
+            <mat-hint *ngIf="!address.valid && address.touched">Address is required</mat-hint>
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <input matInput type="text" placeholder="Restaurant phone number" [(ngModel)]="restaurant.phoneNumber"
+                   ngModel name="phoneNumber" required #phoneNumber="ngModel"/>
+            <mat-hint *ngIf="!phoneNumber.valid && phoneNumber.touched">Phone number is required</mat-hint>
+          </mat-form-field>
+          <div *ngIf="!isInEdit">
+            <label for="restaurantLogo">Upload Logo</label>
+            <input id="restaurantLogo" name="restaurantLogo" class="form-control" type="file" (change)="onFileSelected($event)">
+          </div>
+        </mat-card-content>
+        <button mat-raised-button color="primary" class="btn-block" *ngIf="isInEdit">Edit restaurant</button>
+        <button mat-raised-button color="primary" class="btn-block" *ngIf="!isInEdit">Create new restaurant</button>
+      </form>
+      <mat-error *ngIf="error" class="text-center">{{error}}</mat-error>
+    </mat-card>
+  </div>
+</div>
