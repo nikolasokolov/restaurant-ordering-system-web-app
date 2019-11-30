@@ -1,16 +1,21 @@
 <div class="container">
+  <br/>
   <div class="row">
-    <div class="col-xs-6 col-xs-offset-3 text-center">
-      <h2>Restaurants:</h2>
+    <div class="col-xs-12">
+      <h4 class="pull-left">Restaurants:</h4>
+      <button mat-raised-button color="primary" routerLink="/restaurant-add" class="btn-sm pull-right">Add new restaurant</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-4" *ngFor="let restaurant of restaurants">
       <hr/>
       <div *ngIf="isLoading" style="text-align: center;">
         <app-loading-spinner></app-loading-spinner>
       </div>
-      <div class="row" *ngFor="let restaurant of restaurants">
-        <h3><a mat-button [routerLink]="['/restaurant', restaurant.id]">{{restaurant.name}}</a></h3>
+      <div>
+        <a mat-button [routerLink]="['/restaurant', restaurant.id]">{{restaurant.name}}
+          <img *ngIf="restaurant.logoImage" [src]="restaurant.logoImage" class="img-responsive size" alt="logo"></a>
       </div>
-      <hr/>
-      <button mat-raised-button color="primary" routerLink="/restaurant-add" class="btn-block">Add new restaurant</button>
     </div>
   </div>
 </div>

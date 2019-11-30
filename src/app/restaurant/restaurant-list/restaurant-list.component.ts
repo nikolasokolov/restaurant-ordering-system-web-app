@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {RestaurantService} from '../restaurant-service';
-import {Restaurant} from '../../model/restaurant.model';
+import {DomSanitizer} from '@angular/platform-browser';
+import {RestaurantItem} from '../../model/restaurant-item.model';
 
 @Component({
   selector: 'app-restaurant-list',
@@ -8,10 +9,10 @@ import {Restaurant} from '../../model/restaurant.model';
   styleUrls: ['./restaurant-list.component.css']
 })
 export class RestaurantListComponent implements OnInit {
-  restaurants: Restaurant[];
+  restaurants: RestaurantItem[];
   isLoading = false;
 
-  constructor(private restaurantService: RestaurantService) { }
+  constructor(private restaurantService: RestaurantService, private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.getAllRestaurants();
@@ -21,8 +22,12 @@ export class RestaurantListComponent implements OnInit {
     this.isLoading = true;
     this.restaurantService.getAllRestaurants().subscribe((response: any[]) => {
       this.restaurants = response;
+      for (const restaurantItem of this.restaurants) {
+        const objectURL = 'data:image/jpeg;base64,' + restaurantItem.logo;
+        restaurantItem.logoImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+      }
       this.isLoading = false;
-    }, error => {
+    }, () => {
       this.isLoading = false;
     });
   }

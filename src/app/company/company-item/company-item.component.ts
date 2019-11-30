@@ -40,8 +40,9 @@ export class CompanyItemComponent implements OnInit {
 
   getThumbnail(id: number): void {
     this.companyService.getLogo(id).subscribe((val) => {
-          this.createImageFromBlob(val);
-        }, () => {
+      console.log(val);
+      this.createImageFromBlob(val);
+      }, () => {
         }, () => {
         });
   }

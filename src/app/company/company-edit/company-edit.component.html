@@ -17,7 +17,7 @@
         <mat-card-content class="input-width">
           <mat-form-field class="example-full-width">
             <input matInput type="text" placeholder="Company name" [(ngModel)]="company.name"
-                   ngModel name="name" required #name="ngModel"/>
+                   name="name" required #name="ngModel"/>
             <mat-hint *ngIf="!name.valid && name.touched">Company is required</mat-hint>
           </mat-form-field>
           <mat-form-field class="example-full-width">
