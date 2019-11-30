@@ -58,7 +58,7 @@ export class CompanyItemComponent implements OnInit {
 
   deleteCompany(id: number) {
     this.companyService.deleteCompany(id).subscribe(response => {
-      this.router.navigate(['/company-list']);
+      this.router.navigate(['/companies']);
     }, () => {
     });
   }

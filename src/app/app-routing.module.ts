@@ -18,13 +18,13 @@ const routes: Routes = [
   { path: 'authenticate', component: AuthenticationComponent },
   { path: 'home', component: HomeComponent, canActivate: [AuthenticationGuard] },
   { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthenticationGuard] },
-  { path: 'company-list', component: CompanyListComponent, canActivate: [AuthorizationGuard] },
+  { path: 'companies', component: CompanyListComponent, canActivate: [AuthorizationGuard] },
   { path: 'company-edit/:id', component: CompanyEditComponent, canActivate: [AuthorizationGuard] },
-  { path: 'company-edit', component: CompanyEditComponent, canActivate: [AuthorizationGuard] },
+  { path: 'company-add', component: CompanyEditComponent, canActivate: [AuthorizationGuard] },
   { path: 'company/:id', component: CompanyItemComponent, canActivate: [AuthorizationGuard] },
-  { path: 'restaurant-list', component: RestaurantListComponent, canActivate: [AuthorizationGuard] },
+  { path: 'restaurants', component: RestaurantListComponent, canActivate: [AuthorizationGuard] },
   { path: 'restaurant-edit/:id', component: RestaurantEditComponent, canActivate: [AuthorizationGuard] },
-  { path: 'restaurant-edit', component: RestaurantEditComponent, canActivate: [AuthorizationGuard] },
+  { path: 'restaurant-add', component: RestaurantEditComponent, canActivate: [AuthorizationGuard] },
   { path: 'restaurant/:id', component: RestaurantItemComponent, canActivate: [AuthorizationGuard] }
 
 ];
