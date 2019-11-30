@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import {Company} from '../../model/company.model';
+import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CompanyService} from '../../company/company-service';
-import {Restaurant} from '../../model/restaurant.model';
 import {RestaurantService} from '../restaurant-service';
 import {ConfirmationDialogComponent} from '../../shared/confirmation-dialog/confirmation-dialog.component';
 import {MatDialog} from '@angular/material';
+import {RestaurantItem} from '../../model/restaurant-item.model';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-restaurant-item',
@@ -15,12 +14,12 @@ import {MatDialog} from '@angular/material';
 })
 export class RestaurantItemComponent implements OnInit {
   isLoading = false;
-  restaurant: Restaurant;
+  restaurant: RestaurantItem;
   imageBlobUrl: string | ArrayBuffer = null;
 
   constructor(private httpClient: HttpClient,
               private activatedRoute: ActivatedRoute, private restaurantService: RestaurantService,
-              private router: Router, public dialog: MatDialog) { }
+              private router: Router, public dialog: MatDialog, private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.getRestaurant();
@@ -31,31 +30,12 @@ export class RestaurantItemComponent implements OnInit {
     const id = this.activatedRoute.snapshot.params.id;
     this.restaurantService.getRestaurant(id).subscribe(response => {
       this.restaurant = response;
+      const objectURL = 'data:image/jpeg;base64,' + this.restaurant.logo;
+      this.restaurant.logoImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
       this.isLoading = false;
     }, () => {
       this.isLoading = false;
     });
-    if (id !== undefined) {
-      this.getThumbnail(id);
-    }
-  }
-
-  getThumbnail(id: number): void {
-    this.restaurantService.getLogo(id).subscribe((val) => {
-      this.createImageFromBlob(val);
-    }, () => {
-    }, () => {
-    });
-  }
-
-  createImageFromBlob(image: Blob) {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => {
-      this.imageBlobUrl = reader.result;
-    }, false);
-    if (image) {
-      reader.readAsDataURL(image);
-    }
   }
 
   deleteRestaurant(id: number) {
