@@ -3,6 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {Company} from '../../model/company.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CompanyService} from '../company-service';
+import {MatDialog} from '@angular/material';
+import {ConfirmationDialogComponent} from '../../shared/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-company-item',
@@ -15,7 +17,8 @@ export class CompanyItemComponent implements OnInit {
   imageBlobUrl: string | ArrayBuffer = null;
 
   constructor(private httpClient: HttpClient,
-              private activatedRoute: ActivatedRoute, private companyService: CompanyService, private router: Router) { }
+              private activatedRoute: ActivatedRoute, private companyService: CompanyService,
+              private router: Router, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.getCompany();
@@ -58,6 +61,19 @@ export class CompanyItemComponent implements OnInit {
       this.router.navigate(['/company-list']);
     }, () => {
     });
+  }
 
+  openDialog(id: number): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '500px',
+      height: '150px',
+      data: 'Are you sure you want to delete company ' + this.company.name + ' ?'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Yes clicked');
+        this.deleteCompany(id);
+      }
+    });
   }
 }

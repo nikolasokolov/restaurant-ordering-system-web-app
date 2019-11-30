@@ -17,7 +17,7 @@
       <button mat-raised-button color="primary" [routerLink]="['/company-edit', company?.id]">Edit company</button> &nbsp;
       <button mat-raised-button color="primary" [routerLink]="['/company-edit', company?.id]">View employees</button> &nbsp;
       <button mat-raised-button color="primary" [routerLink]="['/company-edit', company?.id]">Add employee</button> &nbsp;
-      <button mat-raised-button color="warn" (click)="deleteCompany(company.id)">Delete company</button> &nbsp;
+      <button mat-raised-button color="warn" (click)="openDialog(company.id)">Delete company</button> &nbsp;
     </div>
   </div>
 </div>

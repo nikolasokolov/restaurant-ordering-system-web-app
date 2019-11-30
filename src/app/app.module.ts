@@ -12,7 +12,7 @@ import {AuthenticationInterceptorService} from './authentication/authentication-
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AngularMaterialModule} from './angular-material.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {MatCardModule, MatMenuModule} from '@angular/material';
+import {MatCardModule, MatDialogModule, MatMenuModule} from '@angular/material';
 import {NavbarComponent} from './navbar/navbar.component';
 import {ChangePasswordComponent} from './change-password/change-password.component';
 import {CompanyListComponent} from './company/company-list/company-list.component';
@@ -21,6 +21,7 @@ import {CompanyEditComponent} from './company/company-edit/company-edit.componen
 import { RestaurantListComponent } from './restaurant/restaurant-list/restaurant-list.component';
 import { RestaurantItemComponent } from './restaurant/restaurant-item/restaurant-item.component';
 import { RestaurantEditComponent } from './restaurant/restaurant-edit/restaurant-edit.component';
+import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { RestaurantEditComponent } from './restaurant/restaurant-edit/restaurant
     CompanyEditComponent,
     RestaurantListComponent,
     RestaurantItemComponent,
-    RestaurantEditComponent
+    RestaurantEditComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +48,9 @@ import { RestaurantEditComponent } from './restaurant/restaurant-edit/restaurant
     AngularMaterialModule,
     FlexLayoutModule,
     MatCardModule,
-    MatMenuModule
+    MatMenuModule,
+    MatDialogModule,
+    MatDialogModule
   ],
   providers: [
     {
@@ -55,6 +59,9 @@ import { RestaurantEditComponent } from './restaurant/restaurant-edit/restaurant
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  entryComponents: [
+    ConfirmationDialogComponent
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
