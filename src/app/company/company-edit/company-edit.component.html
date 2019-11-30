@@ -11,8 +11,7 @@
     </div>
     <mat-card class="box" *ngIf="!isLoading">
       <mat-card-header>
-        <mat-card-title *ngIf="isInEdit">Edit company</mat-card-title>
-        <mat-card-title *ngIf="!isInEdit">Create new company</mat-card-title>
+        <mat-card-title>{{isInEdit ? 'Edit company' : 'Create new company'}}</mat-card-title>
       </mat-card-header>
       <form class="example-form" #companyForm="ngForm" (ngSubmit)="handleCompanyForm(companyForm)">
         <mat-card-content class="input-width">

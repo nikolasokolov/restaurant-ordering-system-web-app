@@ -11,8 +11,7 @@
     </div>
     <mat-card class="box" *ngIf="!isLoading">
       <mat-card-header>
-        <mat-card-title *ngIf="isInEdit">Edit restaurant</mat-card-title>
-        <mat-card-title *ngIf="!isInEdit">Create new restaurant</mat-card-title>
+        <mat-card-title>{{isInEdit ? 'Edit restaurant' : 'Create new restaurant'}}</mat-card-title>
       </mat-card-header>
       <form class="example-form" #restaurantForm="ngForm" (ngSubmit)="handleRestaurantForm(restaurantForm)">
         <mat-card-content class="input-width">

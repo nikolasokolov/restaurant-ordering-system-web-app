@@ -3,7 +3,6 @@ import {CompanyService} from '../company-service';
 import {ActivatedRoute} from '@angular/router';
 import {Company} from '../../model/company.model';
 import {NgForm} from '@angular/forms';
-import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-company-edit',
