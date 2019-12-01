@@ -6,6 +6,7 @@ import {MatDialog} from '@angular/material';
 import {ConfirmationDialogComponent} from '../../shared/confirmation-dialog/confirmation-dialog.component';
 import {DomSanitizer} from '@angular/platform-browser';
 import {CompanyItem} from '../../model/company-item.model';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-company-item',
@@ -16,9 +17,9 @@ export class CompanyItemComponent implements OnInit {
   isLoading = false;
   company: CompanyItem;
 
-  constructor(private httpClient: HttpClient,
-              private activatedRoute: ActivatedRoute, private companyService: CompanyService,
-              private router: Router, public dialog: MatDialog, private sanitizer: DomSanitizer) {
+  constructor(private httpClient: HttpClient, private activatedRoute: ActivatedRoute,
+              private companyService: CompanyService, private router: Router,
+              public dialog: MatDialog, private sanitizer: DomSanitizer, private location: Location) {
   }
 
   ngOnInit() {
@@ -48,14 +49,17 @@ export class CompanyItemComponent implements OnInit {
   openDialog(id: number): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '500px',
-      height: '150px',
+      height: '140px',
       data: 'Are you sure you want to delete company ' + this.company.name + ' ?'
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Yes clicked');
         this.deleteCompany(id);
       }
     });
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

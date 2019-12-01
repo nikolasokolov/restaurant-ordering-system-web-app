@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-change-password',
@@ -13,7 +14,7 @@ export class ChangePasswordComponent implements OnInit {
   error = null;
   passwordSuccessfullyChanged = false;
 
-  constructor(private httpClient: HttpClient, private router: Router) { }
+  constructor(private httpClient: HttpClient, private router: Router, private location: Location) { }
 
   ngOnInit() {
   }
@@ -39,6 +40,10 @@ export class ChangePasswordComponent implements OnInit {
         this.error = 'Incorrect credentials';
       });
     }
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 }

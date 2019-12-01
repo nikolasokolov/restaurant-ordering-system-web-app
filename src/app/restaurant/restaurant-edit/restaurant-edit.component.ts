@@ -4,6 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {NgForm} from '@angular/forms';
 import {Restaurant} from '../../model/restaurant.model';
 import {RestaurantService} from '../restaurant-service';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-restaurant-edit',
@@ -19,7 +20,8 @@ export class RestaurantEditComponent implements OnInit {
   isInEdit = false;
   selectedPhoto: File = null;
 
-  constructor(private restaurantService: RestaurantService, private activatedRoute: ActivatedRoute) { }
+  constructor(private restaurantService: RestaurantService, private activatedRoute: ActivatedRoute,
+              private location: Location) { }
 
   ngOnInit() {
     const id = this.activatedRoute.snapshot.params.id;
@@ -40,10 +42,10 @@ export class RestaurantEditComponent implements OnInit {
     const phoneNumber = companyForm.value.phoneNumber;
     if (this.restaurant.id !== undefined) {
       const editRestaurantRequest = new Company(name, address, phoneNumber, this.restaurant.id);
-      this.restaurantService.editRestaurant(editRestaurantRequest).subscribe(response => {
+      this.restaurantService.editRestaurant(editRestaurantRequest).subscribe(() => {
         this.restaurantEditedSuccessfully = true;
         this.isLoading = false;
-      }, error => {
+      }, () => {
         this.isLoading = false;
         this.error = 'Error occurred while trying to update company';
       });
@@ -66,6 +68,10 @@ export class RestaurantEditComponent implements OnInit {
 
   onFileSelected(event) {
     this.selectedPhoto = event.target.files[0];
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 }

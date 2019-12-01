@@ -4,8 +4,9 @@
 <div class="alert alert-success fadein text-center" role="alert" *ngIf="restaurantAddedSuccessfully">
   <strong>Restaurant added successfully</strong>
 </div>
-<div class="container-fluid" style="margin-top: 100px;">
-  <div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+<div class="container-fluid">
+  <button mat-button (click)="goBack()" style="margin-top: 10px;"><mat-icon>keyboard_backspace</mat-icon></button>
+  <div class="row login-wrapper" style="margin-top: 80px;">
     <div *ngIf="isLoading" style="text-align: center;">
       <app-loading-spinner></app-loading-spinner>
     </div>

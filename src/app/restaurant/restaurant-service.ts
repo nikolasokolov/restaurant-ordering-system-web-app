@@ -1,13 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {Company} from '../model/company.model';
 import {Restaurant} from '../model/restaurant.model';
 
 @Injectable({providedIn: 'root'})
 export class RestaurantService {
-  constructor(private httpClient: HttpClient, private router: Router) {}
+  constructor(private httpClient: HttpClient) {}
 
   getAllRestaurants(): Observable<any> {
     return this.httpClient.get('https://localhost:8080/main/restaurants');
@@ -34,11 +33,6 @@ export class RestaurantService {
     const formData: FormData = new FormData();
     formData.append('file', file);
     return this.httpClient.post(url , formData);
-  }
-
-  getLogo(id: number): Observable<Blob> {
-    return this.httpClient.get<Blob>('https://localhost:8080/main/restaurant/' + id + '/logo', {
-      responseType: 'blob' as 'json' });
   }
 
 }

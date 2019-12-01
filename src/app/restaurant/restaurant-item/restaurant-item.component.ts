@@ -6,6 +6,7 @@ import {ConfirmationDialogComponent} from '../../shared/confirmation-dialog/conf
 import {MatDialog} from '@angular/material';
 import {RestaurantItem} from '../../model/restaurant-item.model';
 import {DomSanitizer} from '@angular/platform-browser';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-restaurant-item',
@@ -15,11 +16,10 @@ import {DomSanitizer} from '@angular/platform-browser';
 export class RestaurantItemComponent implements OnInit {
   isLoading = false;
   restaurant: RestaurantItem;
-  imageBlobUrl: string | ArrayBuffer = null;
 
-  constructor(private httpClient: HttpClient,
-              private activatedRoute: ActivatedRoute, private restaurantService: RestaurantService,
-              private router: Router, public dialog: MatDialog, private sanitizer: DomSanitizer) { }
+  constructor(private httpClient: HttpClient, private activatedRoute: ActivatedRoute,
+              private restaurantService: RestaurantService, private router: Router,
+              public dialog: MatDialog, private sanitizer: DomSanitizer, private location: Location) { }
 
   ngOnInit() {
     this.getRestaurant();
@@ -39,7 +39,7 @@ export class RestaurantItemComponent implements OnInit {
   }
 
   deleteRestaurant(id: number) {
-    this.restaurantService.deleteRestaurant(id).subscribe(response => {
+    this.restaurantService.deleteRestaurant(id).subscribe(() => {
       this.router.navigate(['/restaurants']);
     }, () => {
     });
@@ -57,6 +57,10 @@ export class RestaurantItemComponent implements OnInit {
         this.deleteRestaurant(id);
       }
     });
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 }

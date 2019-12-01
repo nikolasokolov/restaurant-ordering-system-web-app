@@ -1,12 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {Company} from '../model/company.model';
 
 @Injectable({providedIn: 'root'})
 export class CompanyService {
-  constructor(private httpClient: HttpClient, private router: Router) {}
+  constructor(private httpClient: HttpClient) {}
 
   getAllCompanies(): Observable<any> {
     return this.httpClient.get('https://localhost:8080/main/companies');
@@ -33,11 +32,6 @@ export class CompanyService {
     const formData: FormData = new FormData();
     formData.append('file', file);
     return this.httpClient.post(url , formData);
-  }
-
-  getLogo(id: number): Observable<Blob> {
-    return this.httpClient.get<Blob>('https://localhost:8080/main/company/' + id + '/logo', {
-      responseType: 'blob' as 'json' });
   }
 
 }

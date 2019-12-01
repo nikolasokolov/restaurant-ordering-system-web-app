@@ -1,5 +1,5 @@
-<div class="container">
-  <button mat-button style="margin-top: 20px; margin-left: -100px;"><mat-icon>keyboard_backspace</mat-icon></button>
+<div class="container-fluid">
+  <button mat-button style="margin-top: 10px;" (click)="goBack()"><mat-icon>keyboard_backspace</mat-icon></button>
   <div class="row" style="margin-top: 130px;">
     <div *ngIf="isLoading" style="text-align: center;">
       <app-loading-spinner></app-loading-spinner>
