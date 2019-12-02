@@ -1,10 +1,10 @@
 <div class="container-fluid">
   <button mat-button (click)="goBack()" style="margin-top: 10px;"><mat-icon>keyboard_backspace</mat-icon></button>
-  <div class="row" style="margin-top: 130px;">
+  <div class="row" style="margin-top: 40px;">
     <div *ngIf="isLoading" style="text-align: center;">
       <app-loading-spinner></app-loading-spinner>
     </div>
-    <div class="col-xs-5" *ngIf="restaurant">
+    <div class="col-xs-4 col-xs-offset-1" *ngIf="restaurant">
       <br/>
       <img *ngIf="restaurant.logoImage" [src]="restaurant.logoImage" class="img-responsive" alt="logo">
     </div>

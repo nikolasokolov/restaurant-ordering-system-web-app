@@ -4,7 +4,7 @@
     <div *ngIf="isLoading" style="text-align: center;">
       <app-loading-spinner></app-loading-spinner>
     </div>
-    <div class="col-xs-5" *ngIf="company">
+    <div class="col-xs-4 col-xs-offset-1" *ngIf="company">
       <br/>
       <img *ngIf="company.logoImage" [src]="company.logoImage" class="img-responsive" alt="logo">
     </div>
