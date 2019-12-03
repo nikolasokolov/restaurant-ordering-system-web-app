@@ -7,6 +7,7 @@ import {MatDialog} from '@angular/material';
 import {RestaurantItem} from '../../model/restaurant-item.model';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Location} from '@angular/common';
+import {RestaurantAccount} from '../../model/restaurant-account.model';
 
 @Component({
   selector: 'app-restaurant-item',
@@ -16,6 +17,7 @@ import {Location} from '@angular/common';
 export class RestaurantItemComponent implements OnInit {
   isLoading = false;
   restaurant: RestaurantItem;
+  restaurantAccount: RestaurantAccount;
 
   constructor(private httpClient: HttpClient, private activatedRoute: ActivatedRoute,
               private restaurantService: RestaurantService, private router: Router,
@@ -23,6 +25,9 @@ export class RestaurantItemComponent implements OnInit {
 
   ngOnInit() {
     this.getRestaurant();
+    this.restaurantService.restaurantAccountSubject.subscribe(response => {
+      this.restaurantAccount = response;
+    });
   }
 
   getRestaurant() {

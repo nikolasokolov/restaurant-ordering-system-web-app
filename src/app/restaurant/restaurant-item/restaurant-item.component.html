@@ -14,10 +14,16 @@
       <h5>Name: {{restaurant.name}}</h5>
       <h5>Address: {{restaurant.address}}</h5>
       <h5>Phone number: {{restaurant.phoneNumber}}</h5>
+      <hr/>
       <button mat-raised-button color="primary" [routerLink]="['/restaurant-edit', restaurant?.id]">Edit restaurant</button> &nbsp;
-      <button mat-raised-button color="primary" [routerLink]="['/restaurant-edit', restaurant?.id]">View employees</button> &nbsp;
-      <button mat-raised-button color="primary" [routerLink]="['/restaurant-edit', restaurant?.id]">Add employee</button> &nbsp;
+      <button mat-raised-button *ngIf="!restaurantAccount" [routerLink]="['/restaurant-account/add/', restaurant.id]">Add an account</button> &nbsp;
       <button mat-raised-button color="warn" (click)="openDialog(restaurant.id)">Delete restaurant</button> &nbsp;
+      <div *ngIf="restaurantAccount">
+        <hr/>
+        <h4><strong>Restaurant account details</strong></h4>
+        <h5>Username: {{restaurantAccount.username}}</h5>
+        <h5>Email: {{restaurantAccount.email}}</h5>
+      </div>
     </div>
   </div>
 </div>

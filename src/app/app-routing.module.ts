@@ -11,6 +11,7 @@ import {AuthorizationGuard} from './authentication/authorization-guard';
 import {RestaurantListComponent} from './restaurant/restaurant-list/restaurant-list.component';
 import {RestaurantEditComponent} from './restaurant/restaurant-edit/restaurant-edit.component';
 import {RestaurantItemComponent} from './restaurant/restaurant-item/restaurant-item.component';
+import {RestaurantAccountComponent} from './restaurant/restaurant-account/restaurant-account.component';
 
 
 const routes: Routes = [
@@ -25,8 +26,8 @@ const routes: Routes = [
   { path: 'restaurants', component: RestaurantListComponent, canActivate: [AuthorizationGuard] },
   { path: 'restaurant-edit/:id', component: RestaurantEditComponent, canActivate: [AuthorizationGuard] },
   { path: 'restaurant-add', component: RestaurantEditComponent, canActivate: [AuthorizationGuard] },
-  { path: 'restaurant/:id', component: RestaurantItemComponent, canActivate: [AuthorizationGuard] }
-
+  { path: 'restaurant/:id', component: RestaurantItemComponent, canActivate: [AuthorizationGuard] },
+  { path: 'restaurant-account/add/:id', component: RestaurantAccountComponent, canActivate: [AuthorizationGuard] }
 ];
 
 @NgModule({

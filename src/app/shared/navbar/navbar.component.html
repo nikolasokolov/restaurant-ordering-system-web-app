@@ -1,8 +1,11 @@
 <mat-toolbar color="primary" *ngIf="isAuthenticated">
-  <button mat-button routerLink="home" class="text-center">{{userDetails.company.name}}</button>
-  <button mat-button routerLink="companies" class="text-center">Companies</button> &nbsp;
-  <button mat-button routerLink="restaurants" class="text-center">Restaurants</button>
-  <div class="col-xs-2 col-xs-offset-8">
+  <div class="col-xs-4">
+    <button mat-button routerLink="home" class="text-center">
+      {{userDetails.company !== null ? userDetails.company.name : 'Restaurant ' + userDetails.username.toUpperCase()}}</button>
+    <button mat-button routerLink="companies" *ngIf="userDetails.authorities.toString().endsWith('ADMIN')" class="text-center">Companies</button> &nbsp;
+    <button mat-button routerLink="restaurants" *ngIf="userDetails.authorities.toString().endsWith('ADMIN')" class="text-center">Restaurants</button>
+  </div>
+  <div class="col-xs-2 col-xs-offset-6">
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <p><span class="glyphicon glyphicon-user"></span> &nbsp; {{userDetails.username}}</p>
     </button>
