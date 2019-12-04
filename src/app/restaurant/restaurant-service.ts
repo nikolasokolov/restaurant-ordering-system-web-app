@@ -4,11 +4,12 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {Restaurant} from '../model/restaurant.model';
 import {RestaurantAccount} from '../model/restaurant-account.model';
 import {tap} from 'rxjs/operators';
+import {RestaurantItem} from '../model/restaurant-item.model';
+import {RestaurantAccountDetails} from '../model/restaurant-account-details.model';
 
 @Injectable({providedIn: 'root'})
 export class RestaurantService {
-  restaurantSubject = new BehaviorSubject<Restaurant>(null);
-  restaurantAccountSubject = new BehaviorSubject<RestaurantAccount>(this.getRestaurantAccount());
+  restaurantItemSubject = new BehaviorSubject<Restaurant>(null);
 
   constructor(private httpClient: HttpClient) {}
 
@@ -17,8 +18,9 @@ export class RestaurantService {
   }
 
   getRestaurant(id: number): Observable<any> {
-    return this.httpClient.get<Restaurant>('https://localhost:8080/main/restaurant/' + id).pipe(tap(response => {
-      this.handleRestaurantResponse(response.id, response.name, response.address, response.phoneNumber);
+    return this.httpClient.get<RestaurantItem>('https://localhost:8080/main/restaurant/' + id).pipe(tap(response => {
+      this.handleRestaurantResponse(response.id, response.name, response.address, response.phoneNumber,
+        response.restaurantAccountDetails);
     }));
   }
 
@@ -43,24 +45,13 @@ export class RestaurantService {
 
   addAccountForRestaurant(restaurantId: number, restaurantAccount: RestaurantAccount): Observable<any> {
     return this.httpClient.post('https://localhost:8080/main/restaurant/' + restaurantId + '/account/add',
-      restaurantAccount).pipe(tap(response => {
-        this.handleRestaurantAccountResponse(response.username, response.email);
-    }));
+      restaurantAccount);
   }
 
-  handleRestaurantResponse(id: number, name: string, email: string, phoneNumber: string) {
-    const restaurant = new Restaurant(name, email, phoneNumber, id);
-    this.restaurantSubject.next(restaurant);
-  }
-
-  handleRestaurantAccountResponse(username: string, email: string) {
-    const restaurantAccount = new RestaurantAccount(username, email, null, null);
-    this.restaurantAccountSubject.next(restaurantAccount);
-    localStorage.setItem('restaurantAccount', JSON.stringify(restaurantAccount));
-  }
-
-  getRestaurantAccount() {
-    return JSON.parse(localStorage.getItem('restaurantAccount'));
+  handleRestaurantResponse(id: number, name: string, email: string, phoneNumber: string,
+                           restaurantAccountDetails: RestaurantAccountDetails) {
+    const restaurantItem = new RestaurantItem(id, name, email, phoneNumber, restaurantAccountDetails);
+    this.restaurantItemSubject.next(restaurantItem);
   }
 
 }

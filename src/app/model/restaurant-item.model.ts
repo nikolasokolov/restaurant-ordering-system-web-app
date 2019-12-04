@@ -1,3 +1,5 @@
+import {RestaurantAccountDetails} from './restaurant-account-details.model';
+
 export class RestaurantItem {
   public id: number;
   public address: string;
@@ -5,13 +7,14 @@ export class RestaurantItem {
   public phoneNumber: string;
   public logo: ArrayBuffer | string;
   public logoImage: any;
+  public restaurantAccountDetails: RestaurantAccountDetails
 
-  constructor(id: number, name: string, address: string, phoneNumber: string, logo: ArrayBuffer | string, logoImage: any) {
+  constructor(id: number, name: string, address: string, phoneNumber: string,
+              restaurantAccountDetails: RestaurantAccountDetails) {
     this.id = id;
     this.name = name;
     this.address = address;
     this.phoneNumber = phoneNumber;
-    this.logo = logo;
-    this.logoImage = logoImage;
+    this.restaurantAccountDetails = restaurantAccountDetails;
   }
 }

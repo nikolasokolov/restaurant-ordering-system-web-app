@@ -4,25 +4,25 @@
     <div *ngIf="isLoading" style="text-align: center;">
       <app-loading-spinner></app-loading-spinner>
     </div>
-    <div class="col-xs-4 col-xs-offset-1" *ngIf="restaurant">
+    <div class="col-xs-4 col-xs-offset-1" *ngIf="restaurantItem">
       <br/>
-      <img *ngIf="restaurant.logoImage" [src]="restaurant.logoImage" class="img-responsive" alt="logo">
+      <img *ngIf="restaurantItem.logoImage" [src]="restaurantItem.logoImage" class="img-responsive" alt="logo">
     </div>
-    <div class="col-xs-6 col-xs-offset-1" *ngIf="restaurant">
+    <div class="col-xs-6 col-xs-offset-1" *ngIf="restaurantItem">
       <br/>
       <h4><strong>Restaurant details</strong></h4>
-      <h5>Name: {{restaurant.name}}</h5>
-      <h5>Address: {{restaurant.address}}</h5>
-      <h5>Phone number: {{restaurant.phoneNumber}}</h5>
+      <h5>Name: {{restaurantItem.name}}</h5>
+      <h5>Address: {{restaurantItem.address}}</h5>
+      <h5>Phone number: {{restaurantItem.phoneNumber}}</h5>
       <hr/>
-      <button mat-raised-button color="primary" [routerLink]="['/restaurant-edit', restaurant?.id]">Edit restaurant</button> &nbsp;
-      <button mat-raised-button *ngIf="!restaurantAccount" [routerLink]="['/restaurant-account/add/', restaurant.id]">Add an account</button> &nbsp;
-      <button mat-raised-button color="warn" (click)="openDialog(restaurant.id)">Delete restaurant</button> &nbsp;
-      <div *ngIf="restaurantAccount">
+      <button mat-raised-button color="primary" [routerLink]="['/restaurant-edit', restaurantItem?.id]">Edit restaurant</button> &nbsp;
+      <button mat-raised-button *ngIf="!restaurantItem.restaurantAccountDetails" [routerLink]="['/restaurant-account/add/', restaurantItem.id]">Add an account</button> &nbsp;
+      <button mat-raised-button color="warn" (click)="openDialog(restaurantItem.id)">Delete restaurant</button> &nbsp;
+      <div *ngIf="restaurantItem.restaurantAccountDetails">
         <hr/>
         <h4><strong>Restaurant account details</strong></h4>
-        <h5>Username: {{restaurantAccount.username}}</h5>
-        <h5>Email: {{restaurantAccount.email}}</h5>
+        <h5>Username: {{restaurantItem.restaurantAccountDetails.username}}</h5>
+        <h5>Email: {{restaurantItem.restaurantAccountDetails.email}}</h5>
       </div>
     </div>
   </div>

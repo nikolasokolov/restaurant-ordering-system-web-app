@@ -16,8 +16,7 @@ import {RestaurantAccount} from '../../model/restaurant-account.model';
 })
 export class RestaurantItemComponent implements OnInit {
   isLoading = false;
-  restaurant: RestaurantItem;
-  restaurantAccount: RestaurantAccount;
+  restaurantItem: RestaurantItem;
 
   constructor(private httpClient: HttpClient, private activatedRoute: ActivatedRoute,
               private restaurantService: RestaurantService, private router: Router,
@@ -25,18 +24,15 @@ export class RestaurantItemComponent implements OnInit {
 
   ngOnInit() {
     this.getRestaurant();
-    this.restaurantService.restaurantAccountSubject.subscribe(response => {
-      this.restaurantAccount = response;
-    });
   }
 
   getRestaurant() {
     this.isLoading = true;
     const id = this.activatedRoute.snapshot.params.id;
     this.restaurantService.getRestaurant(id).subscribe(response => {
-      this.restaurant = response;
-      const objectURL = 'data:image/jpeg;base64,' + this.restaurant.logo;
-      this.restaurant.logoImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+      this.restaurantItem = response;
+      const objectURL = 'data:image/jpeg;base64,' + this.restaurantItem.logo;
+      this.restaurantItem.logoImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
       this.isLoading = false;
     }, () => {
       this.isLoading = false;
@@ -45,8 +41,6 @@ export class RestaurantItemComponent implements OnInit {
 
   deleteRestaurant(id: number) {
     this.restaurantService.deleteRestaurant(id).subscribe(() => {
-      this.restaurantAccount = null;
-      localStorage.removeItem('restaurantAccount');
       this.router.navigate(['/restaurants']);
     }, () => {
     });
@@ -56,7 +50,7 @@ export class RestaurantItemComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '500px',
       height: '150px',
-      data: 'Are you sure you want to delete restaurant ' + this.restaurant.name + ' ?'
+      data: 'Are you sure you want to delete restaurant ' + this.restaurantItem.name + ' ?'
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
