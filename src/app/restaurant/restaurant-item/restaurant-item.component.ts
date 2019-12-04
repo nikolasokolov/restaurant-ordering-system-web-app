@@ -45,6 +45,8 @@ export class RestaurantItemComponent implements OnInit {
 
   deleteRestaurant(id: number) {
     this.restaurantService.deleteRestaurant(id).subscribe(() => {
+      this.restaurantAccount = null;
+      localStorage.removeItem('restaurantAccount');
       this.router.navigate(['/restaurants']);
     }, () => {
     });

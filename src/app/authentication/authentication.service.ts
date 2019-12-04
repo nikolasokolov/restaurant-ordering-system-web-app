@@ -73,6 +73,7 @@ export class AuthenticationService {
     localStorage.removeItem('user');
     localStorage.removeItem('Authorization');
     localStorage.removeItem('userDetails');
+    localStorage.removeItem('restaurantAccount');
     if (this.tokenExpirationTimer) {
       clearTimeout(this.tokenExpirationTimer);
     }
