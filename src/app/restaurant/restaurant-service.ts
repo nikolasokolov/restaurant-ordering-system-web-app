@@ -53,5 +53,4 @@ export class RestaurantService {
     const restaurantItem = new RestaurantItem(id, name, email, phoneNumber, restaurantAccountDetails);
     this.restaurantItemSubject.next(restaurantItem);
   }
-
 }

@@ -7,6 +7,7 @@ import {ConfirmationDialogComponent} from '../../shared/confirmation-dialog/conf
 import {DomSanitizer} from '@angular/platform-browser';
 import {CompanyItem} from '../../model/company-item.model';
 import {Location} from '@angular/common';
+import {AddRestaurantDialogComponent} from '../../shared/add-restaurant-dialog/add-restaurant-dialog.component';
 
 @Component({
   selector: 'app-company-item',
@@ -55,6 +56,19 @@ export class CompanyItemComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.deleteCompany(id);
+      }
+    });
+  }
+
+  openRestaurantAddDialog(id: number): void {
+    const dialogRef = this.dialog.open(AddRestaurantDialogComponent, {
+      width: '500px',
+      height: '300px',
+      data: this.company
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // this.deleteCompany(id);
       }
     });
   }

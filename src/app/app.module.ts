@@ -23,6 +23,7 @@ import { RestaurantItemComponent } from './restaurant/restaurant-item/restaurant
 import { RestaurantEditComponent } from './restaurant/restaurant-edit/restaurant-edit.component';
 import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
 import { RestaurantAccountComponent } from './restaurant/restaurant-account/restaurant-account.component';
+import { AddRestaurantDialogComponent } from './shared/add-restaurant-dialog/add-restaurant-dialog.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { RestaurantAccountComponent } from './restaurant/restaurant-account/rest
     RestaurantItemComponent,
     RestaurantEditComponent,
     ConfirmationDialogComponent,
-    RestaurantAccountComponent
+    RestaurantAccountComponent,
+    AddRestaurantDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +64,8 @@ import { RestaurantAccountComponent } from './restaurant/restaurant-account/rest
     }
   ],
   entryComponents: [
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    AddRestaurantDialogComponent
   ],
   bootstrap: [AppComponent],
 })

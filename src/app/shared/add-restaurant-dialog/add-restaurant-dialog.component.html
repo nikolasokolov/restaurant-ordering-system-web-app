@@ -1,0 +1,35 @@
+<div class="alert alert-danger fadein text-center" role="alert" *ngIf="errorMessage">
+  <strong>{{errorMessage}}</strong>
+</div>
+<div mat-dialog-content>
+  <h4 class="text-center">Add a restaurant for company {{companyItem.name}}</h4>
+</div>
+<div *ngIf="isLoading" style="text-align: center;">
+  <app-loading-spinner></app-loading-spinner>
+</div>
+<br/>
+<div class="row">
+  <div class="col-xs-6 col-xs-offset-3 text-center">
+    <form *ngIf="!isLoading">
+      <mat-form-field>
+        <mat-label>Select restaurant</mat-label>
+        <mat-select name="restaurant" [(ngModel)]="selectedRestaurantId"
+                    (selectionChange)="changeRestaurant($event.value)">
+          <mat-option *ngFor="let restaurant of restaurants" [value]="restaurant.id">
+            {{restaurant.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="row">
+        <br/>
+        <button mat-raised-button (click)="addRestaurant()" color="primary">Add restaurant</button> &nbsp;
+        <button mat-raised-button (click)="closeDialog()">Cancel</button> &nbsp;
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+
+

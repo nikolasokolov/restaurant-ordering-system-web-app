@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Company} from '../model/company.model';
+import {CompanyItem} from '../model/company-item.model';
 
 @Injectable({providedIn: 'root'})
 export class CompanyService {
@@ -34,4 +35,8 @@ export class CompanyService {
     return this.httpClient.post(url , formData);
   }
 
+  addRestaurantForCompany(company: CompanyItem, restaurantId: number): Observable<any> {
+    const url = 'https://localhost:8080/main/company/add-restaurant/' + restaurantId;
+    return this.httpClient.post(url, company);
+  }
 }
