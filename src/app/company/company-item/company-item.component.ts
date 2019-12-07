@@ -17,6 +17,7 @@ import {AddRestaurantDialogComponent} from '../../shared/add-restaurant-dialog/a
 export class CompanyItemComponent implements OnInit {
   isLoading = false;
   company: CompanyItem;
+  restaurantAddedToCompany = null;
 
   constructor(private httpClient: HttpClient, private activatedRoute: ActivatedRoute,
               private companyService: CompanyService, private router: Router,
@@ -63,12 +64,13 @@ export class CompanyItemComponent implements OnInit {
   openRestaurantAddDialog(id: number): void {
     const dialogRef = this.dialog.open(AddRestaurantDialogComponent, {
       width: '500px',
-      height: '300px',
+      height: '250px',
       data: this.company
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // this.deleteCompany(id);
+        console.log(result);
+        this.restaurantAddedToCompany = 'Restaurant is successfully added to company ' + this.company.name;
       }
     });
   }

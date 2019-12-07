@@ -54,7 +54,6 @@ export class RestaurantItemComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Yes clicked');
         this.deleteRestaurant(id);
       }
     });

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CompanyService} from '../company-service';
 import {CompanyItem} from '../../model/company-item.model';
 import {DomSanitizer} from '@angular/platform-browser';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-company-list',
@@ -12,7 +13,7 @@ export class CompanyListComponent implements OnInit {
   companies: CompanyItem[];
   isLoading = false;
 
-  constructor(private companyService: CompanyService, private sanitizer: DomSanitizer) { }
+  constructor(private companyService: CompanyService, private sanitizer: DomSanitizer, private location: Location) { }
 
   ngOnInit() {
     this.getAllCompanies();
@@ -30,6 +31,10 @@ export class CompanyListComponent implements OnInit {
     }, () => {
       this.isLoading = false;
     });
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 }
