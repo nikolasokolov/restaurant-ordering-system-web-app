@@ -7,6 +7,7 @@ import {UserService} from '../user-service';
 import {Users} from '../../model/users.model';
 import {ConfirmationDialogComponent} from '../../shared/confirmation-dialog/confirmation-dialog.component';
 import {MatDialog} from '@angular/material';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-user-list',
@@ -23,11 +24,20 @@ export class UserListComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private location: Location, private userService: UserService, public dialog: MatDialog) {
+  constructor(private location: Location, private userService: UserService, public dialog: MatDialog,
+              private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.getAllUsers();
+    const id = this.activatedRoute.snapshot.params.id;
+    if (id !== undefined) {
+      this.companyId = id;
+    }
+    if (this.companyId !== null) {
+      this.getAllUsersForCompany(this.companyId);
+    } else {
+      this.getAllUsers();
+    }
     this.dataSource = new MatTableDataSource(this.users);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -69,12 +79,6 @@ export class UserListComponent implements OnInit {
   }
 
   private deleteUser(id: number) {
-    let user;
-    for (let i = 0; i < this.users.length; i++) {
-      if (this.users[i].id === id) {
-        user = this.users[i];
-      }
-    }
     this.userService.deleteUser(id).subscribe(response => {
       this.deleteRowDataTable(id, 'id', this.paginator, this.dataSource);
     }, error => {
@@ -87,5 +91,15 @@ export class UserListComponent implements OnInit {
     const itemIndex = this.users.findIndex(obj => obj[idColumn] === recordId);
     dataSource.data.splice(itemIndex, 1);
     dataSource.paginator = paginator;
+  }
+
+  private getAllUsersForCompany(id: number) {
+    this.userService.getAllUsersForCompany(id).subscribe(response => {
+      this.users = response;
+      this.dataSource.data = this.users;
+      console.log(this.users);
+    }, error => {
+      alert('Error occurred trying to fetch users');
+    });
   }
 }

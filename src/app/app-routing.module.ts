@@ -32,6 +32,7 @@ const routes: Routes = [
   { path: 'restaurant/:id', component: RestaurantItemComponent, canActivate: [AuthorizationGuard] },
   { path: 'restaurant-account/add/:id', component: RestaurantAccountComponent, canActivate: [AuthorizationGuard] },
   { path: 'users', component: UserListComponent, canActivate: [AuthorizationGuard] },
+  { path: 'users/:id', component: UserListComponent, canActivate: [AuthorizationGuard] },
   { path: 'user-add', component: UserAddComponent, canActivate: [AuthorizationGuard] },
   { path: 'user-add/:id', component: UserAddComponent, canActivate: [AuthorizationGuard] }
 ];

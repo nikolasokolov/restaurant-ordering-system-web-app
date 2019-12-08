@@ -18,4 +18,8 @@ export class UserService {
   deleteUser(id: number) {
     return this.httpClient.delete('https://localhost:8080/main/users/delete/' + id);
   }
+
+  getAllUsersForCompany(companyId: number): Observable<any> {
+    return this.httpClient.get('https://localhost:8080/main/company/' + companyId + '/users/');
+  }
 }
