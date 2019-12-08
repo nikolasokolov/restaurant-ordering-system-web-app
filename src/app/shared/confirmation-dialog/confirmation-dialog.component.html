@@ -1,0 +1,7 @@
+<div mat-dialog-content>
+  <h4 class="text-center">{{message}}</h4>
+</div>
+<div mat-dialog-actions style="margin-left: 150px;">
+  <button mat-raised-button (click)="onNoClick()">Cancel</button>  &nbsp;
+  <button mat-raised-button color="warn" [mat-dialog-close]="true" cdkFocusInitial>Delete</button>
+</div>

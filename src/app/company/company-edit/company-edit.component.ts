@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {CompanyService} from '../company-service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Company} from '../../model/company.model';
 import {NgForm} from '@angular/forms';
-import {Observable} from 'rxjs';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-company-edit',
@@ -19,7 +19,8 @@ export class CompanyEditComponent implements OnInit {
   isInEdit = false;
   selectedPhoto: File = null;
 
-  constructor(private companyService: CompanyService, private activatedRoute: ActivatedRoute) { }
+  constructor(private companyService: CompanyService, private activatedRoute: ActivatedRoute,
+              private location: Location, private router: Router) { }
 
   ngOnInit() {
     const id = this.activatedRoute.snapshot.params.id;
@@ -43,7 +44,8 @@ export class CompanyEditComponent implements OnInit {
       this.companyService.editCompany(editCompanyRequest).subscribe(response => {
         this.companyEditedSuccessfully = true;
         this.isLoading = false;
-      }, error => {
+        this.router.navigate(['/company/' + this.company.id]);
+      }, () => {
         this.isLoading = false;
         this.error = 'Error occurred while trying to update company';
       });
@@ -66,6 +68,10 @@ export class CompanyEditComponent implements OnInit {
 
   onFileSelected(event) {
     this.selectedPhoto = event.target.files[0];
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 }

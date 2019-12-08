@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {Location} from '@angular/common';
+import {ChangePasswordService} from './change-password.service';
+import {ChangePassword} from '../model/change-password.model';
 
 @Component({
   selector: 'app-change-password',
@@ -13,7 +16,7 @@ export class ChangePasswordComponent implements OnInit {
   error = null;
   passwordSuccessfullyChanged = false;
 
-  constructor(private httpClient: HttpClient, private router: Router) { }
+  constructor(private changePasswordService: ChangePasswordService, private router: Router, private location: Location) { }
 
   ngOnInit() {
   }
@@ -30,15 +33,19 @@ export class ChangePasswordComponent implements OnInit {
       this.error = 'Passwords doesn\'t match';
       this.isLoading = false;
     } else {
-      const changePassword = {username, currentPassword, newPassword, confirmPassword};
-      this.httpClient.post('https://localhost:8080/api/change-password', changePassword).subscribe(response => {
+      const changePassword = new ChangePassword(username, currentPassword, newPassword, confirmPassword);
+      this.changePasswordService.changePassword(changePassword).subscribe(() => {
         this.isLoading = false;
         this.passwordSuccessfullyChanged = true;
-      }, error => {
+      }, () => {
         this.isLoading = false;
         this.error = 'Incorrect credentials';
       });
     }
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 }

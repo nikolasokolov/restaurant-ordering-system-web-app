@@ -1,12 +1,15 @@
-<div class="container">
-  <button mat-button style="margin-top: 20px; margin-left: -100px;"><mat-icon>keyboard_backspace</mat-icon></button>
-  <div class="row" style="margin-top: 130px;">
+<div class="alert alert-success fadein text-center" role="alert" *ngIf="restaurantAddedToCompany">
+  <strong>{{restaurantAddedToCompany}}</strong>
+</div>
+<div class="container-fluid">
+  <button mat-button style="margin-top: 10px;" (click)="goBack()"><mat-icon>keyboard_backspace</mat-icon></button>
+  <div class="row" style="margin-top: 50px;">
     <div *ngIf="isLoading" style="text-align: center;">
       <app-loading-spinner></app-loading-spinner>
     </div>
-    <div class="col-xs-5" *ngIf="company">
+    <div class="col-xs-4 col-xs-offset-1" *ngIf="company">
       <br/>
-      <img *ngIf="imageBlobUrl" [src]="imageBlobUrl" class="img-responsive" alt="logo">
+      <img *ngIf="company.logoImage" [src]="company.logoImage" class="img-responsive" alt="logo">
     </div>
     <div class="col-xs-6 col-xs-offset-1" *ngIf="company">
       <br/>
@@ -14,10 +17,16 @@
       <h5>Name: {{company.name}}</h5>
       <h5>Address: {{company.address}}</h5>
       <h5>Phone number: {{company.phoneNumber}}</h5>
-      <button mat-raised-button color="primary" [routerLink]="['/company-edit', company?.id]">Edit company</button> &nbsp;
-      <button mat-raised-button color="primary" [routerLink]="['/company-edit', company?.id]">View employees</button> &nbsp;
-      <button mat-raised-button color="primary" [routerLink]="['/company-edit', company?.id]">Add employee</button> &nbsp;
-      <button mat-raised-button color="warn" (click)="deleteCompany(company.id)">Delete company</button> &nbsp;
+      <button mat-raised-button color="primary" [routerLink]="['/company-edit', company.id]">Edit company</button> &nbsp;
+      <button mat-raised-button color="warn" (click)="openDialog(company.id)">Delete company</button>
+      <hr/>
+      <h4>Restaurants management</h4>
+      <button mat-raised-button color="primary" (click)="openRestaurantAddDialog(company.id)">Add restaurant</button> &nbsp;
+      <button mat-raised-button [routerLink]="['/company-restaurants/', company.id]">View restaurants</button>
+      <hr/>
+      <h4>Users management</h4>
+      <button mat-raised-button color="primary" [routerLink]="['/company/user-add/', company.id]">Add user</button> &nbsp;
+      <button mat-raised-button [routerLink]="['/company/user-add/', company.id]">View users</button>
     </div>
   </div>
 </div>

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Company} from '../../model/company.model';
-import {Subscription} from 'rxjs';
+import {Component, OnInit} from '@angular/core';
 import {CompanyService} from '../company-service';
+import {CompanyItem} from '../../model/company-item.model';
+import {DomSanitizer} from '@angular/platform-browser';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-company-list',
@@ -10,10 +10,10 @@ import {CompanyService} from '../company-service';
   styleUrls: ['./company-list.component.css']
 })
 export class CompanyListComponent implements OnInit {
-  companies: Company[];
+  companies: CompanyItem[];
   isLoading = false;
 
-  constructor(private companyService: CompanyService) { }
+  constructor(private companyService: CompanyService, private sanitizer: DomSanitizer, private location: Location) { }
 
   ngOnInit() {
     this.getAllCompanies();
@@ -23,10 +23,18 @@ export class CompanyListComponent implements OnInit {
     this.isLoading = true;
     this.companyService.getAllCompanies().subscribe((response: any[]) => {
       this.companies = response;
+      for (const companyItem of this.companies) {
+        const objectURL = 'data:image/jpeg;base64,' + companyItem.logo;
+        companyItem.logoImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+      }
       this.isLoading = false;
-    }, error => {
+    }, () => {
       this.isLoading = false;
     });
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 }

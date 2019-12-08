@@ -4,21 +4,21 @@
 <div class="alert alert-success fadein text-center" role="alert" *ngIf="companyAddedSuccessfully">
   <strong>Company added successfully</strong>
 </div>
-<div class="container-fluid" style="margin-top: 100px;">
-  <div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+<div class="container-fluid">
+  <button mat-button style="margin-top: 10px;" (click)="goBack()"><mat-icon>keyboard_backspace</mat-icon></button>
+  <div class="row login-wrapper" style="margin-top: 80px;">
     <div *ngIf="isLoading" style="text-align: center;">
       <app-loading-spinner></app-loading-spinner>
     </div>
-    <mat-card class="box" *ngIf="!isLoading">
+    <mat-card class="box center-block" *ngIf="!isLoading">
       <mat-card-header>
-        <mat-card-title *ngIf="isInEdit">Edit company</mat-card-title>
-        <mat-card-title *ngIf="!isInEdit">Create new company</mat-card-title>
+        <mat-card-title>{{isInEdit ? 'Edit company' : 'Create new company'}}</mat-card-title>
       </mat-card-header>
       <form class="example-form" #companyForm="ngForm" (ngSubmit)="handleCompanyForm(companyForm)">
         <mat-card-content class="input-width">
           <mat-form-field class="example-full-width">
             <input matInput type="text" placeholder="Company name" [(ngModel)]="company.name"
-                   ngModel name="name" required #name="ngModel"/>
+                   name="name" required #name="ngModel"/>
             <mat-hint *ngIf="!name.valid && name.touched">Company is required</mat-hint>
           </mat-form-field>
           <mat-form-field class="example-full-width">
