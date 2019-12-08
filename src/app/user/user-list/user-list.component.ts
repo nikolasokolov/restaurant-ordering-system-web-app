@@ -56,11 +56,14 @@ export class UserListComponent implements OnInit {
   }
 
   private getAllUsers() {
+    this.isLoading = true;
     this.userService.getAllUsers().subscribe(response => {
+      this.isLoading = false;
       this.users = response;
       this.dataSource.data = this.users;
       console.log(this.users);
     }, error => {
+      this.isLoading = false;
       alert('Error occurred trying to fetch users');
     });
   }
@@ -94,11 +97,14 @@ export class UserListComponent implements OnInit {
   }
 
   private getAllUsersForCompany(id: number) {
+    this.isLoading = true;
     this.userService.getAllUsersForCompany(id).subscribe(response => {
+      this.isLoading = false;
       this.users = response;
       this.dataSource.data = this.users;
       console.log(this.users);
     }, error => {
+      this.isLoading = false;
       alert('Error occurred trying to fetch users');
     });
   }

@@ -17,7 +17,7 @@
       <div *ngIf="isLoading" style="text-align: center;">
         <app-loading-spinner></app-loading-spinner>
       </div>
-      <div [hidden]="isLoading === null">
+      <div [hidden]="isLoading === true">
         <mat-form-field>
           <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
         </mat-form-field>
