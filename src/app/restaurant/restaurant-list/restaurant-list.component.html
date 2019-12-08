@@ -19,10 +19,16 @@
       </div>
       <div *ngIf="!isLoading">
         <div class="col-xs-4" *ngFor="let restaurant of restaurants">
-          <div>
+          <div *ngIf="!companyId">
             <a mat-button [routerLink]="['/restaurant', restaurant.id]">{{restaurant.name}}
               <img *ngIf="restaurant.logoImage" [src]="restaurant.logoImage" class="img-responsive size" alt="logo"></a>
-            <button mat-raised-button style="margin-top: 10px; margin-left: 100px;" class="btn btn-sm" color="warn" *ngIf="companyId"
+            <button mat-raised-button style="margin-top: 10px; margin-left: 100px;" color="warn" *ngIf="companyId"
+                    (click)="openDialog(companyId, restaurant.id, restaurant.name)">Delete restaurant</button>
+          </div>
+          <div *ngIf="companyId">
+            <p class="text-center">{{restaurant.name}}</p>
+              <img *ngIf="restaurant.logoImage" [src]="restaurant.logoImage" class="img-responsive size" alt="logo">
+            <button mat-raised-button style="margin-top: 10px; margin-left: 100px;" color="warn" *ngIf="companyId"
                     (click)="openDialog(companyId, restaurant.id, restaurant.name)">Delete restaurant</button>
           </div>
         </div>
