@@ -4,8 +4,9 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {UserService} from '../user-service';
-import {UserDetails} from '../../model/user-details.model';
 import {Users} from '../../model/users.model';
+import {ConfirmationDialogComponent} from '../../shared/confirmation-dialog/confirmation-dialog.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-user-list',
@@ -17,12 +18,12 @@ export class UserListComponent implements OnInit {
   companyId = null;
   users: Users[] = [];
 
-  displayedColumns: string[] = ['id', 'username', 'email', 'authority', 'company'];
+  displayedColumns: string[] = ['id', 'username', 'email', 'authority', 'company', 'actions'];
   dataSource = new MatTableDataSource(this.users);
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private location: Location, private userService: UserService) {
+  constructor(private location: Location, private userService: UserService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -52,5 +53,39 @@ export class UserListComponent implements OnInit {
     }, error => {
       alert('Error occurred trying to fetch users');
     });
+  }
+
+  openDialog(id: number, username: string): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '500px',
+      height: '140px',
+      data: 'Are you sure you want to delete user ' + username + ' ?'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteUser(id);
+      }
+    });
+  }
+
+  private deleteUser(id: number) {
+    let user;
+    for (let i = 0; i < this.users.length; i++) {
+      if (this.users[i].id === id) {
+        user = this.users[i];
+      }
+    }
+    this.userService.deleteUser(id).subscribe(response => {
+      this.deleteRowDataTable(id, 'id', this.paginator, this.dataSource);
+    }, error => {
+      console.log('Error occurred while deleting user');
+    });
+  }
+
+  private deleteRowDataTable(recordId, idColumn, paginator, dataSource) {
+    this.dataSource = dataSource.data;
+    const itemIndex = this.users.findIndex(obj => obj[idColumn] === recordId);
+    dataSource.data.splice(itemIndex, 1);
+    dataSource.paginator = paginator;
   }
 }

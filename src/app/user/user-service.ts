@@ -14,4 +14,8 @@ export class UserService {
   getAllUsers(): Observable<any> {
     return this.httpClient.get('https://localhost:8080/main/users/');
   }
+
+  deleteUser(id: number) {
+    return this.httpClient.delete('https://localhost:8080/main/users/delete/' + id);
+  }
 }
