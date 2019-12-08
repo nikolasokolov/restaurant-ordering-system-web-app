@@ -12,7 +12,7 @@ import {AuthenticationInterceptorService} from './authentication/authentication-
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AngularMaterialModule} from './angular-material.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {MatCardModule, MatDialogModule, MatMenuModule} from '@angular/material';
+import {MatCardModule, MatDialogModule, MatMenuModule, MatSortModule} from '@angular/material';
 import {NavbarComponent} from './shared/navbar/navbar.component';
 import {ChangePasswordComponent} from './change-password/change-password.component';
 import {CompanyListComponent} from './company/company-list/company-list.component';
@@ -47,19 +47,20 @@ import { UserListComponent } from './user/user-list/user-list.component';
     UserAddComponent,
     UserListComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    AngularMaterialModule,
-    FlexLayoutModule,
-    MatCardModule,
-    MatMenuModule,
-    MatDialogModule,
-    MatDialogModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        AngularMaterialModule,
+        FlexLayoutModule,
+        MatCardModule,
+        MatMenuModule,
+        MatDialogModule,
+        MatDialogModule,
+        MatSortModule
+    ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

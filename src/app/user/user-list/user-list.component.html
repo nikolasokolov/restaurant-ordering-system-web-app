@@ -1,1 +1,67 @@
-<p>user-list works!</p>
+<div class="container-fluid">
+  <button mat-button style="margin-top: 10px;" (click)="goBack()">
+    <mat-icon>keyboard_backspace</mat-icon>
+  </button>
+  <br/>
+  <div class="col-xs-10 col-xs-offset-1">
+    <div class="row">
+      <div class="col-xs-12">
+        <h4 class="pull-left">Users:</h4>
+        <button *ngIf="!companyId" mat-raised-button color="primary" routerLink="/user-add"
+                class="btn-sm pull-right">Add new user
+        </button>
+      </div>
+    </div>
+    <hr/>
+    <div class="row">
+      <div *ngIf="isLoading" style="text-align: center;">
+        <app-loading-spinner></app-loading-spinner>
+      </div>
+      <div [hidden]="isLoading === null">
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+
+        <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource" matSort>
+
+            <!-- ID Column -->
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> ID</th>
+              <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+            </ng-container>
+
+            <!-- Progress Column -->
+            <ng-container matColumnDef="username">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Username</th>
+              <td mat-cell *matCellDef="let row"> {{row.username}}</td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> E-mail</th>
+              <td mat-cell *matCellDef="let row"> {{row.email}} </td>
+            </ng-container>
+
+            <!-- Color Column -->
+            <ng-container matColumnDef="authority">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Authority</th>
+              <td mat-cell *matCellDef="let row"> {{row.authority}} </td>
+            </ng-container>
+
+            <!-- Color Column -->
+            <ng-container matColumnDef="company">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Company</th>
+              <td mat-cell *matCellDef="let row"> {{row.company}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+            </tr>
+          </table>
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -18,7 +18,7 @@ export class RestaurantAccountComponent implements OnInit {
   accountAddedSuccessfully = false;
   restaurant: Restaurant;
 
-  constructor(private restaurantService: RestaurantService, private location: Location, private router: Router) { }
+  constructor(private restaurantService: RestaurantService, private location: Location) { }
 
   ngOnInit() {
     this.restaurantService.restaurantItemSubject.subscribe(response => {
