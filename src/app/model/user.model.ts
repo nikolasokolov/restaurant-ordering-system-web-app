@@ -1,3 +1,3 @@
 export class User {
-  constructor(public username: string, public token: string, expirationDate: Date) {}
+  constructor(public username: string, public token: string, public expirationDate: string) {}
 }

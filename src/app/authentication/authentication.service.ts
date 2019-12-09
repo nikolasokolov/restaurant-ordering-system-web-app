@@ -38,8 +38,8 @@ export class AuthenticationService {
   }
 
   private handleAuthentication(username: string, token: string, expiresIn: number) {
-    const expirationDate = new Date(new Date().getTime() + expiresIn);
-    const user = new User(username, token, expirationDate);
+    const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+    const user = new User(username, token, expirationDate.toUTCString());
     this.user.next(user);
     localStorage.setItem('user', JSON.stringify(user));
     localStorage.setItem('Authorization', token);
@@ -78,5 +78,35 @@ export class AuthenticationService {
     }
     this.tokenExpirationTimer = null;
     this.router.navigate(['/authenticate']);
+  }
+
+  autoLogin() {
+    const user: { username: string; token: string; expirationDate: string; } =
+      JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+      return;
+    }
+
+    const userDetails: {
+      id: number, username: string; password: string, email: string; authorities: any[]; company: Company
+    } = JSON.parse(localStorage.getItem('userDetails'));
+    if (!userDetails) {
+      return;
+    }
+
+    const loadedUser = new User(user.username, user.token, user.expirationDate);
+    const loadedUserDetails = new UserDetails(userDetails.id, userDetails.username, userDetails.password, userDetails.email,
+      userDetails.authorities, userDetails.company);
+
+    if (loadedUser.token) {
+      const expirationDuration = new Date(user.expirationDate).getTime() - new Date().getTime();
+      if (expirationDuration > 1000) {
+        this.user.next(loadedUser);
+        this.userDetails.next(loadedUserDetails);
+        this.autoLogout(expirationDuration);
+      } else {
+        localStorage.clear();
+      }
+    }
   }
 }
