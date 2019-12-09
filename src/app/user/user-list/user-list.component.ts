@@ -8,6 +8,8 @@ import {Users} from '../../model/users.model';
 import {ConfirmationDialogComponent} from '../../shared/confirmation-dialog/confirmation-dialog.component';
 import {MatDialog} from '@angular/material';
 import {ActivatedRoute} from '@angular/router';
+import {AuthenticationService} from '../../authentication/authentication.service';
+import {UserDetails} from '../../model/user-details.model';
 
 @Component({
   selector: 'app-user-list',
@@ -18,6 +20,7 @@ export class UserListComponent implements OnInit {
   isLoading = false;
   companyId = null;
   users: Users[] = [];
+  loggedInUser: UserDetails = null;
 
   displayedColumns: string[] = ['id', 'username', 'email', 'authority', 'company', 'actions'];
   dataSource = new MatTableDataSource(this.users);
@@ -25,7 +28,7 @@ export class UserListComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private location: Location, private userService: UserService, public dialog: MatDialog,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute, private authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {
@@ -41,6 +44,7 @@ export class UserListComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.users);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.loggedInUser = this.authenticationService.getUserDetails();
   }
 
   applyFilter(filterValue: string) {

@@ -18,7 +18,7 @@ export class RestaurantAccountComponent implements OnInit {
   accountAddedSuccessfully = false;
   restaurant: Restaurant;
 
-  constructor(private restaurantService: RestaurantService, private location: Location) { }
+  constructor(private restaurantService: RestaurantService, private location: Location, private router: Router) { }
 
   ngOnInit() {
     this.restaurantService.restaurantItemSubject.subscribe(response => {
@@ -42,6 +42,7 @@ export class RestaurantAccountComponent implements OnInit {
       this.restaurantService.addAccountForRestaurant(this.restaurant.id, restaurantAccount).subscribe(() => {
         this.isLoading = false;
         this.accountAddedSuccessfully = true;
+        this.router.navigate(['/restaurant/', this.restaurant.id]);
       }, (error) => {
         console.log(error);
         this.isLoading = false;
