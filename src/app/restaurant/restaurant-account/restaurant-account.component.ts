@@ -42,6 +42,7 @@ export class RestaurantAccountComponent implements OnInit {
       this.restaurantService.addAccountForRestaurant(this.restaurant.id, restaurantAccount).subscribe(() => {
         this.isLoading = false;
         this.accountAddedSuccessfully = true;
+        this.router.navigate(['/restaurant/', this.restaurant.id]);
       }, (error) => {
         console.log(error);
         this.isLoading = false;

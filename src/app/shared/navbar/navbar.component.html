@@ -4,7 +4,7 @@
       {{userDetails.company !== null ? userDetails.company.name : 'Restaurant ' + userDetails.username.toUpperCase()}}</button>
     <button mat-button routerLink="companies" *ngIf="userDetails.authorities.toString().endsWith('ADMIN')" class="text-center">Companies</button>
     <button mat-button routerLink="restaurants" *ngIf="userDetails.authorities.toString().endsWith('ADMIN')" class="text-center">Restaurants</button>
-    <button mat-button routerLink="restaurants" *ngIf="userDetails.authorities.toString().endsWith('ADMIN')" class="text-center">Users</button>
+    <button mat-button routerLink="users" *ngIf="userDetails.authorities.toString().endsWith('ADMIN')" class="text-center">Users</button>
   </div>
   <div class="col-xs-2 col-xs-offset-6">
     <button mat-icon-button [matMenuTriggerFor]="menu">

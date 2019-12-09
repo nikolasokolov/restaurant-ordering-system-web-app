@@ -28,8 +28,8 @@
           <div *ngIf="companyId">
             <p class="text-center">{{restaurant.name}}</p>
               <img *ngIf="restaurant.logoImage" [src]="restaurant.logoImage" class="img-responsive size" alt="logo">
-            <button mat-raised-button style="margin-top: 10px; margin-left: 100px;" color="warn" *ngIf="companyId"
-                    (click)="openDialog(companyId, restaurant.id, restaurant.name)">Delete restaurant</button>
+            <button mat-button style="margin-top: 10px; margin-left: 135px;" color="warn" *ngIf="companyId"
+                    (click)="openDialog(companyId, restaurant.id, restaurant.name)"><mat-icon>delete</mat-icon></button>
           </div>
         </div>
       </div>

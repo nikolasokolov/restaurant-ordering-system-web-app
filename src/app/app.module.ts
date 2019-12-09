@@ -12,7 +12,7 @@ import {AuthenticationInterceptorService} from './authentication/authentication-
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AngularMaterialModule} from './angular-material.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {MatCardModule, MatDialogModule, MatMenuModule} from '@angular/material';
+import {MatCardModule, MatDialogModule, MatMenuModule, MatSortModule} from '@angular/material';
 import {NavbarComponent} from './shared/navbar/navbar.component';
 import {ChangePasswordComponent} from './change-password/change-password.component';
 import {CompanyListComponent} from './company/company-list/company-list.component';
@@ -24,6 +24,8 @@ import { RestaurantEditComponent } from './restaurant/restaurant-edit/restaurant
 import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
 import { RestaurantAccountComponent } from './restaurant/restaurant-account/restaurant-account.component';
 import { AddRestaurantDialogComponent } from './shared/add-restaurant-dialog/add-restaurant-dialog.component';
+import { UserAddComponent } from './user/user-add/user-add.component';
+import { UserListComponent } from './user/user-list/user-list.component';
 
 @NgModule({
   declarations: [
@@ -41,21 +43,24 @@ import { AddRestaurantDialogComponent } from './shared/add-restaurant-dialog/add
     RestaurantEditComponent,
     ConfirmationDialogComponent,
     RestaurantAccountComponent,
-    AddRestaurantDialogComponent
+    AddRestaurantDialogComponent,
+    UserAddComponent,
+    UserListComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    AngularMaterialModule,
-    FlexLayoutModule,
-    MatCardModule,
-    MatMenuModule,
-    MatDialogModule,
-    MatDialogModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        AngularMaterialModule,
+        FlexLayoutModule,
+        MatCardModule,
+        MatMenuModule,
+        MatDialogModule,
+        MatDialogModule,
+        MatSortModule
+    ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
