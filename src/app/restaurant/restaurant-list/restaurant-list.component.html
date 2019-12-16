@@ -1,0 +1,38 @@
+<div class="container-fluid">
+  <button mat-button style="margin-top: 10px;" (click)="goBack()">
+    <mat-icon>keyboard_backspace</mat-icon>
+  </button>
+  <br/>
+  <div class="col-xs-10 col-xs-offset-1">
+    <div class="row">
+      <div class="col-xs-12">
+        <h4 class="pull-left">Restaurants:</h4>
+        <button *ngIf="!companyId" mat-raised-button color="primary" routerLink="/restaurant-add"
+                class="btn-sm pull-right">Add new restaurant
+        </button>
+      </div>
+    </div>
+    <hr/>
+    <div class="row">
+      <div *ngIf="isLoading" style="text-align: center;">
+        <app-loading-spinner></app-loading-spinner>
+      </div>
+      <div *ngIf="!isLoading">
+        <div class="col-xs-4" *ngFor="let restaurant of restaurants">
+          <div *ngIf="!companyId">
+            <a mat-button [routerLink]="['/restaurant', restaurant.id]">{{restaurant.name}}
+              <img *ngIf="restaurant.logoImage" [src]="restaurant.logoImage" class="img-responsive size" alt="logo"></a>
+            <button mat-raised-button style="margin-top: 10px; margin-left: 100px;" color="warn" *ngIf="companyId"
+                    (click)="openDialog(companyId, restaurant.id, restaurant.name)">Delete restaurant</button>
+          </div>
+          <div *ngIf="companyId">
+            <p class="text-center">{{restaurant.name}}</p>
+              <img *ngIf="restaurant.logoImage" [src]="restaurant.logoImage" class="img-responsive size" alt="logo">
+            <button mat-button style="margin-top: 10px; margin-left: 135px;" color="warn" *ngIf="companyId"
+                    (click)="openDialog(companyId, restaurant.id, restaurant.name)"><mat-icon>delete</mat-icon></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
