@@ -60,7 +60,6 @@ export class UserAddComponent implements OnInit {
         this.isLoading = false;
         this.userAddedSuccessfully = true;
       }, (error) => {
-        console.log(error);
         this.isLoading = false;
         this.error = 'An error occurred trying to create a new user';
       });

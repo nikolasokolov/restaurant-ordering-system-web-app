@@ -69,7 +69,6 @@ export class CompanyItemComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
         this.restaurantAddedToCompany = 'Restaurant is successfully added to company ' + this.company.name;
       }
     });

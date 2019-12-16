@@ -1,7 +1,7 @@
 <mat-toolbar color="primary" *ngIf="isAuthenticated">
   <div class="col-xs-4">
     <button mat-button routerLink="home" class="text-center">
-      {{userDetails.company !== null ? userDetails.company.name : 'Restaurant ' + userDetails.username.toUpperCase()}}</button>
+      {{userDetails.company !== null ? userDetails.company.name : userDetails.username.toUpperCase()}}</button>
     <button mat-button routerLink="companies" *ngIf="userDetails.authorities.toString().endsWith('ADMIN')" class="text-center">Companies</button>
     <button mat-button routerLink="restaurants" *ngIf="userDetails.authorities.toString().endsWith('ADMIN')" class="text-center">Restaurants</button>
     <button mat-button routerLink="users" *ngIf="userDetails.authorities.toString().endsWith('ADMIN')" class="text-center">Users</button>

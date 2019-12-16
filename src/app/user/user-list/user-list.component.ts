@@ -65,10 +65,8 @@ export class UserListComponent implements OnInit {
       this.isLoading = false;
       this.users = response;
       this.dataSource.data = this.users;
-      console.log(this.users);
     }, error => {
       this.isLoading = false;
-      alert('Error occurred trying to fetch users');
     });
   }
 
@@ -89,7 +87,6 @@ export class UserListComponent implements OnInit {
     this.userService.deleteUser(id).subscribe(response => {
       this.deleteRowDataTable(id, 'id', this.paginator, this.dataSource);
     }, error => {
-      console.log('Error occurred while deleting user');
     });
   }
 
@@ -106,10 +103,8 @@ export class UserListComponent implements OnInit {
       this.isLoading = false;
       this.users = response;
       this.dataSource.data = this.users;
-      console.log(this.users);
     }, error => {
       this.isLoading = false;
-      alert('Error occurred trying to fetch users');
     });
   }
 }
