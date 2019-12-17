@@ -44,7 +44,6 @@ export class RestaurantAccountComponent implements OnInit {
         this.accountAddedSuccessfully = true;
         this.router.navigate(['/restaurant/', this.restaurant.id]);
       }, (error) => {
-        console.log(error);
         this.isLoading = false;
         this.error = 'An error occurred';
       });

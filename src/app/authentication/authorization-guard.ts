@@ -17,7 +17,7 @@ export class AuthorizationGuard implements CanActivate {
       const auth = !!user;
       if (auth) {
         const userAuthorities = user.authorities;
-        return userAuthorities.includes('ROLE_ADMIN');
+        return userAuthorities.includes('ROLE_SUPER_ADMIN') || userAuthorities.includes('ROLE_ADMIN');
       } else {
         return this.router.createUrlTree(['/home']);
       }
