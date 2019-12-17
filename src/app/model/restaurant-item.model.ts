@@ -7,7 +7,7 @@ export class RestaurantItem {
   public phoneNumber: string;
   public logo: ArrayBuffer | string;
   public logoImage: any;
-  public restaurantAccountDetails: RestaurantAccountDetails
+  public restaurantAccountDetails: RestaurantAccountDetails;
 
   constructor(id: number, name: string, address: string, phoneNumber: string,
               restaurantAccountDetails: RestaurantAccountDetails) {
