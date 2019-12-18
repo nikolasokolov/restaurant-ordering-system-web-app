@@ -8,7 +8,7 @@
       </div>
       <div *ngIf="!isLoading && restaurants">
         <div class="col-xs-4" *ngFor="let restaurant of restaurants">
-          <a mat-button [routerLink]="['/restaurant', restaurant.id]">{{restaurant.name}}
+          <a mat-button [routerLink]="['/restaurant-menu', restaurant.id]">{{restaurant.name}}
             <img *ngIf="restaurant.logoImage" [src]="restaurant.logoImage" class="img-responsive size" alt="logo"></a>
         </div>
       </div>
