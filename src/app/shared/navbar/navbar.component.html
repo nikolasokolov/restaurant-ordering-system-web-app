@@ -2,9 +2,14 @@
   <div class="col-xs-4">
     <button mat-button routerLink="home" class="text-center">
       {{userDetails.company !== null ? userDetails.company.name : userDetails.username.toUpperCase()}}</button>
-    <button mat-button routerLink="companies" *ngIf="userDetails.authorities.toString().endsWith('ADMIN')" class="text-center">Companies</button>
-    <button mat-button routerLink="restaurants" *ngIf="userDetails.authorities.toString().endsWith('ADMIN')" class="text-center">Restaurants</button>
-    <button mat-button routerLink="users" *ngIf="userDetails.authorities.toString().endsWith('ADMIN')" class="text-center">Users</button>
+    <button mat-button routerLink="companies"
+            *ngIf="userDetails.authorities.toString().endsWith('ADMIN')" class="text-center">Companies</button>
+    <button mat-button routerLink="restaurants"
+            *ngIf="userDetails.authorities.toString().endsWith('ADMIN')" class="text-center">Restaurants</button>
+    <button mat-button routerLink="users"
+            *ngIf="userDetails.authorities.toString().endsWith('ADMIN')" class="text-center">Users</button>
+    <button mat-button routerLink="restaurant-menu-management"
+            *ngIf="userDetails.authorities.toString().endsWith('RESTAURANT')" class="text-center">Menu</button>
   </div>
   <div class="col-xs-2 col-xs-offset-6">
     <button mat-icon-button [matMenuTriggerFor]="menu">

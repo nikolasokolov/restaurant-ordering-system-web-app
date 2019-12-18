@@ -15,6 +15,7 @@ import {RestaurantAccountComponent} from './restaurant/restaurant-account/restau
 import {UserListComponent} from './user/user-list/user-list.component';
 import {UserAddComponent} from './user/user-add/user-add.component';
 import {RestaurantMenuComponent} from './restaurant/restaurant-menu/restaurant-menu.component';
+import {RestaurantMenuManagementComponent} from './restaurant/restaurant-menu-management/restaurant-menu-management.component';
 
 
 const routes: Routes = [
@@ -36,7 +37,8 @@ const routes: Routes = [
   { path: 'users/:id', component: UserListComponent, canActivate: [AuthorizationGuard] },
   { path: 'user-add', component: UserAddComponent, canActivate: [AuthorizationGuard] },
   { path: 'user-add/:id', component: UserAddComponent, canActivate: [AuthorizationGuard] },
-  { path: 'restaurant-menu/:id', component: RestaurantMenuComponent, canActivate: [AuthorizationGuard] }
+  { path: 'restaurant-menu/:id', component: RestaurantMenuComponent, canActivate: [AuthorizationGuard] },
+  { path: 'restaurant-menu-management', component: RestaurantMenuManagementComponent, canActivate: [AuthenticationGuard] }
 ];
 
 @NgModule({

@@ -74,6 +74,7 @@ export class AuthenticationService {
   logout() {
     this.user.next(null);
     this.userDetails.next(null);
+    this.restaurants.next(null);
     localStorage.removeItem('user');
     localStorage.removeItem('Authorization');
     localStorage.removeItem('userDetails');
@@ -115,15 +116,18 @@ export class AuthenticationService {
   }
 
   getUserRestaurants() {
-    const userId = this.userDetails.getValue().id;
-    return this.httpClient.get('https://localhost:8080/main/user/' + userId + '/restaurants')
-      .pipe(tap((response: any[]) => {
-        this.restaurants.next(response);
-        for (const restaurantItem of response) {
-          const objectURL = 'data:image/jpeg;base64,' + restaurantItem.logo;
-          restaurantItem.logoImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-        }
-    }));
+    const userDetails = this.getUserDetails();
+    const userId = userDetails.id;
+    if (!(userDetails.authorities.includes('ROLE_RESTAURANT') || userDetails.authorities.includes('ROLE_SUPER_ADMIN'))) {
+      return this.httpClient.get('https://localhost:8080/main/user/' + userId + '/restaurants')
+        .pipe(tap((response: any[]) => {
+          this.restaurants.next(response);
+          for (const restaurantItem of response) {
+            const objectURL = 'data:image/jpeg;base64,' + restaurantItem.logo;
+            restaurantItem.logoImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+          }
+      }));
+    }
   }
 
 }
