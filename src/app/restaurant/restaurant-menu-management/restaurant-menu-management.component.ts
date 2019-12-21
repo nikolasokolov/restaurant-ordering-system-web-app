@@ -12,6 +12,7 @@ import {AuthenticationService} from '../../authentication/authentication.service
 import {ConfirmationDialogComponent} from '../../shared/confirmation-dialog/confirmation-dialog.component';
 import {RestaurantMenuManagementService} from './restaurant-menu-management-service';
 import {MenuItem} from '../../model/menu-item.model';
+import {AddMenuItemDialogComponent} from '../../shared/add-menu-item-dialog/add-menu-item-dialog.component';
 
 @Component({
   selector: 'app-restaurant-menu-management',
@@ -57,27 +58,20 @@ export class RestaurantMenuManagementComponent implements OnInit {
     this.location.back();
   }
 
-  openDialog(id: number, username: string): void {
+  openDeleteMenuItemDialog(id: number, name: string): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '500px',
       height: '140px',
-      data: 'Are you sure you want to delete menu item ' + username + ' ?'
+      data: 'Are you sure you want to delete ' + name + ' from the menu ?'
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.deleteUser(id);
+        this.deleteMenuItem(id);
       }
     });
   }
 
-  private deleteUser(id: number) {
-    this.restaurantMenuManagementService.deleteMenuItem(id).subscribe(response => {
-      this.deleteRowDataTable(id, 'id', this.paginator, this.dataSource);
-    }, error => {
-    });
-  }
-
-  private deleteRowDataTable(recordId, idColumn, paginator, dataSource) {
+  deleteRowDataTable(recordId, idColumn, paginator, dataSource) {
     this.dataSource = dataSource.data;
     const itemIndex = this.menuItems.findIndex(obj => obj[idColumn] === recordId);
     dataSource.data.splice(itemIndex, 1);
@@ -93,5 +87,43 @@ export class RestaurantMenuManagementComponent implements OnInit {
     }, error => {
       this.isLoading = false;
     });
+  }
+
+  openAddMenuItemDialog() {
+    const dialogRef = this.dialog.open(AddMenuItemDialogComponent, {
+      width: '500px',
+      height: '400px',
+      data: new MenuItem('', '', null)
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // this.deleteUser(id);
+      }
+    });
+  }
+
+  openEditMenuItemDialog(id: number) {
+    let menuItemForEdit = null;
+    for (const menuItem of this.menuItems) {
+      if (menuItem.id === id) {
+        menuItemForEdit = menuItem;
+      }
+    }
+    const dialogRef = this.dialog.open(AddMenuItemDialogComponent, {
+      width: '500px',
+      height: '400px',
+      data: menuItemForEdit
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // this.editMenuItem(id);
+      }
+    });
+  }
+
+  deleteMenuItem(id: number) {
+    this.restaurantMenuManagementService.deleteMenuItem(id).subscribe(() => {
+      this.deleteRowDataTable(id, 'id', this.paginator, this.dataSource);
+    }, () => {});
   }
 }

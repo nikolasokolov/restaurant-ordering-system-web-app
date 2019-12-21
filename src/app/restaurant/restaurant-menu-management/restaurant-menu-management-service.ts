@@ -11,6 +11,6 @@ export class RestaurantMenuManagementService {
   }
 
   deleteMenuItem(id: number): Observable<any> {
-    return this.httpClient.get('https://localhost:8080/main/restaurant/menu-items/' + id);
+    return this.httpClient.delete('https://localhost:8080/main/restaurant/menu-item/' + id);
   }
 }

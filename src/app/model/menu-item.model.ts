@@ -1,10 +1,10 @@
 export class MenuItem {
-  public id: number;
+  public id?: number;
   public type: string;
   public name: string;
   public price: number;
 
-  constructor(id: number, type: string, name: string, price: number) {
+  constructor(type: string, name: string, price: number, id?: number) {
     this.id = id;
     this.type = type;
     this.name = name;

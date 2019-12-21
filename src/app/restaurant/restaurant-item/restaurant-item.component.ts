@@ -7,7 +7,6 @@ import {MatDialog} from '@angular/material';
 import {RestaurantItem} from '../../model/restaurant-item.model';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Location} from '@angular/common';
-import {RestaurantAccount} from '../../model/restaurant-account.model';
 import {AuthenticationService} from '../../authentication/authentication.service';
 
 @Component({

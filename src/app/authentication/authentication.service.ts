@@ -105,12 +105,12 @@ export class AuthenticationService {
 
     if (loadedUser.token) {
       const expirationDuration = new Date(user.expirationDate).getTime() - new Date().getTime();
-      if (expirationDuration > 1000) {
+      if (expirationDuration > 5000) {
         this.user.next(loadedUser);
         this.userDetails.next(loadedUserDetails);
         this.autoLogout(expirationDuration);
       } else {
-        localStorage.clear();
+        this.logout();
       }
     }
   }
