@@ -4,7 +4,7 @@ export class MenuItem {
   public name: string;
   public price: number;
 
-  constructor(type: string, name: string, price: number, id?: number) {
+  constructor(name: string, type: string, price: number, id?: number) {
     this.id = id;
     this.type = type;
     this.name = name;

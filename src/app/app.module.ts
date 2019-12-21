@@ -28,7 +28,7 @@ import { UserAddComponent } from './user/user-add/user-add.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { RestaurantMenuComponent } from './restaurant/restaurant-menu/restaurant-menu.component';
 import { RestaurantMenuManagementComponent } from './restaurant/restaurant-menu-management/restaurant-menu-management.component';
-import { AddMenuItemDialogComponent } from './shared/add-menu-item-dialog/add-menu-item-dialog.component';
+import { MenuItemEditComponent } from './restaurant/menu-item-edit/menu-item-edit.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +51,7 @@ import { AddMenuItemDialogComponent } from './shared/add-menu-item-dialog/add-me
     UserListComponent,
     RestaurantMenuComponent,
     RestaurantMenuManagementComponent,
-    AddMenuItemDialogComponent
+    MenuItemEditComponent
   ],
     imports: [
         BrowserModule,
@@ -76,8 +76,7 @@ import { AddMenuItemDialogComponent } from './shared/add-menu-item-dialog/add-me
   ],
   entryComponents: [
     ConfirmationDialogComponent,
-    AddRestaurantDialogComponent,
-    AddMenuItemDialogComponent
+    AddRestaurantDialogComponent
   ],
   bootstrap: [AppComponent],
 })

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddMenuItemDialogComponent } from './add-menu-item-dialog.component';
+import { MenuItemEditComponent } from './menu-item-edit.component';
 
-describe('AddMenuItemDialogComponent', () => {
-  let component: AddMenuItemDialogComponent;
-  let fixture: ComponentFixture<AddMenuItemDialogComponent>;
+describe('MenuItemEditComponent', () => {
+  let component: MenuItemEditComponent;
+  let fixture: ComponentFixture<MenuItemEditComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddMenuItemDialogComponent ]
+      declarations: [ MenuItemEditComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddMenuItemDialogComponent);
+    fixture = TestBed.createComponent(MenuItemEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

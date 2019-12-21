@@ -1,18 +1,14 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Users} from '../../model/users.model';
-import {UserDetails} from '../../model/user-details.model';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {Location} from '@angular/common';
-import {UserService} from '../../user/user-service';
 import {MatDialog} from '@angular/material';
 import {ActivatedRoute} from '@angular/router';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import {ConfirmationDialogComponent} from '../../shared/confirmation-dialog/confirmation-dialog.component';
 import {RestaurantMenuManagementService} from './restaurant-menu-management-service';
 import {MenuItem} from '../../model/menu-item.model';
-import {AddMenuItemDialogComponent} from '../../shared/add-menu-item-dialog/add-menu-item-dialog.component';
 
 @Component({
   selector: 'app-restaurant-menu-management',
@@ -21,9 +17,8 @@ import {AddMenuItemDialogComponent} from '../../shared/add-menu-item-dialog/add-
 })
 export class RestaurantMenuManagementComponent implements OnInit {
   isLoading = false;
-  restaurantId = null;
+  userId = null;
   menuItems: MenuItem[] = [];
-  loggedInUser: UserDetails = null;
 
   displayedColumns: string[] = ['id', 'type', 'name', 'price', 'actions'];
   dataSource = new MatTableDataSource(this.menuItems);
@@ -37,10 +32,9 @@ export class RestaurantMenuManagementComponent implements OnInit {
 
   ngOnInit() {
     this.authenticationService.userDetails.subscribe(response => {
-      this.loggedInUser = response;
+      this.userId = response.id;
     });
-    this.restaurantId = this.loggedInUser.id;
-    this.getMenuItemsForRestaurant(this.restaurantId);
+    this.getMenuItemsForRestaurant(this.userId);
     this.dataSource = new MatTableDataSource(this.menuItems);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -89,41 +83,10 @@ export class RestaurantMenuManagementComponent implements OnInit {
     });
   }
 
-  openAddMenuItemDialog() {
-    const dialogRef = this.dialog.open(AddMenuItemDialogComponent, {
-      width: '500px',
-      height: '400px',
-      data: new MenuItem('', '', null)
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        // this.deleteUser(id);
-      }
-    });
-  }
-
-  openEditMenuItemDialog(id: number) {
-    let menuItemForEdit = null;
-    for (const menuItem of this.menuItems) {
-      if (menuItem.id === id) {
-        menuItemForEdit = menuItem;
-      }
-    }
-    const dialogRef = this.dialog.open(AddMenuItemDialogComponent, {
-      width: '500px',
-      height: '400px',
-      data: menuItemForEdit
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        // this.editMenuItem(id);
-      }
-    });
-  }
-
   deleteMenuItem(id: number) {
     this.restaurantMenuManagementService.deleteMenuItem(id).subscribe(() => {
       this.deleteRowDataTable(id, 'id', this.paginator, this.dataSource);
     }, () => {});
   }
+
 }

@@ -1,5 +1,6 @@
 <div class="container-fluid">
-  <div class="row login-wrapper">
+  <button mat-button (click)="goBack()" style="margin-top: 10px;"><mat-icon>keyboard_backspace</mat-icon></button>
+  <div class="row login-wrapper" style="margin-top: 80px;">
     <div *ngIf="isLoading" style="text-align: center;">
       <app-loading-spinner></app-loading-spinner>
     </div>
@@ -25,8 +26,10 @@
             <mat-hint *ngIf="!price.valid && price.touched">Price is required</mat-hint>
           </mat-form-field>
         </mat-card-content>
-        <button mat-raised-button color="primary" class="btn-block" *ngIf="isInEdit">Edit menu item</button>
-        <button mat-raised-button color="primary" class="btn-block" *ngIf="!isInEdit">Create new menu item</button>
+        <button mat-raised-button color="primary" class="btn-block"
+          *ngIf="isInEdit">Edit menu item</button>
+        <button mat-raised-button color="primary" class="btn-block"
+          *ngIf="!isInEdit">Create new menu item</button>
       </form>
       <mat-error *ngIf="error" class="text-center">{{error}}</mat-error>
     </mat-card>
