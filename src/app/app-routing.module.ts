@@ -39,7 +39,7 @@ const routes: Routes = [
   { path: 'user-add', component: UserAddComponent, canActivate: [AuthorizationGuard] },
   { path: 'user-add/:id', component: UserAddComponent, canActivate: [AuthorizationGuard] },
   { path: 'restaurant-menu/:id', component: RestaurantMenuComponent, canActivate: [AuthorizationGuard] },
-  { path: 'restaurant-menu-management', component: RestaurantMenuManagementComponent, canActivate: [AuthenticationGuard] },
+  { path: 'menu-management', component: RestaurantMenuManagementComponent, canActivate: [AuthenticationGuard] },
   { path: 'menu-item/add', component: MenuItemEditComponent, canActivate: [AuthenticationGuard] },
   { path: 'menu-item/edit/:id', component: MenuItemEditComponent, canActivate: [AuthenticationGuard] }
 ];

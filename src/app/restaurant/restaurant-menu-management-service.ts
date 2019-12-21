@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {MenuItem} from '../../model/menu-item.model';
+import {MenuItem} from '../model/menu-item.model';
 
 @Injectable({providedIn: 'root'})
 export class RestaurantMenuManagementService {

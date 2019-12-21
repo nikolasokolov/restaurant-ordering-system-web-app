@@ -36,8 +36,9 @@
             <input id="companyLogo" name="companyLogo" class="form-control" type="file" (change)="onFileSelected($event)">
           </div>
         </mat-card-content>
-        <button mat-raised-button color="primary" class="btn-block" *ngIf="isInEdit">Edit company</button>
-        <button mat-raised-button color="primary" class="btn-block" *ngIf="!isInEdit">Create new company</button>
+        <button mat-raised-button color="primary" class="btn-block" *ngIf="isInEdit">Edit</button>
+        <button mat-raised-button class="btn-block" style="background-color: green; color: white;"
+                *ngIf="!isInEdit">Create</button>
       </form>
       <mat-error *ngIf="error" class="text-center">{{error}}</mat-error>
     </mat-card>

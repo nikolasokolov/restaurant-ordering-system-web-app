@@ -8,7 +8,7 @@
             *ngIf="userDetails.authorities.toString().endsWith('ADMIN')" class="text-center">Restaurants</button>
     <button mat-button routerLink="users"
             *ngIf="userDetails.authorities.toString().endsWith('ADMIN')" class="text-center">Users</button>
-    <button mat-button routerLink="restaurant-menu-management"
+    <button mat-button routerLink="menu-management"
             *ngIf="userDetails.authorities.toString().endsWith('RESTAURANT')" class="text-center">Menu</button>
   </div>
   <div class="col-xs-2 col-xs-offset-6">

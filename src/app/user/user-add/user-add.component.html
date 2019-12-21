@@ -44,7 +44,7 @@
         <button mat-raised-button color="primary"
                 [disabled]="(username.invalid && username.touched) || (email.invalid && email.touched)
                 || (newPassword.invalid && newPassword.touched) || (confirmPassword.invalid && confirmPassword.touched)"
-                class="btn-block">Create user</button>
+                class="btn-block" style="background-color: green; color: white;">Create</button>
       </form>
       <mat-error *ngIf="error" class="text-center">{{error}}</mat-error>
     </mat-card>

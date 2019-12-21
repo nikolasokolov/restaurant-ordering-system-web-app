@@ -7,8 +7,8 @@ import {MatDialog} from '@angular/material';
 import {ActivatedRoute} from '@angular/router';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import {ConfirmationDialogComponent} from '../../shared/confirmation-dialog/confirmation-dialog.component';
-import {RestaurantMenuManagementService} from './restaurant-menu-management-service';
 import {MenuItem} from '../../model/menu-item.model';
+import {RestaurantMenuManagementService} from '../restaurant-menu-management-service';
 
 @Component({
   selector: 'app-restaurant-menu-management',
@@ -56,7 +56,7 @@ export class RestaurantMenuManagementComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '500px',
       height: '140px',
-      data: 'Are you sure you want to delete ' + name + ' from the menu ?'
+      data: 'Are you sure you want to remove ' + name + ' from the menu ?'
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
