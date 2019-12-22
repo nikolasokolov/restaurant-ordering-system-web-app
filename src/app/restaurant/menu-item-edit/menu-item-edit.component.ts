@@ -46,25 +46,29 @@ export class MenuItemEditComponent implements OnInit {
     const type = this.selectedType;
     const price = menuItemForm.value.price;
     const allergens = menuItemForm.value.allergens;
-    let menuItem;
-    if (id !== undefined) {
-      menuItem = new MenuItem(name, type, allergens, price, id);
-      this.restaurantMenuManagementService.editMenuItem(menuItem, this.userId).subscribe(response => {
-        this.isLoading = false;
-        this.router.navigate(['/menu-management']);
-      }, error => {
-        this.isLoading = false;
-        this.error = 'An error occurred';
-      });
+    if (name.value < 5 || type.length < 5 || isNaN(price) || type.length < 5) {
+      this.error = 'Please enter valid values';
     } else {
-      menuItem = new MenuItem(name, type, allergens, price);
-      this.restaurantMenuManagementService.addMenuItem(menuItem, this.userId).subscribe(response => {
-        this.isLoading = false;
-        this.router.navigate(['/menu-management']);
-      }, error => {
-        this.isLoading = false;
-        this.error = 'An error occurred';
-      });
+      let menuItem;
+      if (id !== undefined) {
+        menuItem = new MenuItem(name, type, allergens, price, id);
+        this.restaurantMenuManagementService.editMenuItem(menuItem, this.userId).subscribe(response => {
+          this.isLoading = false;
+          this.router.navigate(['/menu-management']);
+        }, error => {
+          this.isLoading = false;
+          this.error = 'An error occurred';
+        });
+      } else {
+        menuItem = new MenuItem(name, type, allergens, price);
+        this.restaurantMenuManagementService.addMenuItem(menuItem, this.userId).subscribe(response => {
+          this.isLoading = false;
+          this.router.navigate(['/menu-management']);
+        }, error => {
+          this.isLoading = false;
+          this.error = 'An error occurred';
+        });
+      }
     }
   }
 

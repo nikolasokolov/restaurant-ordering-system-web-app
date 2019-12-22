@@ -17,7 +17,7 @@
           </mat-form-field>
           <mat-form-field class="example-full-width">
             <mat-label>Select type</mat-label>
-            <mat-select name="type" [(ngModel)]="selectedType"
+            <mat-select name="type" required [(ngModel)]="selectedType"
               (selectionChange)="changeType($event.value)">
               <mat-option *ngFor="let type of types" [value]="type">
                 {{type}}
@@ -36,8 +36,9 @@
         </mat-card-content>
         <button mat-raised-button color="primary" class="btn-block"
           *ngIf="isInEdit" [disabled]="!selectedType">Edit</button>
-        <button mat-raised-button class="btn-block"*ngIf="!isInEdit" [disabled]="!selectedType"
-          [ngStyle]="selectedType && {'background-color': 'green', 'color': 'white'}">Create</button>
+        <button mat-raised-button class="btn-block" *ngIf="!isInEdit"
+          [disabled]="(name.invalid && name.touched) || (price.invalid && price.touched)"
+          [ngStyle]="{'background-color': 'green', 'color': 'white'}">Create</button>
       </form>
       <mat-error *ngIf="error" class="text-center">{{error}}</mat-error>
     </mat-card>
