@@ -74,7 +74,6 @@ export class MenuItemEditComponent implements OnInit {
 
   changeType(type: string) {
     this.selectedType = type;
-    console.log(this.selectedType);
   }
 
   goBack() {

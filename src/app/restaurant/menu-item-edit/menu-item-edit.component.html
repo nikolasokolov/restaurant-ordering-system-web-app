@@ -4,7 +4,7 @@
     <div *ngIf="isLoading" style="text-align: center;">
       <app-loading-spinner></app-loading-spinner>
     </div>
-    <mat-card class="box" *ngIf="!isLoading">
+    <mat-card class="box" *ngIf="!isLoading && menuItem">
       <mat-card-header>
         <mat-card-title>{{isInEdit ? 'Edit menu item' : 'Create new menu item'}}</mat-card-title>
       </mat-card-header>
