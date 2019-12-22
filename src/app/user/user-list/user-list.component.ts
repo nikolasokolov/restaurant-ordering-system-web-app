@@ -83,7 +83,7 @@ export class UserListComponent implements OnInit {
     });
   }
 
-  private deleteUser(id: number) {
+  deleteUser(id: number) {
     this.userService.deleteUser(id).subscribe(response => {
       this.deleteRowDataTable(id, 'id', this.paginator, this.dataSource);
     }, error => {

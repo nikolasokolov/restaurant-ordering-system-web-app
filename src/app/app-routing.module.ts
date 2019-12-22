@@ -14,6 +14,9 @@ import {RestaurantItemComponent} from './restaurant/restaurant-item/restaurant-i
 import {RestaurantAccountComponent} from './restaurant/restaurant-account/restaurant-account.component';
 import {UserListComponent} from './user/user-list/user-list.component';
 import {UserAddComponent} from './user/user-add/user-add.component';
+import {RestaurantMenuComponent} from './restaurant/restaurant-menu/restaurant-menu.component';
+import {RestaurantMenuManagementComponent} from './restaurant/restaurant-menu-management/restaurant-menu-management.component';
+import {MenuItemEditComponent} from './restaurant/menu-item-edit/menu-item-edit.component';
 
 
 const routes: Routes = [
@@ -34,7 +37,11 @@ const routes: Routes = [
   { path: 'users', component: UserListComponent, canActivate: [AuthorizationGuard] },
   { path: 'users/:id', component: UserListComponent, canActivate: [AuthorizationGuard] },
   { path: 'user-add', component: UserAddComponent, canActivate: [AuthorizationGuard] },
-  { path: 'user-add/:id', component: UserAddComponent, canActivate: [AuthorizationGuard] }
+  { path: 'user-add/:id', component: UserAddComponent, canActivate: [AuthorizationGuard] },
+  { path: 'restaurant-menu/:id', component: RestaurantMenuComponent, canActivate: [AuthorizationGuard] },
+  { path: 'menu-management', component: RestaurantMenuManagementComponent, canActivate: [AuthenticationGuard] },
+  { path: 'menu-item/add', component: MenuItemEditComponent, canActivate: [AuthenticationGuard] },
+  { path: 'menu-item/edit/:id', component: MenuItemEditComponent, canActivate: [AuthenticationGuard] }
 ];
 
 @NgModule({

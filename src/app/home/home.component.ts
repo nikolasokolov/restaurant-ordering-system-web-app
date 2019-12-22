@@ -26,7 +26,9 @@ export class HomeComponent implements OnInit {
     if (!this.restaurantsFetched) {
       const userDetails = JSON.parse(localStorage.getItem('userDetails'));
       if (userDetails !== null) {
-        this.getRestaurantsForUser(Number(userDetails.id));
+        if (!userDetails.authorities.includes('ROLE_RESTAURANT') && !userDetails.authorities.includes('ROLE_SUPER_ADMIN')) {
+          this.getRestaurantsForUser(Number(userDetails.id));
+        }
       }
     }
   }

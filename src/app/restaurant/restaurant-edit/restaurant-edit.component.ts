@@ -31,7 +31,7 @@ export class RestaurantEditComponent implements OnInit {
         this.isInEdit = true;
       });
     } else {
-      this.restaurant = new Company('', '', '');
+      this.restaurant = new Restaurant('', '', '');
     }
   }
 
