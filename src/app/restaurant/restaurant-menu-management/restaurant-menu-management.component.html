@@ -34,6 +34,11 @@
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Price</th>
               <td mat-cell *matCellDef="let row"> {{row.price}} </td>
             </ng-container>
+            <ng-container matColumnDef="allergens">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Allergens</th>
+              <td mat-cell *matCellDef="let row">
+                {{row.allergens === null || row.allergens === '' ? 'None' : row.allergens}} </td>
+            </ng-container>
             <ng-container matColumnDef="actions">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions</th>
               <td mat-cell *matCellDef="let row">

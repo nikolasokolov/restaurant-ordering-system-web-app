@@ -17,6 +17,8 @@ export class MenuItemEditComponent implements OnInit {
   isInEdit = false;
   menuItem: MenuItem;
   userId = null;
+  selectedType: string;
+  types: string[] = ['SALAD', 'PASTA', 'PIZZA', 'SANDVICH', 'OTHER'];
 
   constructor(private restaurantMenuManagementService: RestaurantMenuManagementService,
               private authenticationService: AuthenticationService, private activatedRoute: ActivatedRoute,
@@ -31,20 +33,22 @@ export class MenuItemEditComponent implements OnInit {
       this.restaurantMenuManagementService.getMenuItem(id).subscribe(response => {
         this.menuItem = response;
         this.isInEdit = true;
+        this.selectedType = this.menuItem.type;
       });
     } else {
-      this.menuItem = new MenuItem('', '', null);
+      this.menuItem = new MenuItem('', '', '', null);
     }
   }
 
   handleMenuItemForm(menuItemForm: NgForm) {
     const id = this.menuItem.id;
     const name = menuItemForm.value.name;
-    const type = menuItemForm.value.type;
+    const type = this.selectedType;
     const price = menuItemForm.value.price;
+    const allergens = menuItemForm.value.allergens;
     let menuItem;
     if (id !== undefined) {
-      menuItem = new MenuItem(name, type, price, id);
+      menuItem = new MenuItem(name, type, allergens, price, id);
       this.restaurantMenuManagementService.editMenuItem(menuItem, this.userId).subscribe(response => {
         this.isLoading = false;
         this.router.navigate(['/menu-management']);
@@ -53,7 +57,7 @@ export class MenuItemEditComponent implements OnInit {
         this.error = 'An error occurred';
       });
     } else {
-      menuItem = new MenuItem(name, type, price);
+      menuItem = new MenuItem(name, type, allergens, price);
       this.restaurantMenuManagementService.addMenuItem(menuItem, this.userId).subscribe(response => {
         this.isLoading = false;
         this.router.navigate(['/menu-management']);
@@ -62,6 +66,11 @@ export class MenuItemEditComponent implements OnInit {
         this.error = 'An error occurred';
       });
     }
+  }
+
+  changeType(type: string) {
+    this.selectedType = type;
+    console.log(this.selectedType);
   }
 
   goBack() {

@@ -16,20 +16,28 @@
             <mat-hint *ngIf="!name.valid && name.touched">Name is required</mat-hint>
           </mat-form-field>
           <mat-form-field class="example-full-width">
-            <input matInput type="text" placeholder="Type" [(ngModel)]="menuItem.type"
-                   ngModel name="type" required #type="ngModel"/>
-            <mat-hint *ngIf="!type.valid && type.touched">Type is required</mat-hint>
+            <mat-label>Select type</mat-label>
+            <mat-select name="type" [(ngModel)]="selectedType"
+              (selectionChange)="changeType($event.value)">
+              <mat-option *ngFor="let type of types" [value]="type">
+                {{type}}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
           <mat-form-field class="example-full-width">
             <input matInput type="text" placeholder="Price" [(ngModel)]="menuItem.price"
                    ngModel name="price" required #price="ngModel"/>
             <mat-hint *ngIf="!price.valid && price.touched">Price is required</mat-hint>
           </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <input matInput type="text" placeholder="Allergens (comma separated, blank if none)"
+              [(ngModel)]="menuItem.allergens" ngModel name="allergens" #allergens="ngModel"/>
+          </mat-form-field>
         </mat-card-content>
         <button mat-raised-button color="primary" class="btn-block"
-          *ngIf="isInEdit">Edit</button>
-        <button mat-raised-button color="primary" class="btn-block" style="background-color: green; color: white;"
-          *ngIf="!isInEdit">Create</button>
+          *ngIf="isInEdit" [disabled]="!selectedType">Edit</button>
+        <button mat-raised-button class="btn-block"*ngIf="!isInEdit" [disabled]="!selectedType"
+          [ngStyle]="selectedType && {'background-color': 'green', 'color': 'white'}">Create</button>
       </form>
       <mat-error *ngIf="error" class="text-center">{{error}}</mat-error>
     </mat-card>

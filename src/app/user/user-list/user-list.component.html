@@ -43,7 +43,8 @@
             <ng-container matColumnDef="actions">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions</th>
               <td mat-cell *matCellDef="let row">
-                <button *ngIf="loggedInUser.username !== row.username" mat-button color="warn" (click)="openDialog(row.id, row.username)">
+                <button *ngIf="loggedInUser.username !== row.username" mat-button color="warn"
+                        (click)="openDialog(row.id, row.username)">
                   <mat-icon>delete</mat-icon>
                 </button>
               </td>
