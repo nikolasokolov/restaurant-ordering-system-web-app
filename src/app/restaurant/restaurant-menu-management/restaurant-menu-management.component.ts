@@ -20,7 +20,7 @@ export class RestaurantMenuManagementComponent implements OnInit {
   userId = null;
   menuItems: MenuItem[] = [];
 
-  displayedColumns: string[] = ['id', 'type', 'name', 'price', 'allergens', 'actions'];
+  displayedColumns: string[] = ['id', 'type', 'name', 'price', 'allergens', 'isAvailable', 'actions'];
   dataSource = new MatTableDataSource(this.menuItems);
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
