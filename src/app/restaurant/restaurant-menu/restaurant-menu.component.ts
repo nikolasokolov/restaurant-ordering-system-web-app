@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {RestaurantMenuManagementService} from '../restaurant-menu-management-service';
 import {MenuItem} from '../../model/menu-item.model';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Route} from '@angular/router';
 import {Location} from '@angular/common';
 
 @Component({
@@ -13,12 +13,14 @@ export class RestaurantMenuComponent implements OnInit {
   error = null;
   isLoading = false;
   typeToMenuItems: Map<string, MenuItem[]>;
+  restaurant: string;
 
   constructor(private restaurantMenuManagementService: RestaurantMenuManagementService,
               private activatedRoute: ActivatedRoute, private location: Location) { }
 
   ngOnInit() {
     const restaurantId = this.activatedRoute.snapshot.params.id;
+    this.restaurant = this.activatedRoute.snapshot.queryParamMap.get('restaurant');
     this.getRestaurantMenu(restaurantId);
   }
 
