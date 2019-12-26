@@ -21,7 +21,8 @@
           <h4 class="text-center" *ngFor="let menuItem of typeToMenuItem.value">
             {{menuItem.name}}
             <mat-icon *ngIf="menuItem.allergens" class="allergens-tooltip-button"
-                      matTooltipClass="allergens-tooltip" [matTooltip]="'Allergens: ' + menuItem.allergens">info</mat-icon>
+                      matTooltipClass="allergens-tooltip"
+                      [matTooltip]="'Allergens: ' + menuItem.allergens">info</mat-icon>
           </h4>
         </div>
       </div>
@@ -29,12 +30,27 @@
     <hr/>
     <br/>
     <div class="row">
-      <div class="col-xs-4 col-xs-offset-4">
-        <form class="example-form">
+      <div class="col-xs-8 col-xs-offset-2 text-center">
+        <form>
           <mat-form-field class="example-full-width">
             <input matInput placeholder="Choose food"/>
           </mat-form-field> &nbsp; &nbsp;
-          <button mat-raised-button color="primary">Order</button>
+          <mat-form-field>
+            <mat-label>Choose time</mat-label>
+            <mat-select name="restaurant" [(ngModel)]="selectedTimePeriod"
+                        (selectionChange)="changeTimePeriod($event.value)">
+              <mat-option *ngFor="let timePeriod of timePeriods" [value]="timePeriod">
+                {{timePeriod}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field> &nbsp;
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Additional inquires (if any)"/>
+          </mat-form-field>
+          <br/>
+          <div class="text-center">
+            <button mat-raised-button color="primary">Order</button>
+          </div>
         </form>
       </div>
     </div>

@@ -14,6 +14,8 @@ export class RestaurantMenuComponent implements OnInit {
   isLoading = false;
   typeToMenuItems: Map<string, MenuItem[]>;
   restaurant: string;
+  timePeriods = ['11:00', '12:00', '13:00'];
+  selectedTimePeriod = '11:00';
 
   constructor(private restaurantMenuManagementService: RestaurantMenuManagementService,
               private activatedRoute: ActivatedRoute, private location: Location) { }
@@ -36,6 +38,10 @@ export class RestaurantMenuComponent implements OnInit {
 
   goBack() {
     this.location.back();
+  }
+
+  changeTimePeriod(timePeriod: any) {
+    this.selectedTimePeriod = timePeriod;
   }
 
 }
