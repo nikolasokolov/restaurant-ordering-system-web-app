@@ -1,10 +1,10 @@
 <div class="container-fluid">
   <button mat-button (click)="goBack()" style="margin-top: 10px;"><mat-icon>keyboard_backspace</mat-icon></button>
-  <div class="row login-wrapper" style="margin-top: 80px;">
+  <div class="row login-wrapper" style="margin-top: 60px;">
     <div *ngIf="isLoading" style="text-align: center;">
       <app-loading-spinner></app-loading-spinner>
     </div>
-    <mat-card class="box" *ngIf="!isLoading">
+    <mat-card class="box" *ngIf="!isLoading && menuItem">
       <mat-card-header>
         <mat-card-title>{{isInEdit ? 'Edit menu item' : 'Create new menu item'}}</mat-card-title>
       </mat-card-header>
@@ -33,6 +33,11 @@
             <input matInput type="text" placeholder="Allergens (comma separated, blank if none)"
               [(ngModel)]="menuItem.allergens" ngModel name="allergens" #allergens="ngModel"/>
           </mat-form-field>
+          <mat-radio-group name="isAvailable" ngModel required [(ngModel)]="defaultChecked">
+            <label style="font-weight: 500; font-size: 15px;">Is Available</label>           
+            <mat-radio-button value="true">Yes</mat-radio-button> &nbsp; &nbsp;
+            <mat-radio-button value="false">No</mat-radio-button>
+          </mat-radio-group>
         </mat-card-content>
         <button mat-raised-button color="primary" class="btn-block"
           *ngIf="isInEdit" [disabled]="!selectedType">Edit</button>

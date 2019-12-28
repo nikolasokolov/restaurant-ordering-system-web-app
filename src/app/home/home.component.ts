@@ -3,7 +3,6 @@ import {HomeService} from './home-service';
 import {AuthenticationService} from '../authentication/authentication.service';
 import {RestaurantItem} from '../model/restaurant-item.model';
 import {DomSanitizer} from '@angular/platform-browser';
-import {UserDetails} from '../model/user-details.model';
 
 @Component({
   selector: 'app-home',

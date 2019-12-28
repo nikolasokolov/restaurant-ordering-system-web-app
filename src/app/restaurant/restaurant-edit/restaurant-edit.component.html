@@ -10,7 +10,7 @@
     <div *ngIf="isLoading" style="text-align: center;">
       <app-loading-spinner></app-loading-spinner>
     </div>
-    <mat-card class="box" *ngIf="!isLoading">
+    <mat-card class="box" *ngIf="!isLoading && restaurant">
       <mat-card-header>
         <mat-card-title>{{isInEdit ? 'Edit restaurant' : 'Create new restaurant'}}</mat-card-title>
       </mat-card-header>

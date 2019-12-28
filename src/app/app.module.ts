@@ -29,6 +29,7 @@ import { UserListComponent } from './user/user-list/user-list.component';
 import { RestaurantMenuComponent } from './restaurant/restaurant-menu/restaurant-menu.component';
 import { RestaurantMenuManagementComponent } from './restaurant/restaurant-menu-management/restaurant-menu-management.component';
 import { MenuItemEditComponent } from './restaurant/menu-item-edit/menu-item-edit.component';
+import {KeyToArrayPipe} from './pipes/keys.pipe';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { MenuItemEditComponent } from './restaurant/menu-item-edit/menu-item-edi
     UserListComponent,
     RestaurantMenuComponent,
     RestaurantMenuManagementComponent,
-    MenuItemEditComponent
+    MenuItemEditComponent,
+    KeyToArrayPipe
   ],
     imports: [
         BrowserModule,

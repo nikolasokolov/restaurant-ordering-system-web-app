@@ -26,4 +26,8 @@ export class RestaurantMenuManagementService {
   getMenuItem(id: number): Observable<any> {
     return this.httpClient.get('https://localhost:8080/main/restaurant/menu-items/' + id);
   }
+
+  getRestaurantMenu(restaurantId: number): Observable<any> {
+    return this.httpClient.get('https://localhost:8080/main/restaurant/' + restaurantId + '/menu');
+  }
 }
