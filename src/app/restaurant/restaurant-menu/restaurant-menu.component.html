@@ -31,9 +31,15 @@
     <br/>
     <div class="row">
       <div class="col-xs-8 col-xs-offset-2 text-center">
-        <form>
+        <form #orderForm="ngForm" (ngSubmit)="submitOrder(orderForm)">
           <mat-form-field class="example-full-width">
-            <input matInput placeholder="Choose food"/>
+            <input type="text" placeholder="Choose an item"
+                   ngModel name="menuItem" required matInput [matAutocomplete]="auto" (keyup)="onKeyUp($event)">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let menuItem of filteredMenuItems" [value]="menuItem.name">
+                {{menuItem.name}}
+              </mat-option>
+            </mat-autocomplete>
           </mat-form-field> &nbsp; &nbsp;
           <mat-form-field>
             <mat-label>Choose time</mat-label>
@@ -45,7 +51,8 @@
             </mat-select>
           </mat-form-field> &nbsp;
           <mat-form-field class="example-full-width">
-            <input matInput placeholder="Additional inquires (if any)"/>
+            <input matInput ngModel name="comments" required
+                   placeholder="Additional inquires (if any)"/>
           </mat-form-field>
           <br/>
           <div class="text-center">
