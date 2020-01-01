@@ -14,4 +14,8 @@ export class OrderService {
   getUserOrder(userId: any, restaurantId: any): Observable<any> {
     return this.httpClient.get('https://localhost:8080/main/orders/user/' + userId);
   }
+
+  cancelOrder(id: number): Observable<any> {
+    return this.httpClient.delete('https://localhost:8080/main/orders/' + id + '/delete');
+  }
 }

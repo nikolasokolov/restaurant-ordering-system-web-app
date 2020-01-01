@@ -8,6 +8,8 @@ import {OrderService} from '../order-service';
 import {OrderRequest} from '../../model/order-request.model';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import {UserOrderResponse} from '../../model/user-order-response.model';
+import {ConfirmationDialogComponent} from '../../shared/confirmation-dialog/confirmation-dialog.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-restaurant-menu',
@@ -30,10 +32,12 @@ export class RestaurantMenuComponent implements OnInit {
   orderSuccess = false;
   isInEdit = false;
   isOrderForCurrentlyOpenRestaurant = null;
+  orderCanceled = null;
 
   constructor(private restaurantMenuManagementService: RestaurantMenuManagementService,
               private activatedRoute: ActivatedRoute, private location: Location,
-              private orderService: OrderService, private authenticationService: AuthenticationService) { }
+              private orderService: OrderService, private authenticationService: AuthenticationService,
+              public dialog: MatDialog) { }
 
   ngOnInit() {
     this.authenticationService.userDetails.subscribe(response => {
@@ -134,5 +138,32 @@ export class RestaurantMenuComponent implements OnInit {
 
   enableEditOrder() {
     this.isInEdit = true;
+  }
+
+  openDialog(id: number): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '500px',
+      height: '140px',
+      data: 'Are you sure you want to cancel your order ?'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.cancelOrder(id);
+      }
+    });
+  }
+
+  cancelOrder(id: number) {
+    this.orderService.cancelOrder(id).subscribe(response => {
+      this.orderCanceled = true;
+      this.hasUserOrdered = false;
+      this.orderSuccess = null;
+      this.isInEdit = false;
+      this.isOrderForCurrentlyOpenRestaurant = null;
+      this.userOrder = null;
+      this.orderCanceled = 'Order is successfully canceled';
+    }, error => {
+      this.orderCanceled = true;
+    });
   }
 }

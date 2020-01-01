@@ -1,6 +1,9 @@
 <div class="alert alert-success fadein text-center" role="alert" *ngIf="orderSuccess">
   <strong>Order was successfully submitted</strong>
 </div>
+<div class="alert alert-success fadein text-center" role="alert" *ngIf="orderCanceled">
+  <strong>{{orderCanceled}}</strong>
+</div>
 <div class="container-fluid">
   <button mat-button style="margin-top: 10px;" (click)="goBack()">
     <mat-icon>keyboard_backspace</mat-icon>
@@ -34,7 +37,7 @@
     <hr/>
     <br/>
     <div class="row" *ngIf="!isLoading">
-      <div class="col-xs-8 col-xs-offset-2 text-center" *ngIf="isOrderForCurrentlyOpenRestaurant">
+      <div class="col-xs-8 col-xs-offset-2 text-center" *ngIf="isOrderForCurrentlyOpenRestaurant || !hasUserOrdered">
         <form #orderForm="ngForm" (ngSubmit)="submitOrder(orderForm)">
           <fieldset [disabled]="hasUserOrdered && !isInEdit">
             <mat-form-field class="example-full-width">
@@ -61,14 +64,17 @@
               <input matInput ngModel name="comments" [ngModel]="userOrder ? userOrder.comments : ''" placeholder="Additional inquires (if any)"/>
             </mat-form-field>
             <br/>
-            <div class="text-center">
-              <button mat-raised-button color="primary" *ngIf="(isInEdit || !hasUserOrdered)" type="submit">{{isInEdit ? 'Edit Order' : 'Order'}}</button>
+            <div class="row text-center">
+              <button mat-raised-button color="primary"
+                      *ngIf="(isInEdit || !hasUserOrdered)" type="submit">{{isInEdit ? 'Edit Order' : 'Order'}}</button>
             </div>
           </fieldset>
-          <div class="text-center">
-            <button mat-raised-button color="default" *ngIf="!isInEdit && hasUserOrdered" (click)="enableEditOrder()">Edit Order</button>
-          </div>
         </form>
+        <div class="text-center">
+          <button mat-raised-button color="default" *ngIf="!isInEdit && hasUserOrdered"
+                  (click)="enableEditOrder()">Edit Order</button> &nbsp; &nbsp;
+          <button mat-raised-button color="warn" *ngIf="hasUserOrdered && !isInEdit" (click)="openDialog(userOrder.id)">Cancel Order</button>
+        </div>
       </div>
     </div>
   </div>
