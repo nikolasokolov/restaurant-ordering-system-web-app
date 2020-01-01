@@ -29,6 +29,7 @@ export class RestaurantMenuComponent implements OnInit {
   userOrder: UserOrderResponse = null;
   orderSuccess = false;
   isInEdit = false;
+  isOrderForCurrentlyOpenRestaurant = null;
 
   constructor(private restaurantMenuManagementService: RestaurantMenuManagementService,
               private activatedRoute: ActivatedRoute, private location: Location,
@@ -108,6 +109,7 @@ export class RestaurantMenuComponent implements OnInit {
     }
     this.orderService.submitOrder(orderRequest).subscribe(response => {
       this.userOrder = response;
+      this.isOrderForCurrentlyOpenRestaurant = this.userOrder.restaurantId === Number(this.restaurantId);
       this.hasUserOrdered = true;
       this.orderSuccess = true;
       this.isInEdit = false;
@@ -122,6 +124,7 @@ export class RestaurantMenuComponent implements OnInit {
       if (this.userOrder !== null) {
         this.hasUserOrdered = true;
         this.isInEdit = false;
+        this.isOrderForCurrentlyOpenRestaurant = this.userOrder.restaurantId === Number(this.restaurantId);
       }
     }, error => {
       this.hasUserOrdered = false;

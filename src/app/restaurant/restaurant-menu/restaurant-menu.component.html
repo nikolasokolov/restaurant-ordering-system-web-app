@@ -34,7 +34,7 @@
     <hr/>
     <br/>
     <div class="row" *ngIf="!isLoading">
-      <div class="col-xs-8 col-xs-offset-2 text-center">
+      <div class="col-xs-8 col-xs-offset-2 text-center" *ngIf="isOrderForCurrentlyOpenRestaurant">
         <form #orderForm="ngForm" (ngSubmit)="submitOrder(orderForm)">
           <fieldset [disabled]="hasUserOrdered && !isInEdit">
             <mat-form-field class="example-full-width">
