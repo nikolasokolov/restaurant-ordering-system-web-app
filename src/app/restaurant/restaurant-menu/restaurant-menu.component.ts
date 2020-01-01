@@ -4,6 +4,10 @@ import {MenuItem} from '../../model/menu-item.model';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {NgForm} from '@angular/forms';
+import {OrderService} from '../order-service';
+import {OrderRequest} from '../../model/order-request.model';
+import {AuthenticationService} from '../../authentication/authentication.service';
+import {UserOrderResponse} from '../../model/user-order-response.model';
 
 @Component({
   selector: 'app-restaurant-menu',
@@ -19,14 +23,25 @@ export class RestaurantMenuComponent implements OnInit {
   selectedTimePeriod = '11:00';
   menuItems: MenuItem[] = [];
   filteredMenuItems: MenuItem[] = [];
+  restaurantId;
+  userId;
+  hasUserOrdered = false;
+  userOrder: UserOrderResponse = null;
+  orderSuccess = false;
+  isInEdit = false;
 
   constructor(private restaurantMenuManagementService: RestaurantMenuManagementService,
-              private activatedRoute: ActivatedRoute, private location: Location) { }
+              private activatedRoute: ActivatedRoute, private location: Location,
+              private orderService: OrderService, private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
-    const restaurantId = this.activatedRoute.snapshot.params.id;
+    this.authenticationService.userDetails.subscribe(response => {
+      this.userId = response.id;
+    });
+    this.restaurantId = this.activatedRoute.snapshot.params.id;
+    this.getUserOrder(this.userId, this.restaurantId);
     this.restaurant = this.activatedRoute.snapshot.queryParamMap.get('restaurant');
-    this.getRestaurantMenu(restaurantId);
+    this.getRestaurantMenu(this.restaurantId);
     this.filteredMenuItems = this.menuItems;
   }
 
@@ -73,7 +88,48 @@ export class RestaurantMenuComponent implements OnInit {
   }
 
   submitOrder(orderForm: NgForm) {
-    console.log(orderForm);
-    console.log('submitting order');
+    const userId = this.userId;
+    const menuItem = orderForm.value.menuItem;
+    const timePeriod = this.selectedTimePeriod;
+    const comments = orderForm.value.comments;
+    const restaurantId = this.restaurantId;
+    let menuItemId: number = null;
+    for (const menuItemFromList of this.menuItems) {
+      if (menuItemFromList.name === menuItem) {
+        menuItemId = menuItemFromList.id;
+      }
+    }
+    let orderRequest;
+    if (this.userOrder !== null) {
+      const orderId = this.userOrder.id;
+      orderRequest = new OrderRequest(timePeriod, comments, menuItemId, restaurantId, userId, orderId);
+    } else {
+      orderRequest = new OrderRequest(timePeriod, comments, menuItemId, restaurantId, userId);
+    }
+    this.orderService.submitOrder(orderRequest).subscribe(response => {
+      this.userOrder = response;
+      this.hasUserOrdered = true;
+      this.orderSuccess = true;
+      this.isInEdit = false;
+    }, error => {
+      this.hasUserOrdered = false;
+    });
+  }
+
+  getUserOrder(userId: any, restaurantId: any) {
+    this.orderService.getUserOrder(userId, restaurantId).subscribe(response => {
+      this.userOrder = response;
+      if (this.userOrder !== null) {
+        this.hasUserOrdered = true;
+        this.isInEdit = false;
+      }
+    }, error => {
+      this.hasUserOrdered = false;
+      this.isInEdit = false;
+    });
+  }
+
+  enableEditOrder() {
+    this.isInEdit = true;
   }
 }
