@@ -7,7 +7,7 @@ import {MatDialog} from '@angular/material';
 import {RestaurantItem} from '../../model/restaurant-item.model';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Location} from '@angular/common';
-import {RestaurantAccount} from '../../model/restaurant-account.model';
+import {AuthenticationService} from '../../authentication/authentication.service';
 
 @Component({
   selector: 'app-restaurant-item',
@@ -20,7 +20,8 @@ export class RestaurantItemComponent implements OnInit {
 
   constructor(private httpClient: HttpClient, private activatedRoute: ActivatedRoute,
               private restaurantService: RestaurantService, private router: Router,
-              public dialog: MatDialog, private sanitizer: DomSanitizer, private location: Location) { }
+              public dialog: MatDialog, private sanitizer: DomSanitizer, private location: Location,
+              private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
     this.getRestaurant();
@@ -55,6 +56,7 @@ export class RestaurantItemComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.deleteRestaurant(id);
+        this.updateRestaurants(id);
       }
     });
   }
@@ -63,4 +65,13 @@ export class RestaurantItemComponent implements OnInit {
     this.location.back();
   }
 
+  updateRestaurants(id: number) {
+    const restaurantItems: any[] = this.authenticationService.restaurants.getValue();
+    restaurantItems.forEach((item, index) => {
+      if (item.id === id) {
+        restaurantItems.splice(index, 1);
+      }
+    });
+    this.authenticationService.restaurants.next(restaurantItems);
+  }
 }

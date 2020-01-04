@@ -1,0 +1,60 @@
+body {
+  min-height: 100vh;
+  font-family: 'Roboto', sans-serif;
+}
+
+.login-wrapper {
+  height: 100%;
+}
+
+.box {
+  position: relative;
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  top: 0;
+  opacity: 1;
+  padding: 50px 50px 50px 50px;
+  background: #f3f3f3;
+  border-radius: 10px;
+  transform: scale(1);
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  z-index: 5;
+}
+
+.login-wrapper .example-form {
+  min-width: 100%;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.login-wrapper .example-full-width, .login-wrapper .btn-block {
+  width: 100%;
+}
+
+.login-wrapper mat-card-header {
+  text-align: center;
+  display: block;
+  font-weight: 700;
+}
+
+.login-wrapper mat-card-header mat-card-title {
+  font-size: 25px;
+}
+
+.login-wrapper .mat-card {
+  padding: 40px 40px 40px;
+}
+
+.login-wrapper .mat-stroked-button {
+  border: 1px solid currentColor;
+  line-height: 54px;
+  background: #FFF7FA;
+}
+
+mat-error {
+  font-size: 18px !important;
+  padding-top: 25px !important;
+}

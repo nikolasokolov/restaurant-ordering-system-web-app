@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Subject} from 'rxjs';
 import {User} from '../model/user.model';
 import {HttpClient} from '@angular/common/http';
 import {switchMap, tap} from 'rxjs/operators';
@@ -7,14 +7,17 @@ import {Router} from '@angular/router';
 import {AuthenticationResponseData} from '../model/authentication-response-data.model';
 import {UserDetails} from '../model/user-details.model';
 import {Company} from '../model/company.model';
+import {RestaurantItem} from '../model/restaurant-item.model';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
   user = new BehaviorSubject<User>(this.isAuthenticated());
   userDetails = new BehaviorSubject<UserDetails>(this.getUserDetails());
+  restaurants = new BehaviorSubject<RestaurantItem[]>(null);
   private tokenExpirationTimer: any;
 
-  constructor(private httpClient: HttpClient, private router: Router) {}
+  constructor(private httpClient: HttpClient, private router: Router, private sanitizer: DomSanitizer) {}
 
   authenticate(username: string, password: string) {
     const credentials = {username, password};
@@ -26,7 +29,8 @@ export class AuthenticationService {
           +response.expiresIn
         );
       })
-    ).pipe(switchMap(() => this.getUser()));
+    ).pipe(switchMap(() => this.getUser()))
+      .pipe(switchMap(() => this.getUserRestaurants()));
   }
 
   isAuthenticated() {
@@ -70,6 +74,7 @@ export class AuthenticationService {
   logout() {
     this.user.next(null);
     this.userDetails.next(null);
+    this.restaurants.next(null);
     localStorage.removeItem('user');
     localStorage.removeItem('Authorization');
     localStorage.removeItem('userDetails');
@@ -100,13 +105,29 @@ export class AuthenticationService {
 
     if (loadedUser.token) {
       const expirationDuration = new Date(user.expirationDate).getTime() - new Date().getTime();
-      if (expirationDuration > 1000) {
+      if (expirationDuration > 5000) {
         this.user.next(loadedUser);
         this.userDetails.next(loadedUserDetails);
         this.autoLogout(expirationDuration);
       } else {
-        localStorage.clear();
+        this.logout();
       }
     }
   }
+
+  getUserRestaurants() {
+    const userDetails = this.getUserDetails();
+    const userId = userDetails.id;
+    if (!(userDetails.authorities.includes('ROLE_RESTAURANT') || userDetails.authorities.includes('ROLE_SUPER_ADMIN'))) {
+      return this.httpClient.get('https://localhost:8080/main/user/' + userId + '/restaurants')
+        .pipe(tap((response: any[]) => {
+          this.restaurants.next(response);
+          for (const restaurantItem of response) {
+            const objectURL = 'data:image/jpeg;base64,' + restaurantItem.logo;
+            restaurantItem.logoImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+          }
+      }));
+    }
+  }
+
 }

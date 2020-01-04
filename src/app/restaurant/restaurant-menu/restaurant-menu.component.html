@@ -1,0 +1,81 @@
+<div class="alert alert-success fadein text-center" role="alert" *ngIf="orderSuccess">
+  <strong>Order was successfully submitted</strong>
+</div>
+<div class="alert alert-success fadein text-center" role="alert" *ngIf="orderCanceled">
+  <strong>{{orderCanceled}}</strong>
+</div>
+<div class="container-fluid">
+  <button mat-button style="margin-top: 10px;" (click)="goBack()">
+    <mat-icon>keyboard_backspace</mat-icon>
+  </button>
+  <br/>
+  <div class="col-xs-10 col-xs-offset-1">
+    <div class="row">
+      <div class="col-xs-12">
+        <h4 class="text-center">{{restaurant}} Menu:</h4>
+      </div>
+    </div>
+    <hr/>
+    <div class="row">
+      <div *ngIf="isLoading" style="text-align: center;">
+        <app-loading-spinner></app-loading-spinner>
+      </div>
+      <div *ngIf="!isLoading">
+        <div class="col-xs-3" *ngFor="let typeToMenuItem of typeToMenuItems | keyToArray">
+          <h3 class="text-center">{{typeToMenuItem.key}}</h3>
+          <br/>
+          <h4 class="text-center" *ngFor="let menuItem of typeToMenuItem.value">
+            {{menuItem.name}}
+            <mat-icon *ngIf="menuItem.allergens" class="allergens-tooltip-button"
+                      matTooltipClass="allergens-tooltip"
+                      [matTooltip]="'Allergens: ' + menuItem.allergens">info
+            </mat-icon>
+          </h4>
+        </div>
+      </div>
+    </div>
+    <hr/>
+    <br/>
+    <div class="row" *ngIf="!isLoading">
+      <div class="col-xs-8 col-xs-offset-2 text-center" *ngIf="isOrderForCurrentlyOpenRestaurant || !hasUserOrdered">
+        <form #orderForm="ngForm" (ngSubmit)="submitOrder(orderForm)">
+          <fieldset [disabled]="hasUserOrdered && !isInEdit">
+            <mat-form-field class="example-full-width">
+              <input type="text" placeholder="Choose a menu item"
+                     [ngModel]="userOrder ? userOrder.menuItemName : ''"
+                     name="menuItem" required matInput [matAutocomplete]="auto" (keyup)="onKeyUp($event)">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let menuItem of filteredMenuItems" [value]="menuItem.name">
+                  {{menuItem.name}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field> &nbsp; &nbsp;
+            <mat-form-field>
+              <mat-label>Choose time</mat-label>
+              <mat-select name="restaurant" [(ngModel)]="userOrder ? userOrder.timePeriod : selectedTimePeriod"
+                          [disabled]="hasUserOrdered && !isInEdit"
+                          (selectionChange)="changeTimePeriod($event.value)">
+                <mat-option *ngFor="let timePeriod of timePeriods" [value]="timePeriod">
+                  {{timePeriod}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field> &nbsp;
+            <mat-form-field class="example-full-width">
+              <input matInput ngModel name="comments" [ngModel]="userOrder ? userOrder.comments : ''" placeholder="Additional inquires (if any)"/>
+            </mat-form-field>
+            <br/>
+            <div class="row text-center">
+              <button mat-raised-button color="primary"
+                      *ngIf="(isInEdit || !hasUserOrdered)" type="submit">{{isInEdit ? 'Edit Order' : 'Order'}}</button>
+            </div>
+          </fieldset>
+        </form>
+        <div class="text-center">
+          <button mat-raised-button color="default" *ngIf="!isInEdit && hasUserOrdered"
+                  (click)="enableEditOrder()">Edit Order</button> &nbsp; &nbsp;
+          <button mat-raised-button color="warn" *ngIf="hasUserOrdered && !isInEdit" (click)="openDialog(userOrder.id)">Cancel Order</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

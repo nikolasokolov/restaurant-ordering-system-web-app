@@ -1,0 +1,13 @@
+.allergens-tooltip-button {
+  font-size: 18px;
+  margin: -15px 0 0 -5px;
+  padding: 0;
+  color: rgb(63, 81, 181);
+}
+
+::ng-deep .allergens-tooltip {
+  font-size: 12px;
+  background-color: black !important;
+  color: white !important;
+}
+

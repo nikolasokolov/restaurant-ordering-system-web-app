@@ -9,7 +9,7 @@ export class ChangePasswordService {
   }
 
   changePassword(changePassword: ChangePassword): Observable<any> {
-    return this.httpClient.post('https://localhost:8080/api/change-password', changePassword);
+    return this.httpClient.post('https://localhost:8080/main/users/change-password', changePassword);
   }
 
 }

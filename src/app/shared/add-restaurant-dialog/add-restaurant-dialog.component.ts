@@ -48,7 +48,6 @@ export class AddRestaurantDialogComponent implements OnInit {
   addRestaurant() {
     const restaurantId = this.selectedRestaurantId;
     this.companyService.addRestaurantForCompany(this.companyItem, restaurantId).subscribe(() => {
-      this.closeDialog();
     }, () => {
       this.errorMessage = 'An error occurred trying to add restaurant to company ' + this.companyItem.name;
     });
