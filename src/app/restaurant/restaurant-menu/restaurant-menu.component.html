@@ -1,9 +1,6 @@
-<div class="alert alert-success fadein text-center" role="alert" *ngIf="orderSuccess">
-  <strong>Order was successfully submitted</strong>
-</div>
-<div class="alert alert-success fadein text-center" role="alert" *ngIf="orderCanceled">
-  <strong>{{orderCanceled}}</strong>
-</div>
+<ngb-alert *ngIf="alertMessage" type="success" (close)="alertMessage = null" class="text-center">
+  <b>{{ alertMessage }}</b>
+</ngb-alert>
 <div class="container-fluid">
   <button mat-button style="margin-top: 10px;" (click)="goBack()">
     <mat-icon>keyboard_backspace</mat-icon>
