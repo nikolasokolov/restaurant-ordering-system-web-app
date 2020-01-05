@@ -30,6 +30,7 @@ import { RestaurantMenuComponent } from './restaurant/restaurant-menu/restaurant
 import { RestaurantMenuManagementComponent } from './restaurant/restaurant-menu-management/restaurant-menu-management.component';
 import { MenuItemEditComponent } from './restaurant/menu-item-edit/menu-item-edit.component';
 import {KeyToArrayPipe} from './pipes/keys.pipe';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import {KeyToArrayPipe} from './pipes/keys.pipe';
         MatDialogModule,
         MatDialogModule,
         MatSortModule,
-        MatAutocompleteModule
+        MatAutocompleteModule,
+        NgbModule
     ],
   providers: [
     {

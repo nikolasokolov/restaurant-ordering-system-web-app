@@ -4,6 +4,8 @@ import {NgForm} from '@angular/forms';
 import {UserService} from '../user-service';
 import {UserAccount} from '../../model/user-account-model';
 import {ActivatedRoute} from '@angular/router';
+import {Subject} from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-add',
@@ -13,19 +15,25 @@ import {ActivatedRoute} from '@angular/router';
 export class UserAddComponent implements OnInit {
   isLoading = false;
   error = null;
-  userAddedSuccessfully = false;
   authority = 'ROLE_USER';
   authorities: Array<string> = ['ROLE_USER', 'ROLE_ADMIN'];
   companyId = null;
+  alert = new Subject<string>();
+  alertMessage: string;
 
-  constructor(private location: Location, private userService: UserService, private activatedRoute: ActivatedRoute) {
-  }
+  constructor(private location: Location, private userService: UserService, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
     const id = this.activatedRoute.snapshot.params.id;
     if (id !== undefined) {
       this.companyId = id;
     }
+    this.alert.subscribe((message) => this.alertMessage = message);
+    this.alert.pipe(debounceTime(2500)).subscribe(() => this.alertMessage = null);
+  }
+
+  changeMessage(message: string) {
+    this.alert.next(message);
   }
 
   goBack() {
@@ -58,8 +66,8 @@ export class UserAddComponent implements OnInit {
       }
       this.userService.addUser(userAccount).subscribe(() => {
         this.isLoading = false;
-        this.userAddedSuccessfully = true;
-      }, (error) => {
+        this.changeMessage('User added successfully');
+      }, () => {
         this.isLoading = false;
         this.error = 'An error occurred trying to create a new user';
       });

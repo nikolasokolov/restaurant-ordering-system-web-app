@@ -10,6 +10,8 @@ import {AuthenticationService} from '../../authentication/authentication.service
 import {UserOrderResponse} from '../../model/user-order-response.model';
 import {ConfirmationDialogComponent} from '../../shared/confirmation-dialog/confirmation-dialog.component';
 import {MatDialog} from '@angular/material';
+import {Subject} from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
 
 @Component({
   selector: 'app-restaurant-menu',
@@ -33,6 +35,8 @@ export class RestaurantMenuComponent implements OnInit {
   isInEdit = false;
   isOrderForCurrentlyOpenRestaurant = null;
   orderCanceled = null;
+  alert = new Subject<string>();
+  alertMessage: string;
 
   constructor(private restaurantMenuManagementService: RestaurantMenuManagementService,
               private activatedRoute: ActivatedRoute, private location: Location,
@@ -48,6 +52,12 @@ export class RestaurantMenuComponent implements OnInit {
     this.restaurant = this.activatedRoute.snapshot.queryParamMap.get('restaurant');
     this.getRestaurantMenu(this.restaurantId);
     this.filteredMenuItems = this.menuItems;
+    this.alert.subscribe((message) => this.alertMessage = message);
+    this.alert.pipe(debounceTime(2500)).subscribe(() => this.alertMessage = null);
+  }
+
+  changeMessage(message: string) {
+    this.alert.next(message);
   }
 
   getRestaurantMenu(restaurantId: number) {
@@ -108,8 +118,10 @@ export class RestaurantMenuComponent implements OnInit {
     if (this.userOrder !== null) {
       const orderId = this.userOrder.id;
       orderRequest = new OrderRequest(timePeriod, comments, menuItemId, restaurantId, userId, orderId);
+      this.changeMessage('Order updated successfully');
     } else {
       orderRequest = new OrderRequest(timePeriod, comments, menuItemId, restaurantId, userId);
+      this.changeMessage('Order submitted successfully');
     }
     this.orderService.submitOrder(orderRequest).subscribe(response => {
       this.userOrder = response;
@@ -117,7 +129,7 @@ export class RestaurantMenuComponent implements OnInit {
       this.hasUserOrdered = true;
       this.orderSuccess = true;
       this.isInEdit = false;
-    }, error => {
+    }, () => {
       this.hasUserOrdered = false;
     });
   }
@@ -161,8 +173,8 @@ export class RestaurantMenuComponent implements OnInit {
       this.isInEdit = false;
       this.isOrderForCurrentlyOpenRestaurant = null;
       this.userOrder = null;
-      this.orderCanceled = 'Order is successfully canceled';
-    }, error => {
+      this.changeMessage('Order successfully canceled');
+    }, () => {
       this.orderCanceled = true;
     });
   }

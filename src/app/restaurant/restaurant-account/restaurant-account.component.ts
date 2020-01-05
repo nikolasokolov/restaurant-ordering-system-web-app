@@ -3,7 +3,6 @@ import {RestaurantService} from '../restaurant-service';
 import {Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {NgForm} from '@angular/forms';
-import {RestaurantItem} from '../../model/restaurant-item.model';
 import {RestaurantAccount} from '../../model/restaurant-account.model';
 import {Restaurant} from '../../model/restaurant.model';
 
@@ -15,7 +14,6 @@ import {Restaurant} from '../../model/restaurant.model';
 export class RestaurantAccountComponent implements OnInit {
   isLoading = false;
   error = null;
-  accountAddedSuccessfully = false;
   restaurant: Restaurant;
 
   constructor(private restaurantService: RestaurantService, private location: Location, private router: Router) { }
@@ -41,9 +39,8 @@ export class RestaurantAccountComponent implements OnInit {
       const restaurantAccount = new RestaurantAccount(username, email, newPassword, confirmPassword);
       this.restaurantService.addAccountForRestaurant(this.restaurant.id, restaurantAccount).subscribe(() => {
         this.isLoading = false;
-        this.accountAddedSuccessfully = true;
         this.router.navigate(['/restaurant/', this.restaurant.id]);
-      }, (error) => {
+      }, () => {
         this.isLoading = false;
         this.error = 'An error occurred';
       });

@@ -4,6 +4,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Company} from '../../model/company.model';
 import {NgForm} from '@angular/forms';
 import {Location} from '@angular/common';
+import {Subject} from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
 
 @Component({
   selector: 'app-company-edit',
@@ -11,13 +13,13 @@ import {Location} from '@angular/common';
   styleUrls: ['./company-edit.component.css']
 })
 export class CompanyEditComponent implements OnInit {
-  companyEditedSuccessfully = null;
-  companyAddedSuccessfully = null;
   company: Company;
   isLoading = false;
   error = null;
   isInEdit = false;
   selectedPhoto: File = null;
+  alert = new Subject<string>();
+  alertMessage: string;
 
   constructor(private companyService: CompanyService, private activatedRoute: ActivatedRoute,
               private location: Location, private router: Router) { }
@@ -32,6 +34,12 @@ export class CompanyEditComponent implements OnInit {
     } else {
       this.company = new Company('', '', '');
     }
+    this.alert.subscribe((message) => this.alertMessage = message);
+    this.alert.pipe(debounceTime(2500)).subscribe(() => this.alertMessage = null);
+  }
+
+  changeMessage(message: string) {
+    this.alert.next(message);
   }
 
   handleCompanyForm(companyForm: NgForm) {
@@ -42,7 +50,6 @@ export class CompanyEditComponent implements OnInit {
     if (this.company.id !== undefined) {
       const editCompanyRequest = new Company(name, address, phoneNumber, this.company.id);
       this.companyService.editCompany(editCompanyRequest).subscribe(response => {
-        this.companyEditedSuccessfully = true;
         this.isLoading = false;
         this.router.navigate(['/company/' + this.company.id]);
       }, () => {
@@ -53,7 +60,7 @@ export class CompanyEditComponent implements OnInit {
     } else {
       const addCompanyRequest = new Company(name, address, phoneNumber);
       this.companyService.addCompany(addCompanyRequest).subscribe(response => {
-        this.companyAddedSuccessfully = true;
+        this.changeMessage('Company added successfully');
         this.isLoading = false;
         this.companyService.uploadFile(this.selectedPhoto, response.id).subscribe(() => {
         }, () => {
