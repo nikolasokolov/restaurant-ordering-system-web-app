@@ -1,6 +1,6 @@
-<div class="alert alert-success fadein text-center" role="alert" *ngIf="restaurantAddedToCompany">
-  <strong>{{restaurantAddedToCompany}}</strong>
-</div>
+<ngb-alert *ngIf="alertMessage" type="success" (close)="alertMessage = null" class="text-center">
+  <b>{{ alertMessage }}</b>
+</ngb-alert>
 <div class="container-fluid">
   <button mat-button style="margin-top: 10px;" (click)="goBack()"><mat-icon>keyboard_backspace</mat-icon></button>
   <div class="row" style="margin-top: 50px;">
@@ -21,7 +21,7 @@
       <button mat-raised-button color="warn" (click)="openDialog(company.id)">Delete company</button>
       <hr/>
       <h4>Restaurants management</h4>
-      <button mat-raised-button color="primary" (click)="openRestaurantAddDialog(company.id)">Add restaurant</button> &nbsp;
+      <button mat-raised-button color="primary" (click)="openRestaurantAddDialog()">Add restaurant</button> &nbsp;
       <button mat-raised-button [routerLink]="['/company-restaurants/', company.id]">View restaurants</button>
       <hr/>
       <h4>Users management</h4>

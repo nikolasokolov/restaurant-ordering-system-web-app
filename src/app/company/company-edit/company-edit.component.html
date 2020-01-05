@@ -1,9 +1,6 @@
-<div class="alert alert-success fadein text-center" role="alert" *ngIf="companyEditedSuccessfully">
-  <strong>Company updated successfully</strong>
-</div>
-<div class="alert alert-success fadein text-center" role="alert" *ngIf="companyAddedSuccessfully">
-  <strong>Company added successfully</strong>
-</div>
+<ngb-alert *ngIf="alertMessage" type="success" (close)="alertMessage = null" class="text-center">
+  <b>{{ alertMessage }}</b>
+</ngb-alert>
 <div class="container-fluid">
   <button mat-button style="margin-top: 10px;" (click)="goBack()"><mat-icon>keyboard_backspace</mat-icon></button>
   <div class="row login-wrapper" style="margin-top: 60px;">
