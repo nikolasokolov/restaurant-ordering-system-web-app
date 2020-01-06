@@ -10,6 +10,8 @@ import {Location} from '@angular/common';
 import {AddRestaurantDialogComponent} from '../../shared/add-restaurant-dialog/add-restaurant-dialog.component';
 import {Subject} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
+import {AuthenticationService} from '../../authentication/authentication.service';
+import {UserDetails} from '../../model/user-details.model';
 
 @Component({
   selector: 'app-company-item',
@@ -21,14 +23,19 @@ export class CompanyItemComponent implements OnInit {
   company: CompanyItem;
   alert = new Subject<string>();
   alertMessage: string;
+  userDetails: UserDetails;
 
   constructor(private httpClient: HttpClient, private activatedRoute: ActivatedRoute,
               private companyService: CompanyService, private router: Router,
-              public dialog: MatDialog, private sanitizer: DomSanitizer, private location: Location) {
+              public dialog: MatDialog, private sanitizer: DomSanitizer, private location: Location,
+              private authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {
     this.getCompany();
+    this.authenticationService.userDetails.subscribe(response => {
+      this.userDetails = response;
+    });
     this.alert.subscribe((message) => this.alertMessage = message);
     this.alert.pipe(debounceTime(2500)).subscribe(() => this.alertMessage = null);
   }

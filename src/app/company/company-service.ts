@@ -39,4 +39,8 @@ export class CompanyService {
     const url = 'https://localhost:8080/main/company/add-restaurant/' + restaurantId;
     return this.httpClient.post(url, company);
   }
+
+  getCompanyOrders(companyId: number): Observable<any> {
+    return this.httpClient.get<Company>('https://localhost:8080/main/orders/company/' + companyId);
+  }
 }

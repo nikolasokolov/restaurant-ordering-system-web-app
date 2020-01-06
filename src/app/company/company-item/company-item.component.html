@@ -18,7 +18,8 @@
       <h5>Address: {{company.address}}</h5>
       <h5>Phone number: {{company.phoneNumber}}</h5>
       <button mat-raised-button color="primary" [routerLink]="['/company-edit', company.id]">Edit company</button> &nbsp;
-      <button mat-raised-button color="warn" (click)="openDialog(company.id)">Delete company</button>
+      <button mat-raised-button color="warn" *ngIf="userDetails.authorities.includes('ROLE_SUPER_ADMIN')"
+              (click)="openDialog(company.id)">Delete company</button>
       <hr/>
       <h4>Restaurants management</h4>
       <button mat-raised-button color="primary" (click)="openRestaurantAddDialog()">Add restaurant</button> &nbsp;
