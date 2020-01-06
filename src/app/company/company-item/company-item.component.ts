@@ -8,6 +8,10 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {CompanyItem} from '../../model/company-item.model';
 import {Location} from '@angular/common';
 import {AddRestaurantDialogComponent} from '../../shared/add-restaurant-dialog/add-restaurant-dialog.component';
+import {Subject} from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
+import {AuthenticationService} from '../../authentication/authentication.service';
+import {UserDetails} from '../../model/user-details.model';
 
 @Component({
   selector: 'app-company-item',
@@ -17,15 +21,27 @@ import {AddRestaurantDialogComponent} from '../../shared/add-restaurant-dialog/a
 export class CompanyItemComponent implements OnInit {
   isLoading = false;
   company: CompanyItem;
-  restaurantAddedToCompany = null;
+  alert = new Subject<string>();
+  alertMessage: string;
+  userDetails: UserDetails;
 
   constructor(private httpClient: HttpClient, private activatedRoute: ActivatedRoute,
               private companyService: CompanyService, private router: Router,
-              public dialog: MatDialog, private sanitizer: DomSanitizer, private location: Location) {
+              public dialog: MatDialog, private sanitizer: DomSanitizer, private location: Location,
+              private authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {
     this.getCompany();
+    this.authenticationService.userDetails.subscribe(response => {
+      this.userDetails = response;
+    });
+    this.alert.subscribe((message) => this.alertMessage = message);
+    this.alert.pipe(debounceTime(2500)).subscribe(() => this.alertMessage = null);
+  }
+
+  changeMessage(message: string) {
+    this.alert.next(message);
   }
 
   getCompany() {
@@ -61,7 +77,7 @@ export class CompanyItemComponent implements OnInit {
     });
   }
 
-  openRestaurantAddDialog(id: number): void {
+  openRestaurantAddDialog(): void {
     const dialogRef = this.dialog.open(AddRestaurantDialogComponent, {
       width: '500px',
       height: '250px',
@@ -69,7 +85,7 @@ export class CompanyItemComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.restaurantAddedToCompany = 'Restaurant is successfully added to company ' + this.company.name;
+        this.changeMessage('Restaurant is successfully added to company ' + this.company.name);
       }
     });
   }

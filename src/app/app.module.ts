@@ -30,6 +30,9 @@ import { RestaurantMenuComponent } from './restaurant/restaurant-menu/restaurant
 import { RestaurantMenuManagementComponent } from './restaurant/restaurant-menu-management/restaurant-menu-management.component';
 import { MenuItemEditComponent } from './restaurant/menu-item-edit/menu-item-edit.component';
 import {KeyToArrayPipe} from './pipes/keys.pipe';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { CompanyOrdersComponent } from './company/company-orders/company-orders.component';
+import { ColleaguesChoicesComponent } from './company/colleagues-choices/colleagues-choices.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +56,9 @@ import {KeyToArrayPipe} from './pipes/keys.pipe';
     RestaurantMenuComponent,
     RestaurantMenuManagementComponent,
     MenuItemEditComponent,
-    KeyToArrayPipe
+    KeyToArrayPipe,
+    CompanyOrdersComponent,
+    ColleaguesChoicesComponent
   ],
     imports: [
         BrowserModule,
@@ -68,7 +73,8 @@ import {KeyToArrayPipe} from './pipes/keys.pipe';
         MatDialogModule,
         MatDialogModule,
         MatSortModule,
-        MatAutocompleteModule
+        MatAutocompleteModule,
+        NgbModule
     ],
   providers: [
     {

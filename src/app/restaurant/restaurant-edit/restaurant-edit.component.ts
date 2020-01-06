@@ -5,6 +5,8 @@ import {NgForm} from '@angular/forms';
 import {Restaurant} from '../../model/restaurant.model';
 import {RestaurantService} from '../restaurant-service';
 import {Location} from '@angular/common';
+import {Subject} from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
 
 @Component({
   selector: 'app-restaurant-edit',
@@ -12,13 +14,13 @@ import {Location} from '@angular/common';
   styleUrls: ['./restaurant-edit.component.css']
 })
 export class RestaurantEditComponent implements OnInit {
-  restaurantEditedSuccessfully = null;
-  restaurantAddedSuccessfully = null;
   restaurant: Restaurant;
   isLoading = false;
   error = null;
   isInEdit = false;
   selectedPhoto: File = null;
+  alert = new Subject<string>();
+  alertMessage: string;
 
   constructor(private restaurantService: RestaurantService, private activatedRoute: ActivatedRoute,
               private location: Location, private router: Router) { }
@@ -33,6 +35,12 @@ export class RestaurantEditComponent implements OnInit {
     } else {
       this.restaurant = new Restaurant('', '', '');
     }
+    this.alert.subscribe((message) => this.alertMessage = message);
+    this.alert.pipe(debounceTime(2500)).subscribe(() => this.alertMessage = null);
+  }
+
+  changeMessage(message: string) {
+    this.alert.next(message);
   }
 
   handleRestaurantForm(restaurantForm: NgForm) {
@@ -43,7 +51,6 @@ export class RestaurantEditComponent implements OnInit {
     if (this.restaurant.id !== undefined) {
       const editRestaurantRequest = new Restaurant(name, address, phoneNumber, this.restaurant.id);
       this.restaurantService.editRestaurant(editRestaurantRequest).subscribe(() => {
-        this.restaurantEditedSuccessfully = true;
         this.isLoading = false;
         this.router.navigate(['/restaurant/' + this.restaurant.id]);
       }, () => {
@@ -54,7 +61,7 @@ export class RestaurantEditComponent implements OnInit {
     } else {
       const addRestaurantRequest = new Company(name, address, phoneNumber);
       this.restaurantService.addRestaurant(addRestaurantRequest).subscribe(response => {
-        this.restaurantAddedSuccessfully = true;
+        this.changeMessage('Restaurant added successfully');
         this.isLoading = false;
         this.restaurantService.uploadFile(this.selectedPhoto, response.id).subscribe(() => {
         }, () => {
