@@ -1,14 +1,11 @@
-import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTree} from '@angular/router';
-import { Injectable } from '@angular/core';
-import {Observable, Subscription} from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {map, take} from 'rxjs/operators';
 import {AuthenticationService} from './authentication.service';
-import {UserDetails} from '../model/user-details.model';
-
 
 @Injectable({ providedIn: 'root' })
-export class AuthorizationGuard implements CanActivate {
-  private isAuthenticated = false;
+export class SuperAdminGuard implements CanActivate {
   constructor(private authenticationService: AuthenticationService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, router: RouterStateSnapshot):
