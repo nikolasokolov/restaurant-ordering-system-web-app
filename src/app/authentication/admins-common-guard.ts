@@ -5,7 +5,7 @@ import {map, take} from 'rxjs/operators';
 import {AuthenticationService} from './authentication.service';
 
 @Injectable({ providedIn: 'root' })
-export class SuperAdminGuard implements CanActivate {
+export class AdminsCommonGuard implements CanActivate {
   constructor(private authenticationService: AuthenticationService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, router: RouterStateSnapshot):
@@ -14,7 +14,7 @@ export class SuperAdminGuard implements CanActivate {
       const auth = !!user;
       if (auth) {
         const userAuthorities = user.authorities;
-        return userAuthorities.includes('ROLE_SUPER_ADMIN');
+        return userAuthorities.includes('ROLE_ADMIN') || userAuthorities.includes('ROLE_SUPER_ADMIN');
       } else {
         return this.router.createUrlTree(['/home']);
       }
