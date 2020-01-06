@@ -20,6 +20,7 @@ import {MenuItemEditComponent} from './restaurant/menu-item-edit/menu-item-edit.
 import {AdminGuard} from './authentication/admin-guard';
 import {AdminsCommonGuard} from './authentication/admins-common-guard';
 import {CompanyOrdersComponent} from './company/company-orders/company-orders.component';
+import {ColleaguesChoicesComponent} from './company/colleagues-choices/colleagues-choices.component';
 
 
 const routes: Routes = [
@@ -44,7 +45,8 @@ const routes: Routes = [
   { path: 'menu-management', component: RestaurantMenuManagementComponent, canActivate: [LoginGuard] },
   { path: 'menu-item/add', component: MenuItemEditComponent, canActivate: [LoginGuard] },
   { path: 'menu-item/edit/:id', component: MenuItemEditComponent, canActivate: [LoginGuard] },
-  { path: 'company-orders/:id', component: CompanyOrdersComponent, canActivate: [AdminGuard] }
+  { path: 'company-orders/:id', component: CompanyOrdersComponent, canActivate: [AdminGuard] },
+  { path: 'colleagues-choices', component: ColleaguesChoicesComponent, canActivate: [LoginGuard] }
 ];
 
 @NgModule({
