@@ -4,8 +4,8 @@
       {{userDetails.company !== null ? userDetails.company.name : userDetails.username.toUpperCase()}}</button>
     <button mat-button [routerLink]="['company', userDetails.company.id]"
             *ngIf="userDetails.authorities.toString().includes('ROLE_ADMIN')" class="text-center">Company management</button>
-    <button mat-button [routerLink]="['company', userDetails.company.id]"
-            *ngIf="userDetails.authorities.toString().includes('ROLE_ADMIN')" class="text-center">Users Orders</button>
+    <button mat-button [routerLink]="['company-orders', userDetails.company.id]"
+            *ngIf="userDetails.authorities.toString().includes('ROLE_ADMIN')" class="text-center">Company Orders</button>
     <button mat-button routerLink="companies"
             *ngIf="userDetails.authorities.toString().includes('ROLE_SUPER_ADMIN')" class="text-center">Companies</button>
     <button mat-button routerLink="restaurants"
