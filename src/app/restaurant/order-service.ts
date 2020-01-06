@@ -18,4 +18,12 @@ export class OrderService {
   cancelOrder(id: number): Observable<any> {
     return this.httpClient.delete('https://localhost:8080/main/orders/' + id + '/delete');
   }
+
+  getCompanyOrders(companyId: number): Observable<any> {
+    return this.httpClient.get('https://localhost:8080/main/orders/company/' + companyId);
+  }
+
+  getDailyCompanyOrders(companyId: number): Observable<any> {
+    return this.httpClient.get('https://localhost:8080/main/daily-orders/company/' + companyId);
+  }
 }

@@ -32,6 +32,7 @@ import { MenuItemEditComponent } from './restaurant/menu-item-edit/menu-item-edi
 import {KeyToArrayPipe} from './pipes/keys.pipe';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CompanyOrdersComponent } from './company/company-orders/company-orders.component';
+import { ColleaguesChoicesComponent } from './company/colleagues-choices/colleagues-choices.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { CompanyOrdersComponent } from './company/company-orders/company-orders.
     RestaurantMenuManagementComponent,
     MenuItemEditComponent,
     KeyToArrayPipe,
-    CompanyOrdersComponent
+    CompanyOrdersComponent,
+    ColleaguesChoicesComponent
   ],
     imports: [
         BrowserModule,

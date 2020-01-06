@@ -6,7 +6,7 @@ import {Location} from '@angular/common';
 import {MatDialog} from '@angular/material';
 import {ActivatedRoute} from '@angular/router';
 import {CompanyOrders} from '../../model/company-orders.model';
-import {CompanyService} from '../company-service';
+import {OrderService} from '../../restaurant/order-service';
 
 @Component({
   selector: 'app-company-orders',
@@ -23,7 +23,7 @@ export class CompanyOrdersComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private location: Location, private companyService: CompanyService, public dialog: MatDialog,
+  constructor(private location: Location, private orderService: OrderService, public dialog: MatDialog,
               private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
@@ -50,7 +50,7 @@ export class CompanyOrdersComponent implements OnInit {
 
   private getCompanyOrders() {
     this.isLoading = true;
-    this.companyService.getCompanyOrders(this.companyId).subscribe(response => {
+    this.orderService.getCompanyOrders(this.companyId).subscribe(response => {
       this.isLoading = false;
       this.companyOrders = response;
       this.dataSource.data = this.companyOrders;

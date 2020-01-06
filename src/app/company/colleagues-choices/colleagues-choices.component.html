@@ -1,0 +1,53 @@
+<div class="container-fluid">
+  <button mat-button style="margin-top: 10px;" (click)="goBack()">
+    <mat-icon>keyboard_backspace</mat-icon>
+  </button>
+  <br/>
+  <div class="col-xs-10 col-xs-offset-1">
+    <div class="row">
+      <h3 class="text-center text-primary">Colleagues choices for today</h3>
+      <div *ngIf="isLoading" style="text-align: center;">
+        <app-loading-spinner></app-loading-spinner>
+      </div>
+      <div [hidden]="isLoading === true">
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+        <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="asc">
+
+            <ng-container matColumnDef="username">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Username</th>
+              <td mat-cell *matCellDef="let row"> {{row.username}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="restaurantName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Restaurant</th>
+              <td mat-cell *matCellDef="let row"> {{row.restaurantName}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="menuItemName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Menu Item</th>
+              <td mat-cell *matCellDef="let row"> {{row.menuItemName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="timePeriod">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Time Period</th>
+              <td mat-cell *matCellDef="let row"> {{row.timePeriod}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="comments">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Comments</th>
+              <td mat-cell *matCellDef="let row"> {{row.comments}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+            </tr>
+          </table>
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
