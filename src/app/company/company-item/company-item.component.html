@@ -2,7 +2,9 @@
   <b>{{ alertMessage }}</b>
 </ngb-alert>
 <div class="container-fluid">
-  <button mat-button style="margin-top: 10px;" (click)="goBack()"><mat-icon>keyboard_backspace</mat-icon></button>
+  <button mat-button style="margin-top: 10px;" (click)="goBack()">
+    <mat-icon>keyboard_backspace</mat-icon>
+  </button>
   <div class="row" style="margin-top: 50px;">
     <div *ngIf="isLoading" style="text-align: center;">
       <app-loading-spinner></app-loading-spinner>
@@ -17,14 +19,18 @@
       <h5>Name: {{company.name}}</h5>
       <h5>Address: {{company.address}}</h5>
       <h5>Phone number: {{company.phoneNumber}}</h5>
-      <button mat-raised-button color="primary" [routerLink]="['/company-edit', company.id]">Edit company</button> &nbsp;
+      <button mat-raised-button color="primary" [routerLink]="['/company-edit', company.id]">Edit company</button>
+      &nbsp;
       <button mat-raised-button color="warn" *ngIf="userDetails.authorities.includes('ROLE_SUPER_ADMIN')"
-              (click)="openDialog(company.id)">Delete company</button>
+              (click)="openDialog(company.id)">Delete company
+      </button>
       <hr/>
-      <h4>Restaurants management</h4>
-      <button mat-raised-button color="primary" (click)="openRestaurantAddDialog()">Add restaurant</button> &nbsp;
-      <button mat-raised-button [routerLink]="['/company-restaurants/', company.id]">View restaurants</button>
-      <hr/>
+      <div *ngIf="userDetails.authorities.includes('ROLE_SUPER_ADMIN')">
+        <h4>Restaurants management</h4>
+        <button mat-raised-button color="primary" (click)="openRestaurantAddDialog()">Add restaurant</button> &nbsp;
+        <button mat-raised-button [routerLink]="['/company-restaurants/', company.id]">View restaurants</button>
+        <hr/>
+      </div>
       <h4>Users management</h4>
       <button mat-raised-button color="primary" [routerLink]="['/user-add/', company.id]">Add user</button> &nbsp;
       <button mat-raised-button [routerLink]="['/users/', company.id]">View users</button>
