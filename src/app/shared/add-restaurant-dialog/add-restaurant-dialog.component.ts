@@ -12,7 +12,7 @@ import {RestaurantService} from '../../restaurant/restaurant-service';
 })
 export class AddRestaurantDialogComponent implements OnInit {
   isLoading = false;
-  restaurants: RestaurantItem[];
+  restaurants: RestaurantItem[] = null;
   companyItem: CompanyItem;
   selectedRestaurantId: number;
   errorMessage = null;
@@ -28,12 +28,13 @@ export class AddRestaurantDialogComponent implements OnInit {
 
   ngOnInit() {
     this.companyItem = this.company;
-    this.getAllRestaurants();
+    this.getAvailableRestaurantsForCompany();
   }
 
-  getAllRestaurants() {
+  getAvailableRestaurantsForCompany() {
+    const companyId = this.companyItem.id;
     this.isLoading = true;
-    this.restaurantService.getAllRestaurants().subscribe((response: any[]) => {
+    this.restaurantService.getAvailableRestaurantsForCompany(companyId).subscribe((response: any[]) => {
       this.restaurants = response;
       this.isLoading = false;
     }, () => {
