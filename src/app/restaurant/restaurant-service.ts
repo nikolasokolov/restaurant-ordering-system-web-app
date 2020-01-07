@@ -62,4 +62,8 @@ export class RestaurantService {
     return this.httpClient
       .delete('https://localhost:8080/main/company/' + companyId + '/delete-restaurant/' + restaurantId);
   }
+
+  getAvailableRestaurantsForCompany(companyId: number): Observable<any> {
+    return this.httpClient.get('https://localhost:8080/main/company/' + companyId + '/available-restaurants');
+  }
 }
