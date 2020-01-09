@@ -23,7 +23,7 @@ export class RestaurantMenuComponent implements OnInit {
   isLoading = false;
   typeToMenuItems: Map<string, MenuItem[]>;
   restaurant: string;
-  timePeriods = ['11:00', '12:00', '13:00'];
+  timePeriods = ['11:00', '11:30', '12:00', '12:30'];
   selectedTimePeriod = '11:00';
   menuItems: MenuItem[] = [];
   filteredMenuItems: MenuItem[] = [];
@@ -54,6 +54,7 @@ export class RestaurantMenuComponent implements OnInit {
     this.filteredMenuItems = this.menuItems;
     this.alert.subscribe((message) => this.alertMessage = message);
     this.alert.pipe(debounceTime(2500)).subscribe(() => this.alertMessage = null);
+    this.validateTimePeriodValues();
   }
 
   changeMessage(message: string) {
@@ -177,5 +178,23 @@ export class RestaurantMenuComponent implements OnInit {
     }, () => {
       this.orderCanceled = true;
     });
+  }
+
+  validateTimePeriodValues() {
+    const timePeriods = [];
+    for (const timePeriod of this.timePeriods) {
+      const currentHour = new Date().getHours();
+      const currentHourFromArray = timePeriod.substr(0, 2);
+      if (Number(currentHour) < Number(currentHourFromArray)) {
+        timePeriods.push(timePeriod);
+      } else if (Number(currentHour) === Number(currentHourFromArray)) {
+        const currentMinutes = new Date().getMinutes();
+        const currentMinutesFromArray = timePeriod.substr(3, 5);
+        if (Number(currentMinutes) < Number(currentMinutesFromArray)) {
+          timePeriods.push(timePeriod);
+        }
+      }
+    }
+    this.timePeriods = timePeriods;
   }
 }
