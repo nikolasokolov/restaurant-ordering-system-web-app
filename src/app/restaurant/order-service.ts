@@ -26,4 +26,8 @@ export class OrderService {
   getDailyCompanyOrders(companyId: number): Observable<any> {
     return this.httpClient.get('https://localhost:8080/main/daily-orders/company/' + companyId);
   }
+
+  getDailyOrdersForRestaurant(restaurantAccountId: number): Observable<any> {
+    return this.httpClient.get('https://localhost:8080/main/daily-orders/restaurant/' + restaurantAccountId);
+  }
 }

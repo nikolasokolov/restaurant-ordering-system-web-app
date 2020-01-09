@@ -33,6 +33,7 @@ import {KeyToArrayPipe} from './pipes/keys.pipe';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CompanyOrdersComponent } from './company/company-orders/company-orders.component';
 import { ColleaguesChoicesComponent } from './company/colleagues-choices/colleagues-choices.component';
+import { DailyOrdersComponent } from './restaurant/daily-orders/daily-orders.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { ColleaguesChoicesComponent } from './company/colleagues-choices/colleag
     MenuItemEditComponent,
     KeyToArrayPipe,
     CompanyOrdersComponent,
-    ColleaguesChoicesComponent
+    ColleaguesChoicesComponent,
+    DailyOrdersComponent
   ],
     imports: [
         BrowserModule,

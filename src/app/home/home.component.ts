@@ -3,6 +3,7 @@ import {HomeService} from './home-service';
 import {AuthenticationService} from '../authentication/authentication.service';
 import {RestaurantItem} from '../model/restaurant-item.model';
 import {DomSanitizer} from '@angular/platform-browser';
+import {UserDetails} from '../model/user-details.model';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,7 @@ export class HomeComponent implements OnInit {
   isLoading = false;
   restaurants: RestaurantItem[];
   restaurantsFetched = false;
+  userDetails: UserDetails;
 
   constructor(private homeService: HomeService, private authenticationService: AuthenticationService,
               private sanitizer: DomSanitizer) {}
@@ -22,11 +24,14 @@ export class HomeComponent implements OnInit {
       this.restaurants = response;
       this.restaurantsFetched = !!response;
     });
+    this.authenticationService.userDetails.subscribe(response => {
+      this.userDetails = response;
+    });
     if (!this.restaurantsFetched) {
-      const userDetails = JSON.parse(localStorage.getItem('userDetails'));
-      if (userDetails !== null) {
-        if (!userDetails.authorities.includes('ROLE_RESTAURANT') && !userDetails.authorities.includes('ROLE_SUPER_ADMIN')) {
-          this.getRestaurantsForUser(Number(userDetails.id));
+      if (this.userDetails !== null) {
+        if (!this.userDetails.authorities.includes('ROLE_RESTAURANT')
+          && !this.userDetails.authorities.includes('ROLE_SUPER_ADMIN')) {
+          this.getRestaurantsForUser(Number(this.userDetails.id));
         }
       }
     }
