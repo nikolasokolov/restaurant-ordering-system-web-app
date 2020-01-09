@@ -1,3 +1,30 @@
+<div class="container-fluid" *ngIf="userDetails.authorities.includes('ROLE_RESTAURANT')">
+  <div class="row" style="margin-top: 140px;">
+    <div class="col-xs-4 col-xs-offset-2">
+      <div class="jumbotron text-center">
+        <button mat-raised-button routerLink="/daily-orders" color="primary">Today's Orders</button>
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <div class="jumbotron text-center">
+        <button mat-raised-button routerLink="/menu-management" color="primary">Menu management</button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-4 col-xs-offset-2">
+      <div class="jumbotron text-center">
+        <button mat-raised-button routerLink="/menu-management" color="primary">Today's Orders</button>
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <div class="jumbotron text-center">
+        <button mat-raised-button routerLink="/menu-management" color="primary">Menu management</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div *ngIf="restaurants">
   <h2 class="text-center text-primary">Choose a restaurant for your breakfast</h2>
   <div class="container-fluid">
