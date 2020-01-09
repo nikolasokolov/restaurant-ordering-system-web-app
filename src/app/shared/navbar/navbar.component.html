@@ -5,7 +5,7 @@
     <button mat-button [routerLink]="['company', userDetails.company.id]"
             *ngIf="userDetails.authorities.toString().includes('ROLE_ADMIN')" class="text-center">Company management</button>
     <button mat-button [routerLink]="['company-orders', userDetails.company.id]"
-            *ngIf="userDetails.authorities.toString().includes('ROLE_ADMIN')" class="text-center">Company Orders</button>
+            *ngIf="userDetails.authorities.toString().includes('ROLE_ADMIN')" class="text-center">Company orders</button>
     <button mat-button routerLink="companies"
             *ngIf="userDetails.authorities.toString().includes('ROLE_SUPER_ADMIN')" class="text-center">Companies</button>
     <button mat-button routerLink="restaurants"
@@ -14,6 +14,8 @@
             *ngIf="userDetails.authorities.toString().includes('ROLE_SUPER_ADMIN')" class="text-center">Users</button>
     <button mat-button routerLink="menu-management"
             *ngIf="userDetails.authorities.toString().includes('ROLE_RESTAURANT')" class="text-center">Menu</button>
+    <button mat-button routerLink="daily-orders"
+            *ngIf="userDetails.authorities.toString().includes('ROLE_RESTAURANT')" class="text-center">Today's orders</button>
   </div>
   <div class="col-xs-2 col-xs-offset-6">
     <button mat-icon-button [matMenuTriggerFor]="menu">
