@@ -66,11 +66,21 @@ export class DailyOrdersComponent implements OnInit {
 
   exportDailyOrdersToPdf() {
     this.exportService.generateDocumentReport(1).subscribe(response => {
-      let file = new Blob([response.data], { type: 'application/pdf' });
-      let fileURL = window.top.URL.createObjectURL(file);
-      window.top.open(fileURL, '_blank');
+      console.log(response);
+      let url = window.URL.createObjectURL(response.data);
+      let a = document.createElement('a');
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display: none');
+      a.setAttribute('target', 'blank');
+      a.href = url;
+      a.download = response.filename;
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+
     }, error => {
 
-    })
+      console.log(error);
+    });
   }
 }
