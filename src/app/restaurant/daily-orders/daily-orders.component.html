@@ -9,7 +9,7 @@
         <h4>Today's orders</h4>
       </div>
       <div class="col-xs-2">
-        <button mat-stroked-button color="primary" routerLink="/daily-orders">
+        <button mat-stroked-button color="primary"  (click)="exportDailyOrdersToPdf()">
           <mat-icon>picture_as_pdf</mat-icon> Export to PDF</button>
       </div>
     </div>
