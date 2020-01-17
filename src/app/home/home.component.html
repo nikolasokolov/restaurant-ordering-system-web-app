@@ -4,7 +4,7 @@
 <div class="container-fluid" *ngIf="userDetails?.authorities.includes('ROLE_RESTAURANT')">
   <div class="col-xs-10 col-xs-offset-1" style="margin-top: 180px;">
     <div class="row">
-        <div class="col-xs-3 col-xs-offset-3">
+        <div class="col-xs-3 col-xs-offset-2">
           <figcaption class="text-center">Today's orders</figcaption>
           <a mat-button routerLink="/daily-orders">
             <img class="img-responsive" [src]="'assets/orders.png'">
@@ -20,6 +20,31 @@
         <figcaption class="text-center">Monthly invoices</figcaption>
         <a mat-button (click)="openInvoiceDialog()">
           <img [src]="'assets/invoice.png'" class="img-responsive"/>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid" *ngIf="userDetails?.authorities.includes('ROLE_SUPER_ADMIN')">
+  <div class="col-xs-10 col-xs-offset-1" style="margin-top: 180px;">
+    <div class="row">
+      <div class="col-xs-3 col-xs-offset-2">
+        <figcaption class="text-center">Companies</figcaption>
+        <a mat-button routerLink="/companies">
+          <img class="img-responsive" [src]="'assets/company.png'">
+        </a>
+      </div>
+      <div class="col-xs-3">
+        <figcaption class="text-center">Restaurants</figcaption>
+        <a mat-button routerLink="/restaurants">
+          <img [src]="'assets/restaurant.png'" class="img-responsive"/>
+        </a>
+      </div>
+      <div class="col-xs-3">
+        <figcaption class="text-center">Users</figcaption>
+        <a mat-button  routerLink="/users">
+          <img [src]="'assets/users.png'" class="img-responsive"/>
         </a>
       </div>
     </div>
