@@ -9,6 +9,8 @@ import {MatDialog} from '@angular/material';
 import {ActivatedRoute} from '@angular/router';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import {RestaurantDailyOrders} from '../../model/restaurant-daily-orders.model';
+import {ExportService} from "../export-service";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-daily-orders',
@@ -26,7 +28,8 @@ export class DailyOrdersComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private location: Location, private orderService: OrderService, public dialog: MatDialog,
-              private activatedRoute: ActivatedRoute, private authenticationService: AuthenticationService) { }
+              private activatedRoute: ActivatedRoute, private authenticationService: AuthenticationService,
+              private exportService: ExportService) { }
 
   ngOnInit() {
     this.authenticationService.userDetails.subscribe(response => {
@@ -61,4 +64,14 @@ export class DailyOrdersComponent implements OnInit {
     });
   }
 
+  exportDailyOrdersToPdf() {
+    const userId = this.userDetails.id;
+    this.exportService.generateDocumentReport(userId).subscribe(response => {
+      const file = new Blob([response.data], { type: 'application/pdf' });
+      const fileURL = window.top.URL.createObjectURL(file);
+      window.top.open(fileURL, '_blank');
+    }, error => {
+      console.log(error);
+    });
+  }
 }

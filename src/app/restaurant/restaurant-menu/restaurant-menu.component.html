@@ -38,7 +38,10 @@
     <hr/>
     <br/>
     <div class="row" *ngIf="!isLoading">
-      <div class="col-xs-10 col-xs-offset-1 text-center" *ngIf="isOrderForCurrentlyOpenRestaurant || !hasUserOrdered">
+      <div class="row">
+        <h4 class="text-center text-danger" *ngIf="timePeriods.length === 0">Ordering is closed after 12:30!</h4>
+      </div>
+      <div class="col-xs-10 col-xs-offset-1 text-center" *ngIf="(isOrderForCurrentlyOpenRestaurant || !hasUserOrdered) && timePeriods.length > 0">
         <form #orderForm="ngForm" (ngSubmit)="submitOrder(orderForm)">
           <fieldset [disabled]="hasUserOrdered && !isInEdit">
             <mat-form-field class="example-full-width">

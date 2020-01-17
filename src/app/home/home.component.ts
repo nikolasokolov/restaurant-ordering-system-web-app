@@ -4,6 +4,10 @@ import {AuthenticationService} from '../authentication/authentication.service';
 import {RestaurantItem} from '../model/restaurant-item.model';
 import {DomSanitizer} from '@angular/platform-browser';
 import {UserDetails} from '../model/user-details.model';
+import {MonthlyInvoiceDialogComponent} from "../shared/monthly-invoice-dialog/monthly-invoice-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
+import {Subject} from "rxjs";
+import {debounceTime} from "rxjs/operators";
 
 @Component({
   selector: 'app-home',
@@ -15,9 +19,11 @@ export class HomeComponent implements OnInit {
   restaurants: RestaurantItem[];
   restaurantsFetched = false;
   userDetails: UserDetails;
+  alert = new Subject<string>();
+  alertMessage: string;
 
   constructor(private homeService: HomeService, private authenticationService: AuthenticationService,
-              private sanitizer: DomSanitizer) {}
+              private sanitizer: DomSanitizer, public dialog: MatDialog) {}
 
   ngOnInit() {
     this.authenticationService.restaurants.subscribe(response => {
@@ -35,6 +41,8 @@ export class HomeComponent implements OnInit {
         }
       }
     }
+    this.alert.subscribe((message) => this.alertMessage = message);
+    this.alert.pipe(debounceTime(2500)).subscribe(() => this.alertMessage = null);
   }
 
   getRestaurantsForUser(userId: number) {
@@ -49,6 +57,23 @@ export class HomeComponent implements OnInit {
     }, () => {
       this.isLoading = false;
     });
+  }
+
+  openInvoiceDialog(): void {
+    const dialogRef = this.dialog.open(MonthlyInvoiceDialogComponent, {
+      width: '500px',
+      height: '250px',
+      data: ''
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.changeMessage('Invoice is successfully sent');
+      }
+    });
+  }
+
+  changeMessage(message: string) {
+    this.alert.next(message);
   }
 
 }
