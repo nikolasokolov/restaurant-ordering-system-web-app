@@ -2,20 +2,26 @@
   <b>{{ alertMessage }}</b>
 </ngb-alert>
 <div class="container-fluid" *ngIf="userDetails?.authorities.includes('ROLE_RESTAURANT')">
-  <div class="row" style="margin-top: 100px;">
-    <div class="col-xs-8 col-xs-offset-2">
-      <mat-grid-list cols="2" rowHeight="2:1">
-        <mat-grid-tile>
-          <a routerLink="/daily-orders"><b>Today's Orders</b></a>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <a routerLink="/menu-management"><b>Menu management</b></a>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <a (click)="openInvoiceDialog()"><b>Send invoice</b></a> &nbsp;
-        </mat-grid-tile>
-        <mat-grid-tile><b>Invoices</b></mat-grid-tile>
-      </mat-grid-list>
+  <div class="col-xs-10 col-xs-offset-1" style="margin-top: 180px;">
+    <div class="row">
+        <div class="col-xs-3 col-xs-offset-3">
+          <figcaption class="text-center">Today's orders</figcaption>
+          <a mat-button routerLink="/daily-orders">
+            <img class="img-responsive" [src]="'assets/orders.png'">
+          </a>
+        </div>
+      <div class="col-xs-3">
+        <figcaption class="text-center">Menu</figcaption>
+        <a mat-button routerLink="/menu-management">
+          <img [src]="'assets/menu.png'" class="img-responsive"/>
+        </a>
+      </div>
+      <div class="col-xs-3">
+        <figcaption class="text-center">Monthly invoices</figcaption>
+        <a mat-button (click)="openInvoiceDialog()">
+          <img [src]="'assets/invoice.png'" class="img-responsive"/>
+        </a>
+      </div>
     </div>
   </div>
 </div>
