@@ -43,4 +43,8 @@ export class CompanyService {
   sendInvoice(userId: number, companyId: any) {
     return this.httpClient.get('https://localhost:8080/main/company/' + companyId + '/user/' + userId);
   }
+
+  getCompaniesForRestaurant(userId: number): Observable<any> {
+    return this.httpClient.get('https://localhost:8080/main/restaurant/' + userId + '/companies');
+  }
 }

@@ -27,16 +27,16 @@ export class MonthlyInvoiceDialogComponent implements OnInit {
     this.authenticationService.userDetails.subscribe(response => {
       this.userDetails = response;
     });
-    this.getAllCompanies();
+    this.getCompaniesForRestaurant();
   }
 
   closeDialog() {
     this.dialogRef.close();
   }
 
-  getAllCompanies() {
+  getCompaniesForRestaurant() {
     this.isLoading = true;
-    this.companyService.getAllCompanies().subscribe((response: any[]) => {
+    this.companyService.getCompaniesForRestaurant(this.userDetails.id).subscribe((response: any[]) => {
       this.companies = response;
       this.isLoading = false;
     }, () => {
