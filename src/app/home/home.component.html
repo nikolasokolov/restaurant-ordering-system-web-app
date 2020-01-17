@@ -1,26 +1,21 @@
+<ngb-alert *ngIf="alertMessage" type="success" (close)="alertMessage = null" class="text-center">
+  <b>{{ alertMessage }}</b>
+</ngb-alert>
 <div class="container-fluid" *ngIf="userDetails?.authorities.includes('ROLE_RESTAURANT')">
-  <div class="row" style="margin-top: 140px;">
-    <div class="col-xs-4 col-xs-offset-2">
-      <div class="jumbotron text-center">
-        <button mat-raised-button routerLink="/daily-orders" color="primary">Today's Orders</button>
-      </div>
-    </div>
-    <div class="col-xs-4">
-      <div class="jumbotron text-center">
-        <button mat-raised-button routerLink="/menu-management" color="primary">Menu management</button>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-4 col-xs-offset-2">
-      <div class="jumbotron text-center">
-        <button mat-raised-button routerLink="/menu-management" color="primary">Today's Orders</button>
-      </div>
-    </div>
-    <div class="col-xs-4">
-      <div class="jumbotron text-center">
-        <button mat-raised-button routerLink="/menu-management" color="primary">Menu management</button>
-      </div>
+  <div class="row" style="margin-top: 100px;">
+    <div class="col-xs-8 col-xs-offset-2">
+      <mat-grid-list cols="2" rowHeight="2:1">
+        <mat-grid-tile>
+          <a routerLink="/daily-orders"><b>Today's Orders</b></a>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <a routerLink="/menu-management"><b>Menu management</b></a>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <a (click)="openInvoiceDialog()"><b>Send invoice</b></a> &nbsp;
+        </mat-grid-tile>
+        <mat-grid-tile><b>Invoices</b></mat-grid-tile>
+      </mat-grid-list>
     </div>
   </div>
 </div>
