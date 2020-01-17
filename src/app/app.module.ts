@@ -34,6 +34,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CompanyOrdersComponent } from './company/company-orders/company-orders.component';
 import { ColleaguesChoicesComponent } from './company/colleagues-choices/colleagues-choices.component';
 import { DailyOrdersComponent } from './restaurant/daily-orders/daily-orders.component';
+import { MonthlyInvoiceDialogComponent } from './shared/monthly-invoice-dialog/monthly-invoice-dialog.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { DailyOrdersComponent } from './restaurant/daily-orders/daily-orders.com
     KeyToArrayPipe,
     CompanyOrdersComponent,
     ColleaguesChoicesComponent,
-    DailyOrdersComponent
+    DailyOrdersComponent,
+    MonthlyInvoiceDialogComponent
   ],
     imports: [
         BrowserModule,
@@ -87,7 +89,8 @@ import { DailyOrdersComponent } from './restaurant/daily-orders/daily-orders.com
   ],
   entryComponents: [
     ConfirmationDialogComponent,
-    AddRestaurantDialogComponent
+    AddRestaurantDialogComponent,
+    MonthlyInvoiceDialogComponent
   ],
   bootstrap: [AppComponent],
 })
