@@ -2,48 +2,47 @@
   <b>{{ alertMessage }}</b>
 </ngb-alert>
 <div class="container-fluid" *ngIf="userDetails?.authorities.includes('ROLE_RESTAURANT')">
-  <div class="col-xs-10 col-xs-offset-1" style="margin-top: 180px;">
+  <div class="col-xs-10 col-xs-offset-1" style="margin-top: 120px;">
     <div class="row">
-        <div class="col-xs-3 col-xs-offset-2">
-          <figcaption class="text-center">Today's orders</figcaption>
-          <a mat-button routerLink="/daily-orders">
+        <div class="col-xs-4">
+          <figcaption class="text-center" style="font-size: 120%;"><b>Today's orders</b></figcaption>
+          <a mat-button routerLink="/daily-orders" style="margin-top: 10px;">
             <img class="img-responsive" [src]="'assets/orders.png'">
           </a>
         </div>
-      <div class="col-xs-3">
-        <figcaption class="text-center">Menu</figcaption>
-        <a mat-button routerLink="/menu-management">
+      <div class="col-xs-4">
+        <figcaption class="text-center" style="font-size: 120%;"><b>Menu</b></figcaption>
+        <a mat-button routerLink="/menu-management" style="margin-top: 10px;">
           <img [src]="'assets/menu.png'" class="img-responsive"/>
         </a>
       </div>
-      <div class="col-xs-3">
-        <figcaption class="text-center">Monthly invoices</figcaption>
-        <a mat-button (click)="openInvoiceDialog()">
+      <div class="col-xs-4">
+        <figcaption class="text-center" style="font-size: 120%;"><b>Monthly invoices</b></figcaption>
+        <a mat-button (click)="openInvoiceDialog()" style="margin-top: 10px;">
           <img [src]="'assets/invoice.png'" class="img-responsive"/>
         </a>
       </div>
     </div>
   </div>
 </div>
-
 <div class="container-fluid" *ngIf="userDetails?.authorities.includes('ROLE_SUPER_ADMIN')">
-  <div class="col-xs-10 col-xs-offset-1" style="margin-top: 180px;">
+  <div class="col-xs-10 col-xs-offset-1" style="margin-top: 120px;">
     <div class="row">
-      <div class="col-xs-3 col-xs-offset-2">
-        <figcaption class="text-center">Companies</figcaption>
-        <a mat-button routerLink="/companies">
+      <div class="col-xs-4">
+        <figcaption class="text-center" style="font-size: 120%;"><b>Companies</b></figcaption>
+        <a mat-button routerLink="/companies" style="margin-top: 10px;">
           <img class="img-responsive" [src]="'assets/company.png'">
         </a>
       </div>
-      <div class="col-xs-3">
-        <figcaption class="text-center">Restaurants</figcaption>
-        <a mat-button routerLink="/restaurants">
+      <div class="col-xs-4">
+        <figcaption class="text-center" style="font-size: 120%;"><b>Restaurants</b></figcaption>
+        <a mat-button routerLink="/restaurants" style="margin-top: 10px;">
           <img [src]="'assets/restaurant.png'" class="img-responsive"/>
         </a>
       </div>
-      <div class="col-xs-3">
-        <figcaption class="text-center">Users</figcaption>
-        <a mat-button  routerLink="/users">
+      <div class="col-xs-4">
+        <figcaption class="text-center" style="font-size: 120%;"><b>Users</b></figcaption>
+        <a mat-button  routerLink="/users" style="margin-top: 10px;">
           <img [src]="'assets/users.png'" class="img-responsive"/>
         </a>
       </div>
