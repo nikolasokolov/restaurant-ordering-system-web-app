@@ -5,21 +5,23 @@ import {Observable} from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class UserService {
+  USERS_BASE_URL = 'https://localhost:8080/main/users';
+
   constructor(private httpClient: HttpClient) {}
 
   addUser(userAccount: UserAccount): Observable<any> {
-    return this.httpClient.post('https://localhost:8080/main/users/add', userAccount);
+    return this.httpClient.post(this.USERS_BASE_URL + '/add', userAccount);
   }
 
   getAllUsers(): Observable<any> {
-    return this.httpClient.get('https://localhost:8080/main/users/');
+    return this.httpClient.get(this.USERS_BASE_URL + '/');
   }
 
   deleteUser(id: number) {
-    return this.httpClient.delete('https://localhost:8080/main/users/delete/' + id);
+    return this.httpClient.delete(this.USERS_BASE_URL + '/delete/' + id);
   }
 
   getAllUsersForCompany(companyId: number): Observable<any> {
-    return this.httpClient.get('https://localhost:8080/main/company/' + companyId + '/users/');
+    return this.httpClient.get(this.USERS_BASE_URL + '/company/' + companyId);
   }
 }

@@ -6,38 +6,38 @@ import {CompanyItem} from '../model/company-item.model';
 
 @Injectable({providedIn: 'root'})
 export class CompanyService {
+  COMPANIES_BASE_URL = 'https://localhost:8080/main/companies';
+
   constructor(private httpClient: HttpClient) {}
 
   getAllCompanies(): Observable<any> {
-    return this.httpClient.get('https://localhost:8080/main/companies');
+    return this.httpClient.get(this.COMPANIES_BASE_URL + '/');
   }
 
   getCompany(id: number): Observable<any> {
-    return this.httpClient.get<Company>('https://localhost:8080/main/company/' + id);
+    return this.httpClient.get<Company>(this.COMPANIES_BASE_URL + '/' + id);
   }
 
   addCompany(company: Company): Observable<any> {
-    return this.httpClient.post('https://localhost:8080/main/company/new', company);
+    return this.httpClient.post(this.COMPANIES_BASE_URL + '/new', company);
   }
 
   editCompany(company: Company): Observable<any> {
-    return this.httpClient.put('https://localhost:8080/main/company/edit', company);
+    return this.httpClient.put(this.COMPANIES_BASE_URL + '/edit', company);
   }
 
   deleteCompany(id: number): Observable<any> {
-    return this.httpClient.delete('https://localhost:8080/main/company/' + id + '/delete');
+    return this.httpClient.delete(this.COMPANIES_BASE_URL + '/' + id + '/delete');
   }
 
   uploadFile(file: File, companyId: number): Observable<any> {
-    const url = 'https://localhost:8080/main/company/' + companyId + '/uploadLogo/';
     const formData: FormData = new FormData();
     formData.append('file', file);
-    return this.httpClient.post(url , formData);
+    return this.httpClient.post(this.COMPANIES_BASE_URL + '/' + companyId + '/uploadLogo/' , formData);
   }
 
   addRestaurantForCompany(company: CompanyItem, restaurantId: number): Observable<any> {
-    const url = 'https://localhost:8080/main/company/add-restaurant/' + restaurantId;
-    return this.httpClient.post(url, company);
+    return this.httpClient.post(this.COMPANIES_BASE_URL + '/add-restaurant/' + restaurantId, company);
   }
 
   sendInvoice(userId: number, companyId: any) {
@@ -45,6 +45,6 @@ export class CompanyService {
   }
 
   getCompaniesForRestaurant(userId: number): Observable<any> {
-    return this.httpClient.get('https://localhost:8080/main/restaurant/' + userId + '/companies');
+    return this.httpClient.get(this.COMPANIES_BASE_URL + '/users/' + userId + '/restaurant');
   }
 }

@@ -16,13 +16,13 @@
       <h5>Phone number: {{restaurantItem.phoneNumber}}</h5>
       <hr/>
       <button mat-raised-button color="primary" [routerLink]="['/restaurant-edit', restaurantItem?.id]">Edit restaurant</button> &nbsp;
-      <button mat-raised-button *ngIf="!restaurantItem.restaurantAccountDetails" [routerLink]="['/restaurant-account/add/', restaurantItem.id]">Add an account</button> &nbsp;
+      <button mat-raised-button *ngIf="!restaurantItem.restaurantAccountDetailsDTO" [routerLink]="['/restaurant-account/add/', restaurantItem.id]">Add an account</button> &nbsp;
       <button mat-raised-button color="warn" (click)="openDialog(restaurantItem.id)">Delete restaurant</button> &nbsp;
-      <div *ngIf="restaurantItem.restaurantAccountDetails">
+      <div *ngIf="restaurantItem.restaurantAccountDetailsDTO">
         <hr/>
         <h4><strong>Restaurant account details</strong></h4>
-        <h5>Username: {{restaurantItem.restaurantAccountDetails.username}}</h5>
-        <h5>Email: {{restaurantItem.restaurantAccountDetails.email}}</h5>
+        <h5>Username: {{restaurantItem.restaurantAccountDetailsDTO.username}}</h5>
+        <h5>Email: {{restaurantItem.restaurantAccountDetailsDTO.email}}</h5>
       </div>
     </div>
   </div>
