@@ -11,8 +11,8 @@ export class OrderService {
     return this.httpClient.post('https://localhost:8080/main/orders/save', orderRequest);
   }
 
-  getUserOrder(userId: any, restaurantId: any): Observable<any> {
-    return this.httpClient.get('https://localhost:8080/main/orders/user/' + userId);
+  getUserOrder(userId: any): Observable<any> {
+    return this.httpClient.get('https://localhost:8080/main/orders/users/' + userId);
   }
 
   cancelOrder(id: number): Observable<any> {
@@ -20,14 +20,14 @@ export class OrderService {
   }
 
   getCompanyOrders(companyId: number): Observable<any> {
-    return this.httpClient.get('https://localhost:8080/main/orders/company/' + companyId);
+    return this.httpClient.get('https://localhost:8080/main/orders/companies/' + companyId);
   }
 
   getDailyCompanyOrders(companyId: number): Observable<any> {
-    return this.httpClient.get('https://localhost:8080/main/daily-orders/company/' + companyId);
+    return this.httpClient.get('https://localhost:8080/main/daily-orders/companies/' + companyId);
   }
 
   getDailyOrdersForRestaurant(restaurantAccountId: number): Observable<any> {
-    return this.httpClient.get('https://localhost:8080/main/daily-orders/restaurant/' + restaurantAccountId);
+    return this.httpClient.get('https://localhost:8080/main/daily-orders/restaurants/users/' + restaurantAccountId);
   }
 }

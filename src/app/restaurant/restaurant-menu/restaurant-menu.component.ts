@@ -48,7 +48,7 @@ export class RestaurantMenuComponent implements OnInit {
       this.userId = response.id;
     });
     this.restaurantId = this.activatedRoute.snapshot.params.id;
-    this.getUserOrder(this.userId, this.restaurantId);
+    this.getUserOrder(this.userId);
     this.restaurant = this.activatedRoute.snapshot.queryParamMap.get('restaurant');
     this.getRestaurantMenu(this.restaurantId);
     this.filteredMenuItems = this.menuItems;
@@ -135,8 +135,8 @@ export class RestaurantMenuComponent implements OnInit {
     });
   }
 
-  getUserOrder(userId: any, restaurantId: any) {
-    this.orderService.getUserOrder(userId, restaurantId).subscribe(response => {
+  getUserOrder(userId: any) {
+    this.orderService.getUserOrder(userId).subscribe(response => {
       this.userOrder = response;
       if (this.userOrder !== null) {
         this.hasUserOrdered = true;
