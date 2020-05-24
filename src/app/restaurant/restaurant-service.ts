@@ -55,15 +55,15 @@ export class RestaurantService {
   }
 
   getRestaurantsForCompany(id: number): Observable<any> {
-    return this.httpClient.get('https://localhost:8080/main/company/' + id + '/restaurants');
+    return this.httpClient.get('https://localhost:8080/main/companies/' + id + '/restaurants');
   }
 
   deleteRestaurantForCompany(companyId: any, restaurantId: number) {
     return this.httpClient
-      .delete('https://localhost:8080/main/company/' + companyId + '/delete-restaurant/' + restaurantId);
+      .delete('https://localhost:8080/main/companies/' + companyId + '/delete-restaurant/' + restaurantId);
   }
 
   getAvailableRestaurantsForCompany(companyId: number): Observable<any> {
-    return this.httpClient.get('https://localhost:8080/main/company/' + companyId + '/available-restaurants');
+    return this.httpClient.get('https://localhost:8080/main/companies/' + companyId + '/available-restaurants');
   }
 }
