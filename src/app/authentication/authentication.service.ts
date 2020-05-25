@@ -119,7 +119,7 @@ export class AuthenticationService {
     const userDetails = this.getUserDetails();
     const userId = userDetails.id;
     if (!(userDetails.authorities.includes('ROLE_RESTAURANT') || userDetails.authorities.includes('ROLE_SUPER_ADMIN'))) {
-      return this.httpClient.get('https://localhost:8080/main/user/' + userId + '/restaurants')
+      return this.httpClient.get('https://localhost:8080/main/restaurants/users/' + userId)
         .pipe(tap((response: any[]) => {
           this.restaurants.next(response);
           for (const restaurantItem of response) {

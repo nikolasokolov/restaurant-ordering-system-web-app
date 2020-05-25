@@ -37,14 +37,14 @@ export class CompanyService {
   }
 
   addRestaurantForCompany(company: CompanyItem, restaurantId: number): Observable<any> {
-    return this.httpClient.post(this.COMPANIES_BASE_URL + '/add-restaurant/' + restaurantId, company);
+    return this.httpClient.post(this.COMPANIES_BASE_URL + '/' + company.id + '/restaurants/' + restaurantId + '/add', company);
   }
 
   sendInvoice(userId: number, companyId: any) {
-    return this.httpClient.get('https://localhost:8080/main/company/' + companyId + '/user/' + userId);
+    return this.httpClient.get('https://localhost:8080/main/invoices/companies/' + companyId + '/users/' + userId);
   }
 
   getCompaniesForRestaurant(userId: number): Observable<any> {
-    return this.httpClient.get(this.COMPANIES_BASE_URL + '/users/' + userId + '/restaurant');
+    return this.httpClient.get(this.COMPANIES_BASE_URL + '/users/' + userId);
   }
 }

@@ -8,7 +8,7 @@ export class HomeService {
   constructor(private httpClient: HttpClient) {}
 
   getRestaurantsForUser(userId: number): Observable<any> {
-    return this.httpClient.get('https://localhost:8080/main/user/' + userId + '/restaurants');
+    return this.httpClient.get('https://localhost:8080/main/restaurants/users/' + userId);
   }
 
 }

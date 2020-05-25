@@ -9,42 +9,45 @@ import {RestaurantAccountDetails} from '../model/restaurant-account-details.mode
 
 @Injectable({providedIn: 'root'})
 export class RestaurantService {
+  RESTAURANTS_BASE_URL = 'https://localhost:8080/main/restaurants';
+
   restaurantItemSubject = new BehaviorSubject<Restaurant>(null);
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+  }
 
   getAllRestaurants(): Observable<any> {
-    return this.httpClient.get('https://localhost:8080/main/restaurants');
+    return this.httpClient.get(this.RESTAURANTS_BASE_URL + '/');
   }
 
   getRestaurant(id: number): Observable<any> {
-    return this.httpClient.get<RestaurantItem>('https://localhost:8080/main/restaurant/' + id).pipe(tap(response => {
-      this.handleRestaurantResponse(response.id, response.name, response.address, response.phoneNumber,
-        response.restaurantAccountDetails);
-    }));
+    return this.httpClient.get<RestaurantItem>(this.RESTAURANTS_BASE_URL + '/' + id)
+      .pipe(tap(response => {
+        this.handleRestaurantResponse(response.id, response.name, response.address, response.phoneNumber,
+          response.restaurantAccountDetails);
+      }));
   }
 
   addRestaurant(restaurant: Restaurant): Observable<any> {
-    return this.httpClient.post('https://localhost:8080/main/restaurant/new', restaurant);
+    return this.httpClient.post(this.RESTAURANTS_BASE_URL + '/new', restaurant);
   }
 
   editRestaurant(restaurant: Restaurant): Observable<any> {
-    return this.httpClient.put('https://localhost:8080/main/restaurant/edit', restaurant);
+    return this.httpClient.put(this.RESTAURANTS_BASE_URL + '/edit', restaurant);
   }
 
   deleteRestaurant(id: number): Observable<any> {
-    return this.httpClient.delete('https://localhost:8080/main/restaurant/' + id + '/delete');
+    return this.httpClient.delete(this.RESTAURANTS_BASE_URL + '/' + id + '/delete');
   }
 
   uploadFile(file: File, restaurantId: number): Observable<any> {
-    const url = 'https://localhost:8080/main/restaurant/' + restaurantId + '/uploadLogo/';
     const formData: FormData = new FormData();
     formData.append('file', file);
-    return this.httpClient.post(url , formData);
+    return this.httpClient.post(this.RESTAURANTS_BASE_URL + '/' + +restaurantId + '/uploadLogo', formData);
   }
 
   addAccountForRestaurant(restaurantId: number, restaurantAccount: RestaurantAccount): Observable<any> {
-    return this.httpClient.post('https://localhost:8080/main/restaurant/' + restaurantId + '/account/add',
+    return this.httpClient.post(this.RESTAURANTS_BASE_URL + '/' + restaurantId + '/account/add',
       restaurantAccount);
   }
 
@@ -60,7 +63,7 @@ export class RestaurantService {
 
   deleteRestaurantForCompany(companyId: any, restaurantId: number) {
     return this.httpClient
-      .delete('https://localhost:8080/main/companies/' + companyId + '/delete-restaurant/' + restaurantId);
+      .delete('https://localhost:8080/main/companies/' + companyId + '/restaurants/' + restaurantId + '/delete');
   }
 
   getAvailableRestaurantsForCompany(companyId: number): Observable<any> {

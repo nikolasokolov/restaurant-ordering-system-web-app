@@ -5,29 +5,31 @@ import {MenuItem} from '../model/menu-item.model';
 
 @Injectable({providedIn: 'root'})
 export class RestaurantMenuManagementService {
+  MENU_ITEMS_BASE_URL = 'https://localhost:8080/main/menu-items';
+
   constructor(private httpClient: HttpClient) {}
 
   getRestaurantMenuItems(restaurantId: any): Observable<any> {
-    return this.httpClient.get('https://localhost:8080/main/restaurant/' + restaurantId + '/menu-items');
+    return this.httpClient.get(this.MENU_ITEMS_BASE_URL + '/users/' + restaurantId + '');
   }
 
   deleteMenuItem(id: number): Observable<any> {
-    return this.httpClient.delete('https://localhost:8080/main/restaurant/menu-items/' + id + '/delete');
+    return this.httpClient.delete(this.MENU_ITEMS_BASE_URL + '/' + id + '/delete');
   }
 
   addMenuItem(menuItem: MenuItem, userId: number): Observable<any> {
-    return this.httpClient.post('https://localhost:8080/main/restaurant/' + userId + '/menu-items/add', menuItem);
+    return this.httpClient.post(this.MENU_ITEMS_BASE_URL + '/add/users/' + userId, menuItem);
   }
 
   editMenuItem(menuItem: MenuItem, userId: number): Observable<any> {
-    return this.httpClient.put('https://localhost:8080/main/restaurant/' + userId + '/menu-items/update', menuItem);
+    return this.httpClient.put(this.MENU_ITEMS_BASE_URL + '/update/users/' + userId, menuItem);
   }
 
   getMenuItem(id: number): Observable<any> {
-    return this.httpClient.get('https://localhost:8080/main/restaurant/menu-items/' + id);
+    return this.httpClient.get(this.MENU_ITEMS_BASE_URL + '/' + id);
   }
 
   getRestaurantMenu(restaurantId: number): Observable<any> {
-    return this.httpClient.get('https://localhost:8080/main/restaurant/' + restaurantId + '/menu');
+    return this.httpClient.get(this.MENU_ITEMS_BASE_URL + '/restaurants/' + restaurantId);
   }
 }
